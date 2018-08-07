@@ -1,0 +1,62 @@
+[
+	{
+		"title": "Start",
+		"tags": "",
+		"body": "Welcome to Survivor\nYou can do alot in here\nTry to use your gun, press CTRL\nGreat!\nZombies will try to catch you throughout the game\nNow listen,\nYou have two options: \n[[Quit the game|Leave]]\n[[Continue|LearnMore]]",
+		"position": {
+			"x": 592,
+			"y": 181
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Leave",
+		"tags": "",
+		"body": "Oh, goodbye!\nYou'll be back soon!",
+		"position": {
+			"x": 387,
+			"y": 487
+		},
+		"colorID": 0
+	},
+	{
+		"title": "LearnMore",
+		"tags": "",
+		"body": "HAHAHA",
+		"position": {
+			"x": 763,
+			"y": 472
+		},
+		"colorID": 0
+	},
+	{
+		"title": "TalkTo",
+		"tags": "",
+		"body": "Im all alone\n[[Recruit him|Recruit]]\n[[Some other time|OtherTime]]",
+		"position": {
+			"x": 592,
+			"y": 181
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Recruit",
+		"tags": "",
+		"body": "<<recruitAction()>>\n[[OtherTime]]",
+		"position": {
+			"x": 592,
+			"y": 181
+		},
+		"colorID": 0
+	},
+	{
+		"title": "OtherTime",
+		"tags": "",
+		"body": "Bye",
+		"position": {
+			"x": 592,
+			"y": 181
+		},
+		"colorID": 0
+	}
+]
