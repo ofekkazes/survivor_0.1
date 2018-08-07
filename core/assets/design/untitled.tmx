@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.5" orientation="orthogonal" renderorder="right-down" width="100" height="32" tilewidth="32" tileheight="32" infinite="0" nextobjectid="1">
+ <tileset firstgid="1" source="test.tsx"/>
+ <layer name="שכבת משבצות 1" width="100" height="32">
+  <data encoding="base64" compression="zlib">
+   eJztl8ENgzAQBN0h6SApE3eAu8J5WHkGgmAnYh6r+Z51OzZMpZRHzwTm3FMBc1zBZ88LzLGLCpnnbKb78I1jHw0yj358dkKY5+5+LMX3g0b9YFE/WNQPFvWDRf1gUT9Y1A8W9YPF9z9hA8xxBZN935r5YGronP/ix+j71iwH00Ln/IXpPvh+5P3YS7+vWBx3TnoO/bgf032Q+kFmug9SP8hM90HqB5npPkj9IDPdB6kfZKb7IPWDzBWE12yZ
+  </data>
+ </layer>
+ <objectgroup name="objects"/>
+ <layer name="שכבת משבצות 2" width="100" height="32">
+  <data encoding="base64" compression="zlib">
+   eJzt2FtOwkAYhuGyaNkB7kBwAygbUFYAJh4uVUC89ACKeqNEjYdvkg6UBqgtUwvt+yQvTEhL/pthAM8DAABYH9eB9bE6yWqQDbeb4J5GYH2qvtRIdVRX9dTV6qMhgb433Q/3aqCG6kGdZThXnjSiL5lh98OHevefP1VLtdWR0+mKIc7nVvhaux/sPtlSZXWuLtSliwGxVHAP2f1g90lFbasbdavu/n26fPrL55Y5zx/9td0n5nw337de1ZsapzId5jHn+chf233i+a9xnkeLe1bHvXeV9weK5lm9ZD0EJn7MQynrKQDkmevvSU+O369odlRV1ULrpL5dDFUQ8/67qqs9tR9aL7oe6TpQh6oZWgfx2w8AAAAAkAe/lEpMuA==
+  </data>
+ </layer>
+</map>
