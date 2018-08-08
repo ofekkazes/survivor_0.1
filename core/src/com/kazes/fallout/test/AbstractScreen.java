@@ -20,16 +20,23 @@ public abstract class AbstractScreen implements Screen{
 	protected final Survivor game;
 	
 	//Background colour
-    protected Color clear = new Color(0f,0f,0f,1f);
+    protected Color clear = new Color(.22f, .69f, .87f, 1);
 
 	public AbstractScreen(Survivor game ){
 		this.game = game;
 	}
 
+	public void update(float delta) {
+
+	}
+
 	@Override
 	public void render(float delta){
-		Gdx.gl.glClearColor( clear.r, clear.g, clear.b, clear.a);
-		Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT );
+		this.update(delta);
+
+		Gdx.gl.glClearColor( 0, 0, 0, 1);
+		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 	}
 
     public void pauseLogic() { }

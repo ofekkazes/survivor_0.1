@@ -39,7 +39,7 @@ public class LoadingScreen extends  AbstractScreen {
         if (switchScreen) {
             Assets.finishLoading();
 
-            game.setScreen(new SideScroll(game));
+            game.setScreen(new Prologue(game));
         }
     }
 

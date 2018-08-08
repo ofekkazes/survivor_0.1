@@ -19,33 +19,21 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.StringBuilder;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.kazes.fallout.SuperObject;
 import com.kyper.yarn.Dialogue;
 import com.kyper.yarn.Library;
 import com.kyper.yarn.UserData;
 import com.kyper.yarn.Value;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
-/*
-import com.kyper.yarn.Dialogue;
-import com.kyper.yarn.Dialogue.CommandResult;
-import com.kyper.yarn.Dialogue.LineResult;
-import com.kyper.yarn.Dialogue.NodeCompleteResult;
-import com.kyper.yarn.Dialogue.OptionResult;
-import com.kyper.yarn.Library.Function;
-import com.kyper.yarn.UserData;
-import com.kyper.yarn.Value;*/
 
-public class SideScroll extends AbstractScreen {
+
+public class SideScroll extends GameScreen {
 
     private ParallaxBackground parallaxBackground;
     public static Texture texture; //temp pikachu texture for testing
     private Player player; //player actor
-    float stateTime;
     private Array<Zombie> enemies; //enemy actors
     private Array<NPC> npcs; //Friendly foes
-    private Stage gameStage; //game container
-    private Stage screenStage; // screen container
     private Skin skin; //default game skin
     private Array<Carryable> items; //Scattered supplies
     private Window dialogWindow;
@@ -69,7 +57,7 @@ public class SideScroll extends AbstractScreen {
 
 
     public SideScroll(Survivor game) {
-        super(game);
+        super(game, "Prologue");
         create(game);
     }
     @Override
@@ -93,15 +81,6 @@ public class SideScroll extends AbstractScreen {
         SideScrollingCamera camera = new SideScrollingCamera();
         camera.setToOrtho (false,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         FitViewport viewp = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
-
-        gameStage = new Stage(viewp);
-        gameStage.getBatch().enableBlending();
-        screenStage = new Stage(new ScreenViewport());
-
-        InputMultiplexer multiplexer = new InputMultiplexer();
-        multiplexer.addProcessor(screenStage);
-        multiplexer.addProcessor(gameStage);
-        Gdx.input.setInputProcessor(multiplexer);
 
 
         Array<Texture> textures = new Array<Texture>();
@@ -268,8 +247,9 @@ public class SideScroll extends AbstractScreen {
         line = "";
     }
 
-    //Update the logic every frame
-    public void update() {
+    @Override
+    public void update(float delta) {
+        super.update(delta);
         //SuperObject.updateBegin(gameStage.getCamera());
         this.processInput();
 
@@ -305,24 +285,13 @@ public class SideScroll extends AbstractScreen {
     //Draws every frame
     @Override
     public void render (float delta) {
-        this.update();
-        Gdx.gl.glClearColor(.22f, .69f, .87f, 1);
-        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-
+        super.render(delta);
         ((SideScrollingCamera)gameStage.getCamera()).followPos(player.getRectangle());
         parallaxBackground.setXPos(gameStage.getCamera().position.x - gameStage.getCamera().viewportWidth / 2);
 
-        gameStage.act(Gdx.graphics.getDeltaTime());
-        gameStage.draw();
-
-        screenStage.act(Gdx.graphics.getDeltaTime());
-        screenStage.draw();
 
         renderDialogue();
 
-        stateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation time
     }
 
     //Every input given from the player is processed here

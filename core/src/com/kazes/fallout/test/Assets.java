@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ArrayMap;
 
 public class Assets {
@@ -33,6 +34,7 @@ public class Assets {
         public static final String TREELOG = "images/maps/wood.png";
         public static final String TUNA = "images/maps/tuna.png";
         public static final String WATER = "images/maps/water.png";
+        public static final String SPLASH = "images/statics/splash.png";
     }
     private static final String[] _Images = {
             Images.PIKACHU,
@@ -41,7 +43,13 @@ public class Assets {
             Images.PARALLAX_3, Images.PARALLAX_4,
             Images.PARALLAX_5, Images.PARALLAX_6,
             Images.MAP, Images.BONFIRE, Images.TREELOG,
-            Images.TUNA, Images.WATER
+            Images.TUNA, Images.WATER, Images.SPLASH
+    };
+
+    public static final String[] _Parallax1 = {
+            Images.PARALLAX_1, Images.PARALLAX_2,
+            Images.PARALLAX_3, Images.PARALLAX_4,
+            Images.PARALLAX_5, Images.PARALLAX_6
     };
 
     public static class Buttons {/*
@@ -71,10 +79,11 @@ public class Assets {
         public static final String SHIP  = "dialogues/ship.json";
         public static final String SALLY  = "dialogues/sally.json";
         public static final String EXAMPLE  = "dialogues/example.json";
+        public static final String PROLOGUE  = "dialogues/prologue.json";
     }
     private static final String[] _Dialogues = {
             Dialogues.SHIP, Dialogues.SALLY,
-            Dialogues.EXAMPLE
+            Dialogues.EXAMPLE, Dialogues.PROLOGUE
     };
 
     public static class FontSizes {
