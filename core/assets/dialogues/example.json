@@ -32,7 +32,7 @@
 	{
 		"title": "TalkTo",
 		"tags": "",
-		"body": "Im all alone\n[[Recruit him|Recruit]]\n[[Some other time|OtherTime]]",
+		"body": "Can you help me?\nMy parents died from starvation\nWill you help please?\n[[Recruit him|Recruit]]\n[[Some other time|OtherTime]]",
 		"position": {
 			"x": 592,
 			"y": 181
@@ -42,7 +42,7 @@
 	{
 		"title": "Recruit",
 		"tags": "",
-		"body": "<<recruitAction()>>\n[[OtherTime]]",
+		"body": "<<recruitAction()>>\nI will do anything i can",
 		"position": {
 			"x": 592,
 			"y": 181
@@ -52,7 +52,7 @@
 	{
 		"title": "OtherTime",
 		"tags": "",
-		"body": "Bye",
+		"body": "Then, you doom me for an eternal of hard days, hunger, wounds\nand possibly, death.\nI thank you for your 'warm' hospitality\nif I could, I would serve poison to you.",
 		"position": {
 			"x": 592,
 			"y": 181

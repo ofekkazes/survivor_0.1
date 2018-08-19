@@ -97,4 +97,8 @@ public class ImageEx extends Image {
         return tmp;
     }
 
+    public Vector2 getOrigin() {
+        return new Vector2(getX() + getWidth() / 2, getY() + getHeight() / 2);
+    }
+
 }

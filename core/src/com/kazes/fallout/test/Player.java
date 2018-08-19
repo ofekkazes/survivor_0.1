@@ -14,22 +14,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import org.omg.CORBA.ValueBaseHolder;
 
-enum Weapons {
-    NULL(1),
-    Knife(2),
-    Sword(3),
-    Pistol(4),
-    SMG(5);
 
-    private final int value;
-    private Weapons(int value) {
-        this.value = value;
-    }
-
-    public int getValue() {
-        return value;
-    }
-}
 
 class Bag extends Window {
     int x;
@@ -84,7 +69,7 @@ class Bag extends Window {
         description.clearChildren();
         if(item != null) {
             if (item instanceof Medicine) {
-                Medicine clone = new Medicine(((Medicine) item).texture, item.getX(), item.getY());
+                Medicine clone = new Medicine(item.getX(), item.getY());
                 clone.setName(item.getName());
                 description.add(clone).grow().fillY().pad(Value.percentHeight(1f, item)).row();
                 description.add(new Label(clone.getName(), Assets.getAsset(Assets.UI_SKIN, Skin.class))).row();
@@ -119,6 +104,15 @@ class Bag extends Window {
                 description.add(useButton);
 
             }
+            if (item instanceof BearTrap) {
+                BearTrap clone = new BearTrap(item.getX(), item.getY());
+                clone.setName(item.getName());
+                description.add(clone).grow().fillY().pad(Value.percentHeight(1f, item)).row();
+                description.add(new Label(clone.getName(), Assets.getAsset(Assets.UI_SKIN, Skin.class))).row();
+                description.add(new Label(clone.getDescription(), Assets.getAsset(Assets.UI_SKIN, Skin.class))).row();
+                description.add(useButton);
+
+            }
         }
 
     }
@@ -136,8 +130,8 @@ class Bag extends Window {
 
 public class Player extends AnimationActor {
 
-    int weapon;
-    Array<ImageEx> bullets;
+    Weapons weapon;
+    int cooldown;
     private float health;
     Bag bag;
     private float hunger;
@@ -147,13 +141,15 @@ public class Player extends AnimationActor {
     public Player(ObjectMap<String, Animation<TextureRegion>> t, Vector2 position) {
         super(t, "Player", position.x, position.y);
         this.setPosition(position.x, position.y);
-        weapon = Weapons.NULL.getValue();
-        bullets = new Array<ImageEx>();
+        weapon = Weapons.Pistol;
         bag = new Bag("Bag", Assets.getAsset(Assets.UI_SKIN, Skin.class));
         bag.setVisible(false);
-        this.health = 100;
+        this.health = 10000;
         this.hunger = 100;
+        this.thirst = 100;
         this.time = 0;
+        this.setOrigin(this.getWidth() / 2, this.getHeight() / 2);
+        this.cooldown = 0;
     }
 
     @Override
@@ -162,18 +158,31 @@ public class Player extends AnimationActor {
         if(Gdx.input.isKeyJustPressed(Input.Keys.I)) {
             bag.setVisible(!bag.isVisible());
         }
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            if(weapon == Weapons.Pistol)
+                weapon = Weapons.SMG;
+            else if(weapon == Weapons.SMG)
+                weapon = Weapons.Pistol;
+            Gdx.app.log("Weapon", "changed to " + weapon);
+        }
+
         time += delta;
 
         if(time % 1 > 0.9f)
             time += 1-(time % 1);
+
         if((time % 60) == 0) {
             hunger--;
             Gdx.app.log("Hunger", hunger + "");
         }
-        if((time % 120) == 0) {
+        if((time % 30) == 0) {
             thirst--;
             Gdx.app.log("Thirst", thirst + "");
         }
+        if(cooldown <= 20)
+            cooldown++;
+
+
     }
 
     public void addHealth(float amount) {
@@ -191,11 +200,11 @@ public class Player extends AnimationActor {
         return super.texture;
     }
 
-    public int getWeapon() {
+    public Weapons getWeapon() {
         return weapon;
     }
 
-    public void setWeapon(int weapon) {
+    public void setWeapon(Weapons weapon) {
         this.weapon = weapon;
     }
 
@@ -206,4 +215,6 @@ public class Player extends AnimationActor {
     public void drink(float amount) {
         thirst += amount;
     }
+
+
 }

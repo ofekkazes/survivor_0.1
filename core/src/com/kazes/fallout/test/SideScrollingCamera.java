@@ -1,37 +1,43 @@
 package com.kazes.fallout.test;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 public class SideScrollingCamera extends OrthographicCamera {
 
-    float camSpeedX;
-    float camSpeedY;
+    float updateX;
+    float updateY;
 
     boolean updateCamera;
 
     public SideScrollingCamera() {
         super();
 
-        camSpeedX = 50;
-        camSpeedY = 50;
+        updateX = 50;
+        updateY = 50;
     }
 
-    public void followPos(Rectangle playerPos) {
+    public void followPos(Vector2 playerPos) {
         updateCamera = false;
 
-        if (playerPos.x - position.x > camSpeedX) {
-            position.x = playerPos.x - camSpeedX;
+        if (playerPos.x - position.x > updateX) {
+            position.x = playerPos.x - updateX;
             updateCamera = true;
-        } else if (playerPos.x - position.x < -camSpeedX) {
-            position.x = playerPos.x + camSpeedX;
+        } else if (playerPos.x - position.x < -updateX) {
+            position.x = playerPos.x + updateX;
             updateCamera = true;
         }
 
+        /*Vector3 target = new Vector3(playerPos.x, Gdx.graphics.getHeight() / 2, 0);
+        position.scl(0.9f);
+        target.scl(0.1f);
+        position.add(target);*/
+
         if (position.x < -0 + viewportWidth / 2) {
-            position.x = -0 + (int)(viewportWidth / 2);
+            position.x = (int)(viewportWidth / 2);
             updateCamera = false;
         }
 
@@ -42,11 +48,11 @@ public class SideScrollingCamera extends OrthographicCamera {
 
         if(updateCamera) update();
 
-        /*if (playerPos.y - position.y > camSpeedY) {
-            position.y = playerPos.y - camSpeedY;
+        /*if (playerPos.y - position.y > updateY) {
+            position.y = playerPos.y - updateY;
             update();
-        } else if (playerPos.y - position.y < -camSpeedY) {
-            position.y = playerPos.y + camSpeedY;
+        } else if (playerPos.y - position.y < -updateY) {
+            position.y = playerPos.y + updateY;
             update();
         }*/
     }

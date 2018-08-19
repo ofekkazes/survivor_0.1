@@ -2,6 +2,7 @@ package com.kazes.fallout.test;
 
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Array;
 
 public class Water extends ImageEx implements Carryable {
     private String desc;
@@ -16,8 +17,8 @@ public class Water extends ImageEx implements Carryable {
     }
 
     @Override
-    public boolean useItem(Player usedOn) {
-        usedOn.thirst += 10;
+    public <T> boolean useItem(T usedOn, Array<Float> objects) {
+        ((Player)usedOn).thirst += 10;
         return true;
     }
 }

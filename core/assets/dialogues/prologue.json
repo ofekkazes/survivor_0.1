@@ -1,0 +1,23 @@
+[
+	{
+		"title": "Start",
+		"tags": "",
+		"body": "B: Here they come!\nA: Shit!\nA: There are too many\nB: Why won't you focus more on killing then on yelling\nA: I'll do both\nA: Where did they come from?\nB: They followed us from the forest, I think\nA: At least we got some food to the tribe\nB: It won't be of use if we will die here\nA: Don't worry about that\nA: I got them\nB: I think you need to be faster\nB: My ammo is about to end\nA:What?!\nB: ..\n[[Prologue]]",
+		"position": {
+			"x": 592,
+			"y": 181
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Prologue",
+		"tags": "",
+		"body": "It starts with alarms\nPeople running and screaming\nSome, confused, trying to follow\nThen, a blast\nAnd another\nEverything turns to ash\nEverything burns\nNot everyone could get into shelter in time\nAll payed the price.",
+		"position": {
+			"x": 387,
+			"y": 487
+		},
+		"colorID": 0
+	},
+	
+]

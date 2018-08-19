@@ -1,13 +1,13 @@
 package com.kazes.fallout.test;
 
 import com.badlogic.gdx.*;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.*;
@@ -17,8 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.StringBuilder;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.kyper.yarn.Dialogue;
 import com.kyper.yarn.Library;
 import com.kyper.yarn.UserData;
@@ -32,31 +30,30 @@ public class SideScroll extends GameScreen {
     private ParallaxBackground parallaxBackground;
     public static Texture texture; //temp pikachu texture for testing
     private Player player; //player actor
-    private Array<Zombie> enemies; //enemy actors
-    private Array<NPC> npcs; //Friendly foes
-    private Skin skin; //default game skin
-    private Array<Carryable> items; //Scattered supplies
+    private Group bullets;
+    private Group enemies; //enemy actors
+    private Group npcs; //Friendly foes
+    private Group items; //Scattered supplies
+    private Group traps;
+    private Group followers;
+    private Group bonfires;
     private Window dialogWindow;
     private String line;
-    Group followers;
-    NPC talkingTo;
-
+    private NPC talkingTo;
 
     ///////////////////////////////
     //Dialogue vars
-    int[] OP_KEYS = { Input.Keys.NUM_1, Input.Keys.NUM_2, Input.Keys.NUM_3, Input.Keys.NUM_4, Input.Keys.NUM_5 };
-    String ship_file = "dialogues/ship.json";
-    String sally_file = "dialogues/sally.json";
-    Dialogue test_dialogue;
-    Dialogue.LineResult current_line = null;
-    Dialogue.OptionResult current_options = null;
-    Dialogue.CommandResult current_command = null;
-    Dialogue.NodeCompleteResult node_complete = null;
-    StringBuilder option_string;
-    boolean complete = true;
+    private int[] OP_KEYS = { Input.Keys.NUM_1, Input.Keys.NUM_2, Input.Keys.NUM_3, Input.Keys.NUM_4, Input.Keys.NUM_5 };
+    private Dialogue test_dialogue;
+    private Dialogue.LineResult current_line = null;
+    private Dialogue.OptionResult current_options = null;
+    private Dialogue.CommandResult current_command = null;
+    private Dialogue.NodeCompleteResult node_complete = null;
+    private StringBuilder option_string;
+    private boolean complete = true;
 
 
-    public SideScroll(Survivor game) {
+    SideScroll(Survivor game) {
         super(game, "Prologue");
         create(game);
     }
@@ -73,35 +70,44 @@ public class SideScroll extends GameScreen {
     public void hide() {}
 
     //Load the content
-    public void create (Survivor game) {
+    private void create (final Survivor game) {
         //SuperObject.init();
+        //gameStage.setDebugAll(true);
 
-        skin = game.assetManager.get(Assets.UI_SKIN, Skin.class);
+        gameStage.getBatch().setShader(new ShaderProgram(Gdx.files.internal("shaders/basicVertex120.vs").readString(), Gdx.files.internal("shaders/basicFragment120.fs").readString()));
+
 
         SideScrollingCamera camera = new SideScrollingCamera();
         camera.setToOrtho (false,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-        FitViewport viewp = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
+        //FitViewport viewp = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
 
 
-        Array<Texture> textures = new Array<Texture>();
-        textures.add(game.assetManager.get(Assets.Images.PARALLAX_1, Texture.class));
-        textures.add(game.assetManager.get(Assets.Images.PARALLAX_2, Texture.class));
-        textures.add(game.assetManager.get(Assets.Images.PARALLAX_3, Texture.class));
-        textures.add(game.assetManager.get(Assets.Images.PARALLAX_4, Texture.class));
-        textures.add(game.assetManager.get(Assets.Images.PARALLAX_5, Texture.class));
-        textures.add(game.assetManager.get(Assets.Images.PARALLAX_6, Texture.class));
-
-        for(int i = 1; i <=6;i++){
-
-            textures.get(textures.size-1).setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat);
+        Array<Texture> parallaxTextures = new Array<Texture>();
+        for(int i = 0; i < 6;i++){
+            parallaxTextures.add(Assets.getAsset(Assets._Parallax1[i], Texture.class));
+            parallaxTextures.get(i).setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat);
         }
-        parallaxBackground = new ParallaxBackground(textures);
+        parallaxBackground = new ParallaxBackground(parallaxTextures);
         parallaxBackground.setSize(Gdx.graphics.getWidth() / 2,Gdx.graphics.getHeight() / 2);
         gameStage.addActor(parallaxBackground);
 
         gameStage.addActor(new ImageEx(game.assetManager.get(Assets.Images.MAP, Texture.class)));
 
+        enemies = new Group();
+        npcs = new Group();
+        traps = new Group();
+        followers = new Group();
+        bonfires = new Group();
+        bullets = new Group();
+        items = new Group();
 
+        gameStage.addActor(enemies);
+        gameStage.addActor(npcs);
+        gameStage.addActor(traps);
+        gameStage.addActor(followers);
+        gameStage.addActor(bonfires);
+        gameStage.addActor(bullets);
+        gameStage.addActor(items);
 
         ObjectMap<String, Animation<TextureRegion>> temp = new ObjectMap<String, Animation<TextureRegion>>();
         for(int i = 0; i < Assets.animationList.size; i++) {
@@ -114,64 +120,40 @@ public class SideScroll extends GameScreen {
         player.setZIndex(10000);
         gameStage.addActor(player);
 
-
         texture = game.assetManager.get(Assets.Images.PIKACHU, Texture.class);
-        enemies = new Array<Zombie>();
-        for(int i = 0; i < 25; i++)
-            enemies.add(new Zombie(texture, MathUtils.random(1000, 4000), MathUtils.random(500), true));
-
-        for (int i = 0; i < enemies.size; i++) {
-            enemies.get(i).setName("Zombie " + i);
-            //enemies.get(i).addAction(forever(moveBy(MathUtils.random(-150, 150), MathUtils.random(-50, 50), 3f)));
-            gameStage.addActor(enemies.get(i));//Make movement random
+        for(int i = 0; i < 15; i++) {
+            enemies.addActor(new Zombie(texture, MathUtils.random(1000, 4000), MathUtils.random(500), true));
+            enemies.getChildren().items[i].setName("Zombie " + i);
         }
-        npcs = new Array<NPC>();
-        npcs.add(new NPC(game.assetManager.get(Assets.Images.NPC_TEMP_2, Texture.class), "Harambe", 50, 50, false));
-        npcs.add(new NPC(game.assetManager.get(Assets.Images.NPC_TEMP_1, Texture.class), "Yilfa", 450, 50, true));
-        for (int i = 0; i < npcs.size; i++) {
-            npcs.get(i).setSize(100, 150);
-            gameStage.addActor(npcs.get(i));
 
+        npcs.addActor(new NPC(game.assetManager.get(Assets.Images.NPC_TEMP_2, Texture.class), "Harambe", 50, 50, false, Weapons.Pistol));
+        npcs.addActor(new NPC(game.assetManager.get(Assets.Images.NPC_TEMP_1, Texture.class), "Yilfa", 450, 50, true, Weapons.SMG));
+        for (int i = 0; i < npcs.getChildren().size; i++) {
+            npcs.getChildren().items[i].setSize(100, 150);
         }
-        followers = new Group();
-
-
-
-        //Level start sequence
-        Action action = sequence(
-                moveBy(50f, 0, 1f),
-                delay(1f),
-                moveBy(-50f, 0, 1f),
-                delay(1f),
-                moveBy(50f, 0, 1f),
-                delay(1f),
-                moveBy(-50f, 0, 1f),
-                delay(.5f),
-                moveTo(150f, player.getY(), 2f)
-                );
-        //player.addAction(action);
 
         screenStage.addActor(player.bag);
 
-        items = new Array<Carryable>();
         for(int i = 0; i < 7; i++) {
-            items.add(new Medicine(texture, MathUtils.random(0, 4000), MathUtils.random(0, 280)));
-            ((Medicine)(items.get(i))).setName("Medicine number "+i);
+            items.addActor(new Medicine(MathUtils.random(0, 4000), MathUtils.random(0, 280)));
+            items.getChildren().get(items.getChildren().size - 1).setName("Medicine number "+i);
         }
-        for(int i = 0; i < 7; i++) {
-            items.add(new Wood(Assets.getAsset(Assets.Images.TREELOG, Texture.class), MathUtils.random(0, 4000), MathUtils.random(0, 280)));
-            ((Wood)(items.peek())).setName("Wood number "+i);
+        for(int i = 0; i < 9; i++) {
+            items.addActor(new Wood(Assets.getAsset(Assets.Images.TREELOG, Texture.class), MathUtils.random(0, 4000), MathUtils.random(0, 280)));
+            items.getChildren().get(items.getChildren().size - 1).setName("Wood number "+i);
         }
         for(int i = 0; i < 3; i++) {
-            items.add(new Tuna(MathUtils.random(0, 4000), MathUtils.random(0, 280)));
-            ((Tuna)(items.peek())).setName("Tuna number "+i);
+            items.addActor(new Tuna(MathUtils.random(0, 4000), MathUtils.random(0, 280)));
+            items.getChildren().get(items.getChildren().size - 1).setName("Tuna number "+i);
         }
         for(int i = 0; i < 3; i++) {
-            items.add(new Water(MathUtils.random(0, 4000), MathUtils.random(0, 280)));
-            ((Water)(items.peek())).setName("Water number "+i);
+            items.addActor(new Water(MathUtils.random(0, 4000), MathUtils.random(0, 280)));
+            items.getChildren().get(items.getChildren().size - 1).setName("Water number "+i);
         }
-        for(int i = 0; i < items.size; i++)
-            gameStage.addActor((ImageEx)items.get(i));
+        for(int i = 0; i < 5; i++) {
+            items.addActor(new BearTrap(MathUtils.random(0, 4000), MathUtils.random(0, 280)));
+            items.getChildren().get(items.getChildren().size - 1).setName("Bear Trap number "+i);
+        }
 
 
         player.bag.items.addListener(new ClickListener() {
@@ -219,7 +201,18 @@ public class SideScroll extends GameScreen {
                                 bagItem = player.bag.items.getCells().get(i).getActor();
                                 if(bagItem != null) {
                                     if (bagItem.getName().compareTo(descItem.getName()) == 0) {
-                                        if (((Carryable) descItem).useItem(player)) {
+                                        if(descItem instanceof Trap) {
+                                            Array<Float> array = new Array<Float>();
+                                            array.add(player.getX());
+                                            array.add(player.getY());
+                                            if (((Carryable) descItem).useItem(traps, array)) {
+                                                player.bag.items.removeActor(player.bag.items.getCells().get(i).getActor());
+                                                Gdx.app.log("Bag", descItem.getName() + " removed from bag");
+                                                player.bag.changeDescription(null);
+                                                return;
+                                            }
+                                        }
+                                        else if (((Carryable) descItem).useItem(player, new Array<Float>())) {
                                             player.bag.items.removeActor(player.bag.items.getCells().get(i).getActor());
                                             Gdx.app.log("Bag", descItem.getName() + " removed from bag");
                                             player.bag.changeDescription(null);
@@ -256,17 +249,7 @@ public class SideScroll extends GameScreen {
         this.fireGun();
         this.playerZombieInteraction();
         this.pickItem();
-
-        for(int i = 0; i < npcs.size; i++) {
-            if (player.getRectangle().overlaps(npcs.get(i).getRectangle()) && Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT)) {
-                Gdx.app.log("Interaction occurred", "Player interacted with " + npcs.get(i).getName());
-                return;
-            }
-        }
-        for(Zombie zombie : enemies) {
-            zombie.setX(MathUtils.clamp(zombie.getX(), 0, game.assetManager.get(Assets.Images.MAP, Texture.class).getWidth()));
-            zombie.setY(MathUtils.clamp(zombie.getY(), 0, game.assetManager.get(Assets.Images.MAP, Texture.class).getHeight() - 200));
-        }
+        this.followPlayer();
 
         if(player.getY() > 280)
             player.setY(280);
@@ -286,12 +269,9 @@ public class SideScroll extends GameScreen {
     @Override
     public void render (float delta) {
         super.render(delta);
-        ((SideScrollingCamera)gameStage.getCamera()).followPos(player.getRectangle());
+        ((SideScrollingCamera)gameStage.getCamera()).followPos(player.getOrigin());
         parallaxBackground.setXPos(gameStage.getCamera().position.x - gameStage.getCamera().viewportWidth / 2);
-
-
         renderDialogue();
-
     }
 
     //Every input given from the player is processed here
@@ -299,7 +279,7 @@ public class SideScroll extends GameScreen {
         parallaxBackground.setSpeed(0);
         player.changeAnimation(Assets.Animations.HERO + "_idle");
 
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+        if(Gdx.input.isKeyPressed(Input.Keys.A)) {
             player.translateX(-3);
             if(((SideScrollingCamera)gameStage.getCamera()).getUpdateCamera())
                 parallaxBackground.setSpeed(-0.2f);
@@ -307,7 +287,7 @@ public class SideScroll extends GameScreen {
                 player.flip(true, false);
             player.changeAnimation(Assets.Animations.HERO + "_walking");
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        if(Gdx.input.isKeyPressed(Input.Keys.D)) {
             player.translateX(3);
             if(((SideScrollingCamera)gameStage.getCamera()).getUpdateCamera())
                 parallaxBackground.setSpeed(0.2f);
@@ -315,15 +295,15 @@ public class SideScroll extends GameScreen {
                 player.flip(true, false);
             player.changeAnimation(Assets.Animations.HERO + "_walking");
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.UP))
+        if(Gdx.input.isKeyPressed(Input.Keys.W))
             player.translateY(3);
-        if(Gdx.input.isKeyPressed(Input.Keys.DOWN))
+        if(Gdx.input.isKeyPressed(Input.Keys.S))
             player.translateY(-3);
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.ALT_LEFT)) {
-            for(int i = 0; i < npcs.size; i++) {
-                if(player.getRectangle().overlaps(npcs.get(i).getRectangle())) {
-                    talkingTo = npcs.get(i);
+            for(int i = 0; i < npcs.getChildren().size; i++) {
+                if(player.getRectangle().overlaps(((NPC)npcs.getChildren().items[i]).getRectangle())) {
+                    talkingTo = (NPC)npcs.getChildren().items[i];
                     test_dialogue.start("TalkTo");
                     complete = false;
                     resetAllResults();
@@ -333,6 +313,27 @@ public class SideScroll extends GameScreen {
             }
         }
 
+        if(player.getWeapon() == Weapons.Pistol) {
+            if (Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT)) {
+                Vector2 mousePos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
+                mousePos = gameStage.screenToStageCoordinates(mousePos);
+                this.bullets.addActor(new Bullet(player.getX(), player.getY(), mousePos.cpy().sub(player.getOrigin()).nor()));
+                //gameStage.addActor(this.bullets.get(this.bullets.size - 1));
+            }
+        }
+        if(player.getWeapon() == Weapons.SMG) {
+            if (Gdx.input.isTouched() || Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
+                if(player.cooldown > 17) {
+                    Vector2 mousePos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
+                    mousePos = gameStage.screenToStageCoordinates(mousePos);
+                    this.bullets.addActor(new Bullet(player.getX(), player.getY(), mousePos.cpy().sub(player.getOrigin()).nor()));
+                    //gameStage.addActor(this.bullets.get(this.bullets.size - 1));
+                    player.cooldown = 0;
+                }
+            }
+        }
+
+
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.K)) {
             Actor bagItem;
@@ -341,7 +342,9 @@ public class SideScroll extends GameScreen {
                 if(bagItem != null) {
                     if (bagItem instanceof Wood) {
                         player.bag.items.removeActor(player.bag.items.getCells().get(i).getActor());
-                        gameStage.addActor(new Bonfire(player.getX(), player.getY()));
+                        ImageEx bonfire = new Bonfire(player.getOrigin().x, player.getOrigin().y);
+                        bonfire.setBounds(player.getX(), player.getY(), 200, 300);
+                        bonfires.addActor(bonfire);
                         Gdx.app.log("Survivor", "Bonfire set");
                         break;
                     }
@@ -353,61 +356,110 @@ public class SideScroll extends GameScreen {
 
     //Checks if the player fired the gun, and checks for the boundries of the bullets
     private void fireGun() {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT)) {
-            this.player.bullets.add(new ImageEx(texture));
-            this.player.bullets.get(player.bullets.size - 1).setPosition(this.player.getX(), this.player.getY());
-            this.player.bullets.get(player.bullets.size - 1).addAction(forever(moveBy((player.xFlipped) ? -60f : 60f, 0)));
-            gameStage.addActor(this.player.bullets.get(player.bullets.size - 1));
+        if(this.bullets.getChildren().size > 0) {
+            if (((Bullet)this.bullets.getChildren().items[this.bullets.getChildren().size - 1]).getTimeToLive() < 0) {
+                this.bullets.removeActor(this.bullets.getChildren().items[this.bullets.getChildren().size - 1]);
+            }
         }
-        if(this.player.bullets.size > 0) {
-            if (this.player.getX() + 650 < this.player.bullets.get(this.player.bullets.size - 1).getX() ||
-                    this.player.getX() - 650 > this.player.bullets.get(this.player.bullets.size - 1).getX()) {
-                gameStage.getActors().removeValue(this.player.bullets.removeIndex(this.player.bullets.size - 1), true);
+        for(NPC follower : (NPC[])followers.getChildren().toArray(NPC.class)) {
+            switch (follower.getWeapon()) {
+                case Pistol: if(follower.getCooldown() % 50 == 0) {
+                    ImageEx[] array = enemies.getChildren().toArray(ImageEx.class);
+                    this.bullets.addActor(new Bullet(follower.getX(), follower.getY(), SideScroll.closestTo(array, follower).getOrigin().cpy().sub(follower.getOrigin()).nor()));
+                    follower.resetCooldown();
+                }
+                break;
+                case SMG: if(follower.getCooldown() % 30 == 0) {
+                    ImageEx[] array = enemies.getChildren().toArray(ImageEx.class);
+                    this.bullets.addActor(new Bullet(follower.getX(), follower.getY(), SideScroll.closestTo(array, follower).getOrigin().cpy().sub(follower.getOrigin()).nor()));
+                    follower.resetCooldown();
+                }
+                break;
             }
         }
     }
 
     //Player, Enemy and Bullets collision check, plus the most sophisticated AI the world has ever seen for a zombie
     private void playerZombieInteraction() {
-        for (int j = 0; j < enemies.size; j++) {
-            if(!enemies.get(j).hasActions())
-                enemies.get(j).addAction(moveTo(player.getX(), player.getY(), (forcePositive(enemies.get(j).getX() - player.getX())) / 50, Interpolation.pow2In)); //add y to time calculation
+        for (int j = 0; j < enemies.getChildren().size; j++) {
+            Zombie currentEnemy = (Zombie)enemies.getChildren().items[j];
+            if(!currentEnemy.hasActions()) {
+                if(currentEnemy.wander && currentEnemy.getHealth() == 100)// OR there is not clean line of sight (obstacles/hiding spots)
+                    currentEnemy.addAction(sequence(delay(1.5f), moveBy(MathUtils.random(-30, 30), MathUtils.random(-15, 15f), MathUtils.random(1.5f, 3.0f)), new WanderAction()));
+                else {
+                    float yTranslate = player.getY() - currentEnemy.getY();
+                    float xTranslate = currentEnemy.getX() - player.getX();
+                    if((xTranslate > -400 && xTranslate < 400) || currentEnemy.getHealth() != 100) { //OR THERE IS A CLEAN LINE OF SIGHT
+                        if((xTranslate > -150 && xTranslate < 150))
+                            yTranslate = (yTranslate > 0 ) ? .4f : -.4f;
+                        else yTranslate = 0;
+                        xTranslate = (xTranslate > 0) ? -.5f : .5f;
+                        currentEnemy.clearActions();
+                        currentEnemy.translate(xTranslate, yTranslate);
+                        currentEnemy.wander = false;
+                    }
+                    else currentEnemy.wander = true;
+                }
+            }
+                //enemies.get(j).addAction(moveTo(player.getX(), player.getY(), (forcePositive(enemies.get(j).getX() - player.getX())) / 50, Interpolation.pow2In)); //add y to time calculation
 
-            if(player.getRectangle().overlaps(enemies.get(j).getRectangle())) {
-                player.addAction(getHitAction(enemies.get(j).getX(), enemies.get(j).getY(), player.getX(), player.getY()));
+            if(player.getRectangle().overlaps(currentEnemy.getRectangle())) {
+                player.addAction(getHitAction(currentEnemy.getX(), currentEnemy.getY(), player.getX(), player.getY()));
                 player.subHealth(30);
             }
-            for (int i = 0; i < this.player.bullets.size; i++) {
-                if (this.player.bullets.get(i).getRectangle().overlaps(enemies.get(j).getRectangle())) {
+            for (int i = 0; i < this.bullets.getChildren().size; i++) {
+                if (((Bullet)this.bullets.getChildren().items[i]).getRectangle().overlaps(currentEnemy.getRectangle())) {
 
-                    enemies.get(j).subHealth(20);
-                    enemies.get(j).clearActions();
-                    enemies.get(j).addAction(getHitAction(player.getX(), player.getY(), enemies.get(j).getX(), enemies.get(j).getY()));
-                    gameStage.getActors().removeValue(this.player.bullets.removeIndex(i), true);
-                    if (enemies.get(j).getHealth() == 0) {
-                        gameStage.getActors().removeValue(this.enemies.removeIndex(j), true);
+                    currentEnemy.subHealth(20);
+                    currentEnemy.clearActions();
+                    currentEnemy.addAction(getHitAction(player.getX(), player.getY(), currentEnemy.getX(), currentEnemy.getY()));
+                    this.bullets.removeActor(this.bullets.getChildren().items[i]);
+                    if (currentEnemy.getHealth() == 0) {
+                        this.enemies.removeActor(currentEnemy);
                     }
                     break;
                 }
             }
+
+            for(int i = 0; i < traps.getChildren().size; i++) {
+                if(((ImageEx)traps.getChildren().items[i]).getRectangle().overlaps(currentEnemy.getRectangle())) {
+                    currentEnemy.subHealth(90);
+                    currentEnemy.clearActions();
+                    currentEnemy.addAction(getHitAction(traps.getChildren().items[i].getX(), traps.getChildren().items[i].getY(), currentEnemy.getX(), currentEnemy.getY()));
+                    traps.removeActor(traps.getChildren().items[i]);
+                }
+            }
+
+            for(ImageEx bonfire : (ImageEx[])bonfires.getChildren().toArray(ImageEx.class)) {
+                Vector2 range = SideScroll.getRange(bonfire.getX(), bonfire.getY(), currentEnemy.getX(), currentEnemy.getY());
+                if((range.x < 200 && range.x > -200) && (range.y < 100 && range.y > -100))
+                    currentEnemy.addAction(getHitAction(bonfire.getX(), bonfire.getY(), currentEnemy.getX(), currentEnemy.getY()));
+            }
+
+            currentEnemy.setX(MathUtils.clamp(currentEnemy.getX(), 0, game.assetManager.get(Assets.Images.MAP, Texture.class).getWidth()));
+            currentEnemy.setY(MathUtils.clamp(currentEnemy.getY(), 0, game.assetManager.get(Assets.Images.MAP, Texture.class).getHeight() - 200));
+
         }
     }
 
     //Checks if the player picked up an item
     private void pickItem() {
         if(Gdx.input.isKeyJustPressed(Input.Keys.F)) {
-            for (int i = 0; i < items.size; i++) {
-                if (((ImageEx) items.get(i)).getRectangle().overlaps(player.getRectangle())) {
-                    if(items.get(i) instanceof Medicine)
-                        this.player.bag.addItem(((Medicine) this.items.removeIndex(i)));
-                    else if(items.get(i) instanceof Wood)
-                        this.player.bag.addItem(((Wood) this.items.removeIndex(i)));
-                    else if(items.get(i) instanceof Tuna)
-                        this.player.bag.addItem(((Tuna) this.items.removeIndex(i)));
-                    else if(items.get(i) instanceof Water)
-                        this.player.bag.addItem(((Water) this.items.removeIndex(i)));
+            for (int i = 0; i < items.getChildren().size; i++) {
+                ImageEx item = (ImageEx)items.getChildren().get(i);
+                if (item.getRectangle().overlaps(player.getRectangle())) {
+                    items.removeActor(item);
+                    this.player.bag.addItem(item);
                 }
             }
+        }
+    }
+
+    private void followPlayer() {
+
+        for(Actor follower : followers.getChildren()) {
+            if(!follower.hasActions())
+                follower.addAction(moveTo(player.getX() + ((player.xFlipped) ? 50 + ( 50 * followers.getChildren().indexOf(follower, false)) : -50 - ( 70 * followers.getChildren().indexOf(follower, false))), player.getY(), 1f));
         }
     }
 
@@ -424,7 +476,7 @@ public class SideScroll extends GameScreen {
             @Override
             public void invoke(com.kyper.yarn.Value... params) {
                 // this function only has one parameter so check like so
-                Value action = params[0];// this parameter will be the name of the action sprite to set sally to
+                //Value action = params[0];// this parameter will be the name of the action sprite to set sally to
 
 
             }
@@ -433,14 +485,15 @@ public class SideScroll extends GameScreen {
             @Override
             public void invoke(Value... params) {
                 if(talkingTo != null) {
-                    followers.addActor(talkingTo);
-                    npcs.removeValue(talkingTo, false);
-                    gameStage.getActors().removeValue(talkingTo, false);
+                    npcs.removeActor(talkingTo);
+                    //gameStage.getActors().removeValue(talkingTo, false);
                     Gdx.app.log("Followers", talkingTo.getName() + " was added");
-                    return;
+                    followers.addActor(talkingTo);
                 }
             }
         });
+        String ship_file = "dialogues/ship.json";
+        String sally_file = "dialogues/sally.json";
         test_dialogue.loadFile(ship_file, false, false, null);
         test_dialogue.loadFile(sally_file, false, false, null);
         test_dialogue.loadFile("dialogues/example.json", false, false, null);
@@ -504,7 +557,7 @@ public class SideScroll extends GameScreen {
         }
     }
 
-    public void inputDialogue() {
+    private void inputDialogue() {
         if (complete) {
 
             if (Gdx.input.isKeyJustPressed(OP_KEYS[0])) {
@@ -581,8 +634,6 @@ public class SideScroll extends GameScreen {
             }
             ((Label)dialogWindow.getCells().get(0).getActor()).setText(line);
         }
-
-
     }
 
     private void resetAllResults() {
@@ -599,8 +650,33 @@ public class SideScroll extends GameScreen {
         screenStage.dispose();
     }
 
-    public float forcePositive(float number) {
+    public static float forcePositive(float number) {
         return (number < 0) ? number * -1 : number;
+    }
+
+    static ImageEx closestTo(ImageEx[] vectorsArray, ImageEx checkVector) {
+        float shortestDist = 0;
+        ImageEx closestVector = null;
+        for(ImageEx point : vectorsArray){
+            float dst2 = checkVector.getOrigin().dst2(point.getOrigin());
+            if(closestVector == null || dst2 < shortestDist){
+                shortestDist = dst2;
+                closestVector = point;
+            }
+        }
+        return closestVector;
+    }
+
+    private static Vector2 getRange(float xOrigin, float yOrigin, float xTarget, float yTarget) {
+        return new Vector2(xOrigin - xTarget, yOrigin - yTarget);
     }
 }
 
+/*Ideas:
+1. if you eat too much your speed will decrease
+2. if you drink too much will speed will increase drastically (you need to piss)
+3. if you use too much medkits you will get sick (but with full health)
+4. getting sick causes loss of focus (shooting will get hard, and the screen will get bobbly)
+
+
+ */

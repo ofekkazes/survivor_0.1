@@ -1,6 +1,7 @@
 package com.kazes.fallout.test;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.utils.Array;
 
 public class Tuna extends ImageEx implements Carryable {
     private String desc;
@@ -16,8 +17,8 @@ public class Tuna extends ImageEx implements Carryable {
     }
 
     @Override
-    public boolean useItem(Player usedOn) {
-        usedOn.eat(10);
+    public <T> boolean useItem(T usedOn, Array<Float> objects) {
+        ((Player)usedOn).eat(10);
         return true;
     }
 }

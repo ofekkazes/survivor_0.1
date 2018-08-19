@@ -35,7 +35,7 @@ public class ColonyScene extends Game implements ApplicationListener {
     @Override
     public void create() {
         SuperObject.init();
-        skin = new Skin(Gdx.files.internal("clean-crispy-ui.json"));
+        skin = new Skin(Gdx.files.internal("skins/clean-crispy-ui.json"));
         stage = new Stage();
 
         Gdx.input.setInputProcessor(stage);
@@ -54,7 +54,7 @@ public class ColonyScene extends Game implements ApplicationListener {
         this.notifications.add("You start with 15 medications");
         this.notifications.add("You start with 10500 Shmeckels");
 
-        gameScreen.addActor(new Land("sc_map.png"));
+        gameScreen.addActor(new Land("images/maps/sc_map.png"));
 
 
         this.buildings = new Group();

@@ -2,11 +2,12 @@ package com.kazes.fallout.test;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.Array;
 
 public class Medicine extends ImageEx implements Carryable {
     private String desc;
-    public Medicine(Texture texture, float x, float y) {
-        super(texture);
+    public Medicine(float x, float y) {
+        super(Assets.getAsset(Assets.Images.MEDKIT, Texture.class));
         this.setPosition(x, y);
         this.desc = "Used to heal 30 points";
     }
@@ -17,10 +18,10 @@ public class Medicine extends ImageEx implements Carryable {
     }
 
     @Override
-    public boolean useItem(Player usedOn) {
-        if(usedOn.getHealth() == 100)
+    public <T> boolean useItem(T usedOn, Array<Float> objects) {
+        if(((Player)usedOn).getHealth() == 100)
             return false;
-        usedOn.addHealth(20);
+        ((Player)usedOn).addHealth(20);
         return true;
     }
 }
