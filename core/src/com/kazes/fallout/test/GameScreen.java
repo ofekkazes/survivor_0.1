@@ -14,22 +14,22 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public abstract class GameScreen extends AbstractScreen implements GameScreenInterface {
 
-    Stage gameStage; //game container
-    Stage screenStage; // screen container
-    float stateTime;
+    Stage gameStage; //Game container
+    Stage screenStage; //Screen container
+    float stateTime; //How much time passed since the screen was created
 
-    ImageEx map;
-    ParallaxBackground parallaxBackground;
-    Group decor;
+    ImageEx map; //Level map
+    ParallaxBackground parallaxBackground; //Level background
+    Group decor; //Decoration textures
 
-    Player player;
-    Group bullets;
-    Group enemies; //enemy actors
-    Group npcs; //Friendly foes
+    Player player; //Game player
+    Group bullets; //All the bullets used
+    Group enemies; //Enemy actors
+    Group npcs; //Friendly actors
     Group items; //Scattered supplies
-    Group traps;
-    Group followers;
-    Group bonfires;
+    Group traps; //Traps set by the player for the enemies
+    Group followers; //Npc's the player persuades to join him
+    Group bonfires; //Fires the player sets
 
     boolean completed;
 
@@ -37,6 +37,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         super(game);
         stateTime = 0;
 
+        //Changing the camera used by the game stage
         SideScrollingCamera camera = new SideScrollingCamera();
         camera.setToOrtho (false,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         FitViewport viewp = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
@@ -45,11 +46,13 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         gameStage.getBatch().enableBlending();
         screenStage = new Stage(new ScreenViewport());
 
+        //Limit the input implementation to the game and screen stages
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(screenStage);
         multiplexer.addProcessor(gameStage);
         Gdx.input.setInputProcessor(multiplexer);
 
+        //Objects initialization
         enemies = new Group();
         npcs = new Group();
         traps = new Group();
@@ -59,6 +62,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         items = new Group();
         decor = new Group();
 
+        //Stage object loading
         setMap();
         setDecor();
         setItems();
@@ -66,6 +70,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         setNPCS();
         setEnemies();
 
+        //adding all the objects to the main stage
         gameStage.addActor(parallaxBackground);
         gameStage.addActor(map);
         gameStage.addActor(decor);
