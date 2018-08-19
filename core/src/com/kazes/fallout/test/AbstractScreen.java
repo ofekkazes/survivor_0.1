@@ -27,7 +27,6 @@ public abstract class AbstractScreen implements Screen{
 	}
 
 	public void update(float delta) {
-
 	}
 
 	@Override

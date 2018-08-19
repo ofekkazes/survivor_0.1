@@ -26,17 +26,9 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 
 public class SideScroll extends GameScreen {
-
-    private ParallaxBackground parallaxBackground;
     public static Texture texture; //temp pikachu texture for testing
-    private Player player; //player actor
-    private Group bullets;
-    private Group enemies; //enemy actors
-    private Group npcs; //Friendly foes
-    private Group items; //Scattered supplies
-    private Group traps;
-    private Group followers;
-    private Group bonfires;
+
+
     private Window dialogWindow;
     private String line;
     private NPC talkingTo;
@@ -72,89 +64,11 @@ public class SideScroll extends GameScreen {
     //Load the content
     private void create (final Survivor game) {
         //SuperObject.init();
-        gameStage.setDebugAll(true);
+        //gameStage.setDebugAll(true);
 
-        gameStage.getBatch().setShader(new ShaderProgram(Gdx.files.internal("shaders/basicVertex120.vs").readString(), Gdx.files.internal("shaders/basicFragment120.fs").readString()));
-
-
-        SideScrollingCamera camera = new SideScrollingCamera();
-        camera.setToOrtho (false,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-        //FitViewport viewp = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
-
-
-        Array<Texture> parallaxTextures = new Array<Texture>();
-        for(int i = 0; i < 6;i++){
-            parallaxTextures.add(Assets.getAsset(Assets._Parallax1[i], Texture.class));
-            parallaxTextures.get(i).setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat);
-        }
-        parallaxBackground = new ParallaxBackground(parallaxTextures);
-        parallaxBackground.setSize(Gdx.graphics.getWidth() / 2,Gdx.graphics.getHeight() / 2);
-        gameStage.addActor(parallaxBackground);
-
-        gameStage.addActor(new ImageEx(game.assetManager.get(Assets.Images.MAP, Texture.class)));
-
-        enemies = new Group();
-        npcs = new Group();
-        traps = new Group();
-        followers = new Group();
-        bonfires = new Group();
-        bullets = new Group();
-        items = new Group();
-
-        gameStage.addActor(enemies);
-        gameStage.addActor(npcs);
-        gameStage.addActor(traps);
-        gameStage.addActor(followers);
-        gameStage.addActor(bonfires);
-        gameStage.addActor(bullets);
-        gameStage.addActor(items);
-
-        ObjectMap<String, Animation<TextureRegion>> temp = new ObjectMap<String, Animation<TextureRegion>>();
-        for(int i = 0; i < Assets.animationList.size; i++) {
-            if(Assets.animationList.getKeyAt(i).contains(Assets.Animations.HERO)) {
-                temp.put(Assets.animationList.getKeyAt(i), Assets.animationList.getValueAt(i));
-            }
-
-        }
-        player = new Player(temp, new Vector2(250, gameStage.getHeight() / 2 - 100));
-        player.setZIndex(10000);
-        gameStage.addActor(player);
-
-        texture = game.assetManager.get(Assets.Images.PIKACHU, Texture.class);
-        for(int i = 0; i < 15; i++) {
-            enemies.addActor(new Zombie(texture, MathUtils.random(1000, 4000), MathUtils.random(500), true));
-            enemies.getChildren().items[i].setName("Zombie " + i);
-        }
-
-        npcs.addActor(new NPC(game.assetManager.get(Assets.Images.NPC_TEMP_2, Texture.class), "Harambe", 50, 50, false, Weapons.Pistol));
-        npcs.addActor(new NPC(game.assetManager.get(Assets.Images.NPC_TEMP_1, Texture.class), "Yilfa", 450, 50, true, Weapons.SMG));
-        for (int i = 0; i < npcs.getChildren().size; i++) {
-            npcs.getChildren().items[i].setSize(100, 150);
-        }
+        //gameStage.getBatch().setShader(new ShaderProgram(Gdx.files.internal("shaders/basicVertex120.vs").readString(), Gdx.files.internal("shaders/basicFragment120.fs").readString()));
 
         screenStage.addActor(player.bag);
-
-        for(int i = 0; i < 7; i++) {
-            items.addActor(new Medicine(MathUtils.random(0, 4000), MathUtils.random(0, 280)));
-            items.getChildren().get(items.getChildren().size - 1).setName("Medicine number "+i);
-        }
-        for(int i = 0; i < 9; i++) {
-            items.addActor(new Wood(Assets.getAsset(Assets.Images.TREELOG, Texture.class), MathUtils.random(0, 4000), MathUtils.random(0, 280)));
-            items.getChildren().get(items.getChildren().size - 1).setName("Wood number "+i);
-        }
-        for(int i = 0; i < 3; i++) {
-            items.addActor(new Tuna(MathUtils.random(0, 4000), MathUtils.random(0, 280)));
-            items.getChildren().get(items.getChildren().size - 1).setName("Tuna number "+i);
-        }
-        for(int i = 0; i < 3; i++) {
-            items.addActor(new Water(MathUtils.random(0, 4000), MathUtils.random(0, 280)));
-            items.getChildren().get(items.getChildren().size - 1).setName("Water number "+i);
-        }
-        for(int i = 0; i < 5; i++) {
-            items.addActor(new BearTrap(MathUtils.random(0, 4000), MathUtils.random(0, 280)));
-            items.getChildren().get(items.getChildren().size - 1).setName("Bear Trap number "+i);
-        }
-
 
         player.bag.items.addListener(new ClickListener() {
 
@@ -226,6 +140,8 @@ public class SideScroll extends GameScreen {
                 }
             }
         });
+
+
         createDialogue();
         //test_dialogue.start("Start");
         complete = true;
@@ -244,7 +160,7 @@ public class SideScroll extends GameScreen {
     public void update(float delta) {
         super.update(delta);
         //SuperObject.updateBegin(gameStage.getCamera());
-        this.processInput();
+        //this.processInput();
 
         this.fireGun();
         this.playerZombieInteraction();
@@ -261,6 +177,10 @@ public class SideScroll extends GameScreen {
             Gdx.app.exit();
         }
 
+        if(player.getX() > 4000) {
+            game.setScreen(new Tribe(game, "Tribe", player));
+        }
+
         updateDialogue();
         //SuperObject.updateEnd();
     }
@@ -275,30 +195,10 @@ public class SideScroll extends GameScreen {
     }
 
     //Every input given from the player is processed here
-    private void processInput() {
-        parallaxBackground.setSpeed(0);
-        player.changeAnimation(Assets.Animations.HERO + "_idle");
+    @Override
+    public void proccessInput() {
+        super.proccessInput();
 
-        if(Gdx.input.isKeyPressed(Input.Keys.A)) {
-            player.translateX(-3);
-            if(((SideScrollingCamera)gameStage.getCamera()).getUpdateCamera())
-                parallaxBackground.setSpeed(-0.2f);
-            if(!player.xFlipped)
-                player.flip(true, false);
-            player.changeAnimation(Assets.Animations.HERO + "_walking");
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.D)) {
-            player.translateX(3);
-            if(((SideScrollingCamera)gameStage.getCamera()).getUpdateCamera())
-                parallaxBackground.setSpeed(0.2f);
-            if(player.xFlipped)
-                player.flip(true, false);
-            player.changeAnimation(Assets.Animations.HERO + "_walking");
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.W))
-            player.translateY(3);
-        if(Gdx.input.isKeyPressed(Input.Keys.S))
-            player.translateY(-3);
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.ALT_LEFT)) {
             for(int i = 0; i < npcs.getChildren().size; i++) {
@@ -669,6 +569,80 @@ public class SideScroll extends GameScreen {
 
     private static Vector2 getRange(float xOrigin, float yOrigin, float xTarget, float yTarget) {
         return new Vector2(xOrigin - xTarget, yOrigin - yTarget);
+    }
+
+    @Override
+    public void setMap() {
+        Array<Texture> parallaxTextures = new Array<Texture>();
+        for(int i = 0; i < 6;i++){
+            parallaxTextures.add(Assets.getAsset(Assets._Parallax1[i], Texture.class));
+            parallaxTextures.get(i).setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat);
+        }
+        parallaxBackground = new ParallaxBackground(parallaxTextures);
+        parallaxBackground.setSize(Gdx.graphics.getWidth() / 2,Gdx.graphics.getHeight() / 2);
+
+        map = new ImageEx(game.assetManager.get(Assets.Images.MAP, Texture.class));
+    }
+
+    @Override
+    public void setDecor() {
+        decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE1, Texture.class), 500, 300));
+        decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE2, Texture.class), 1000, 300));
+    }
+
+    @Override
+    public void setPlayer() {
+        ObjectMap<String, Animation<TextureRegion>> temp = new ObjectMap<String, Animation<TextureRegion>>();
+        for(int i = 0; i < Assets.animationList.size; i++) {
+            if(Assets.animationList.getKeyAt(i).contains(Assets.Animations.HERO)) {
+                temp.put(Assets.animationList.getKeyAt(i), Assets.animationList.getValueAt(i));
+            }
+
+        }
+        player = new Player(temp, new Vector2(250, gameStage.getHeight() / 2 - 100));
+        player.setZIndex(10000);
+    }
+
+    @Override
+    public void setNPCS() {
+        npcs.addActor(new NPC(game.assetManager.get(Assets.Images.NPC_TEMP_2, Texture.class), "Harambe", 50, 50, false, Weapons.Pistol));
+        npcs.addActor(new NPC(game.assetManager.get(Assets.Images.NPC_TEMP_1, Texture.class), "Yilfa", 450, 50, true, Weapons.SMG));
+        for (int i = 0; i < npcs.getChildren().size; i++) {
+            npcs.getChildren().items[i].setSize(100, 150);
+        }
+    }
+
+    @Override
+    public void setEnemies() {
+        texture = game.assetManager.get(Assets.Images.PIKACHU, Texture.class);
+        for(int i = 0; i < 15; i++) {
+            enemies.addActor(new Zombie(texture, MathUtils.random(1000, 4000), MathUtils.random(500), true));
+            enemies.getChildren().items[i].setName("Zombie " + i);
+        }
+    }
+
+    @Override
+    public void setItems() {
+        for(int i = 0; i < 7; i++) {
+            items.addActor(new Medicine(MathUtils.random(0, 4000), MathUtils.random(0, 280)));
+            items.getChildren().get(items.getChildren().size - 1).setName("Medicine number "+i);
+        }
+        for(int i = 0; i < 9; i++) {
+            items.addActor(new Wood(Assets.getAsset(Assets.Images.TREELOG, Texture.class), MathUtils.random(0, 4000), MathUtils.random(0, 280)));
+            items.getChildren().get(items.getChildren().size - 1).setName("Wood number "+i);
+        }
+        for(int i = 0; i < 3; i++) {
+            items.addActor(new Tuna(MathUtils.random(0, 4000), MathUtils.random(0, 280)));
+            items.getChildren().get(items.getChildren().size - 1).setName("Tuna number "+i);
+        }
+        for(int i = 0; i < 3; i++) {
+            items.addActor(new Water(MathUtils.random(0, 4000), MathUtils.random(0, 280)));
+            items.getChildren().get(items.getChildren().size - 1).setName("Water number "+i);
+        }
+        for(int i = 0; i < 5; i++) {
+            items.addActor(new BearTrap(MathUtils.random(0, 4000), MathUtils.random(0, 280)));
+            items.getChildren().get(items.getChildren().size - 1).setName("Bear Trap number "+i);
+        }
     }
 }
 

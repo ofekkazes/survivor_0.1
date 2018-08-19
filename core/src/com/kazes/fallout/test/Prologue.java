@@ -326,4 +326,34 @@ public class Prologue extends GameScreen {
         node_complete = null;
         current_command = null;
     }
+
+    @Override
+    public void setMap() {
+
+    }
+
+    @Override
+    public void setDecor() {
+
+    }
+
+    @Override
+    public void setPlayer() {
+
+    }
+
+    @Override
+    public void setNPCS() {
+
+    }
+
+    @Override
+    public void setEnemies() {
+
+    }
+
+    @Override
+    public void setItems() {
+
+    }
 }
