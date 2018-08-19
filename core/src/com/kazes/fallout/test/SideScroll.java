@@ -72,7 +72,7 @@ public class SideScroll extends GameScreen {
     //Load the content
     private void create (final Survivor game) {
         //SuperObject.init();
-        //gameStage.setDebugAll(true);
+        gameStage.setDebugAll(true);
 
         gameStage.getBatch().setShader(new ShaderProgram(Gdx.files.internal("shaders/basicVertex120.vs").readString(), Gdx.files.internal("shaders/basicFragment120.fs").readString()));
 
