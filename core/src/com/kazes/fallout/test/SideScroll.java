@@ -163,7 +163,7 @@ public class SideScroll extends GameScreen {
         //this.processInput();
 
         this.fireGun();
-        this.playerZombieInteraction();
+
         this.pickItem();
         this.followPlayer();
 
@@ -279,68 +279,7 @@ public class SideScroll extends GameScreen {
         }
     }
 
-    //Player, Enemy and Bullets collision check, plus the most sophisticated AI the world has ever seen for a zombie
-    private void playerZombieInteraction() {
-        for (int j = 0; j < enemies.getChildren().size; j++) {
-            Zombie currentEnemy = (Zombie)enemies.getChildren().items[j];
-            if(!currentEnemy.hasActions()) {
-                if(currentEnemy.wander && currentEnemy.getHealth() == 100)// OR there is not clean line of sight (obstacles/hiding spots)
-                    currentEnemy.addAction(sequence(delay(1.5f), moveBy(MathUtils.random(-30, 30), MathUtils.random(-15, 15f), MathUtils.random(1.5f, 3.0f)), new WanderAction()));
-                else {
-                    float yTranslate = player.getY() - currentEnemy.getY();
-                    float xTranslate = currentEnemy.getX() - player.getX();
-                    if((xTranslate > -400 && xTranslate < 400) || currentEnemy.getHealth() != 100) { //OR THERE IS A CLEAN LINE OF SIGHT
-                        if((xTranslate > -150 && xTranslate < 150))
-                            yTranslate = (yTranslate > 0 ) ? .4f : -.4f;
-                        else yTranslate = 0;
-                        xTranslate = (xTranslate > 0) ? -.5f : .5f;
-                        currentEnemy.clearActions();
-                        currentEnemy.translate(xTranslate, yTranslate);
-                        currentEnemy.wander = false;
-                    }
-                    else currentEnemy.wander = true;
-                }
-            }
-                //enemies.get(j).addAction(moveTo(player.getX(), player.getY(), (forcePositive(enemies.get(j).getX() - player.getX())) / 50, Interpolation.pow2In)); //add y to time calculation
 
-            if(player.getRectangle().overlaps(currentEnemy.getRectangle())) {
-                player.addAction(getHitAction(currentEnemy.getX(), currentEnemy.getY(), player.getX(), player.getY()));
-                player.subHealth(30);
-            }
-            for (int i = 0; i < this.bullets.getChildren().size; i++) {
-                if (((Bullet)this.bullets.getChildren().items[i]).getRectangle().overlaps(currentEnemy.getRectangle())) {
-
-                    currentEnemy.subHealth(20);
-                    currentEnemy.clearActions();
-                    currentEnemy.addAction(getHitAction(player.getX(), player.getY(), currentEnemy.getX(), currentEnemy.getY()));
-                    this.bullets.removeActor(this.bullets.getChildren().items[i]);
-                    if (currentEnemy.getHealth() == 0) {
-                        this.enemies.removeActor(currentEnemy);
-                    }
-                    break;
-                }
-            }
-
-            for(int i = 0; i < traps.getChildren().size; i++) {
-                if(((ImageEx)traps.getChildren().items[i]).getRectangle().overlaps(currentEnemy.getRectangle())) {
-                    currentEnemy.subHealth(90);
-                    currentEnemy.clearActions();
-                    currentEnemy.addAction(getHitAction(traps.getChildren().items[i].getX(), traps.getChildren().items[i].getY(), currentEnemy.getX(), currentEnemy.getY()));
-                    traps.removeActor(traps.getChildren().items[i]);
-                }
-            }
-
-            for(ImageEx bonfire : (ImageEx[])bonfires.getChildren().toArray(ImageEx.class)) {
-                Vector2 range = SideScroll.getRange(bonfire.getX(), bonfire.getY(), currentEnemy.getX(), currentEnemy.getY());
-                if((range.x < 200 && range.x > -200) && (range.y < 100 && range.y > -100))
-                    currentEnemy.addAction(getHitAction(bonfire.getX(), bonfire.getY(), currentEnemy.getX(), currentEnemy.getY()));
-            }
-
-            currentEnemy.setX(MathUtils.clamp(currentEnemy.getX(), 0, game.assetManager.get(Assets.Images.MAP, Texture.class).getWidth()));
-            currentEnemy.setY(MathUtils.clamp(currentEnemy.getY(), 0, game.assetManager.get(Assets.Images.MAP, Texture.class).getHeight() - 200));
-
-        }
-    }
 
     //Checks if the player picked up an item
     private void pickItem() {
