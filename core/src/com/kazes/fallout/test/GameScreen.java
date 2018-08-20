@@ -103,7 +103,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         this.player = player;
         this.player.setX(0);
         gameStage.addActor(player);
-    }
+    }//IDEAs
 
     //Update the logic every frame
     @Override

@@ -154,7 +154,7 @@ public class SideScroll extends GameScreen {
         screenStage.addActor(dialogWindow);
 
         line = "";
-    }
+    }//IDEAs
 
     @Override
     public void update(float delta) {
