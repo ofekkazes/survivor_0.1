@@ -1,13 +1,10 @@
-package com.kazes.fallout.test;
+package com.kazes.fallout.test.screens;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.*;
@@ -17,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.StringBuilder;
+import com.kazes.fallout.test.*;
 import com.kyper.yarn.Dialogue;
 import com.kyper.yarn.Library;
 import com.kyper.yarn.UserData;
@@ -45,8 +43,8 @@ public class SideScroll extends GameScreen {
     private boolean complete = true;
 
 
-    SideScroll(Survivor game) {
-        super(game, "Prologue");
+    public SideScroll(Survivor game) {
+        super(game, "Prologue", 0);
         create(game);
     }
     @Override
@@ -154,16 +152,13 @@ public class SideScroll extends GameScreen {
         screenStage.addActor(dialogWindow);
 
         line = "";
-    }//IDEAs
+    }
 
     @Override
     public void update(float delta) {
         super.update(delta);
         //SuperObject.updateBegin(gameStage.getCamera());
         //this.processInput();
-
-        this.fireGun();
-
         this.pickItem();
         this.followPlayer();
 
@@ -178,7 +173,7 @@ public class SideScroll extends GameScreen {
         }
 
         if(player.getX() > 4000) {
-            game.setScreen(new Tribe(game, "Tribe", player));
+            game.setScreen(new Tribe(game, 0));
         }
 
         updateDialogue();
@@ -254,30 +249,7 @@ public class SideScroll extends GameScreen {
         inputDialogue();
     }
 
-    //Checks if the player fired the gun, and checks for the boundries of the bullets
-    private void fireGun() {
-        if(this.bullets.getChildren().size > 0) {
-            if (((Bullet)this.bullets.getChildren().items[this.bullets.getChildren().size - 1]).getTimeToLive() < 0) {
-                this.bullets.removeActor(this.bullets.getChildren().items[this.bullets.getChildren().size - 1]);
-            }
-        }
-        for(NPC follower : (NPC[])followers.getChildren().toArray(NPC.class)) {
-            switch (follower.getWeapon()) {
-                case Pistol: if(follower.getCooldown() % 50 == 0) {
-                    ImageEx[] array = enemies.getChildren().toArray(ImageEx.class);
-                    this.bullets.addActor(new Bullet(follower.getX(), follower.getY(), SideScroll.closestTo(array, follower).getOrigin().cpy().sub(follower.getOrigin()).nor()));
-                    follower.resetCooldown();
-                }
-                break;
-                case SMG: if(follower.getCooldown() % 30 == 0) {
-                    ImageEx[] array = enemies.getChildren().toArray(ImageEx.class);
-                    this.bullets.addActor(new Bullet(follower.getX(), follower.getY(), SideScroll.closestTo(array, follower).getOrigin().cpy().sub(follower.getOrigin()).nor()));
-                    follower.resetCooldown();
-                }
-                break;
-            }
-        }
-    }
+
 
 
 
@@ -530,16 +502,8 @@ public class SideScroll extends GameScreen {
     }
 
     @Override
-    public void setPlayer() {
-        ObjectMap<String, Animation<TextureRegion>> temp = new ObjectMap<String, Animation<TextureRegion>>();
-        for(int i = 0; i < Assets.animationList.size; i++) {
-            if(Assets.animationList.getKeyAt(i).contains(Assets.Animations.HERO)) {
-                temp.put(Assets.animationList.getKeyAt(i), Assets.animationList.getValueAt(i));
-            }
-
-        }
-        player = new Player(temp, new Vector2(250, gameStage.getHeight() / 2 - 100));
-        player.setZIndex(10000);
+    public void setPlayer(float startingPointX) {
+        player.setX(startingPointX);
     }
 
     @Override

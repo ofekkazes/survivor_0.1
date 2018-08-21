@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 public class ImageEx extends Image {
 
     Texture texture;
-    boolean xFlipped;
+    public boolean xFlipped;
     boolean yFlipped;
 
     private ImageEx flipped;

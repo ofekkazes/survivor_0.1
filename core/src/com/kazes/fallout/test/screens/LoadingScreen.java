@@ -1,8 +1,12 @@
-package com.kazes.fallout.test;
+package com.kazes.fallout.test.screens;
 
 import com.badlogic.gdx.graphics.Color;
+import com.kazes.fallout.test.Assets;
+import com.kazes.fallout.test.Survivor;
+import com.kazes.fallout.test.screens.AbstractScreen;
+import com.kazes.fallout.test.screens.Tribe;
 
-public class LoadingScreen extends  AbstractScreen {
+public class LoadingScreen extends AbstractScreen {
     private static final float LOAD_DELAY = 0.5f;
 
     private boolean loaded = false;
@@ -39,7 +43,7 @@ public class LoadingScreen extends  AbstractScreen {
         if (switchScreen) {
             Assets.finishLoading();
 
-            game.setScreen(new SideScroll(game));
+            game.setScreen(new Tribe(game, 250));
         }
     }
 

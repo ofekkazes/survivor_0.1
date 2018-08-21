@@ -1,4 +1,4 @@
-package com.kazes.fallout.test;
+package com.kazes.fallout.test.screens;
 
 public interface GameScreenInterface {
 
@@ -9,7 +9,7 @@ public interface GameScreenInterface {
     void setDecor();
 
     //Player loading
-    void setPlayer();
+    void setPlayer(float startingPointX);
 
     //NPCS and their dialog loading
     void setNPCS();

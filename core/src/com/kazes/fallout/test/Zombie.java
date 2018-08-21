@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 public class Zombie extends ImageEx {
 
     float health;
-    boolean wander;
+    public boolean wander;
 
     public Zombie(Texture img, Vector2 position, boolean verticalFlip) {
         super(img, verticalFlip, false);

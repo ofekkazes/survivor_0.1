@@ -2,6 +2,7 @@ package com.kazes.fallout.test;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
+import com.kazes.fallout.test.screens.LoadingScreen;
 
 public class Survivor extends Game {
     public AssetManager assetManager;

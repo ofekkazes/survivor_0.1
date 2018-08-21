@@ -1,4 +1,7 @@
-package com.kazes.fallout.test;
+package com.kazes.fallout.test.screens;
+
+import com.kazes.fallout.test.Survivor;
+import com.kazes.fallout.test.screens.*;
 
 public enum Screens {
     Loading {

@@ -1,4 +1,4 @@
-package com.kazes.fallout.test;
+package com.kazes.fallout.test.screens;
 
 
 import com.badlogic.gdx.Gdx;
@@ -8,23 +8,20 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.StringBuilder;
-import com.badlogic.gdx.utils.Timer;
+import com.kazes.fallout.test.*;
+import com.kazes.fallout.test.screens.GameScreen;
+import com.kazes.fallout.test.screens.SideScroll;
 import com.kyper.yarn.Dialogue;
-import com.kyper.yarn.Library;
 import com.kyper.yarn.UserData;
-import com.kyper.yarn.Value;
-import javafx.geometry.Side;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.color;
@@ -63,7 +60,7 @@ public class Prologue extends GameScreen {
     SpriteBatch batch;
 
     public Prologue(Survivor game) {
-        super(game, "Prologue");
+        super(game, "Prologue", 0);
         createGame(game);
         batch = new SpriteBatch();
     }
@@ -338,7 +335,7 @@ public class Prologue extends GameScreen {
     }
 
     @Override
-    public void setPlayer() {
+    public void setPlayer(float startingPointX) {
 
     }
 

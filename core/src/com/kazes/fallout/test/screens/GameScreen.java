@@ -1,26 +1,28 @@
-package com.kazes.fallout.test;
+package com.kazes.fallout.test.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.kazes.fallout.test.*;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.color;
 
 public abstract class GameScreen extends AbstractScreen implements GameScreenInterface {
+
+    static Player player; //Game player
 
     Stage gameStage; //Game container
     Stage screenStage; //Screen container
@@ -30,7 +32,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     ParallaxBackground parallaxBackground; //Level background
     Group decor; //Decoration textures
 
-    Player player; //Game player
+
     Group bullets; //All the bullets used
     Group enemies; //Enemy actors
     Group npcs; //Friendly actors
@@ -41,7 +43,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
     boolean completed;
 
-    GameScreen(Survivor game, String name) {
+    GameScreen(Survivor game, String name, float startingPosX) {
         super(game);
         stateTime = 0;
 
@@ -60,6 +62,19 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         multiplexer.addProcessor(gameStage);
         Gdx.input.setInputProcessor(multiplexer);
 
+        //Player init
+        if(player == null) {
+            ObjectMap<String, Animation<TextureRegion>> temp = new ObjectMap<String, Animation<TextureRegion>>();
+            for(int i = 0; i < Assets.animationList.size; i++) {
+                if(Assets.animationList.getKeyAt(i).contains(Assets.Animations.HERO)) {
+                    temp.put(Assets.animationList.getKeyAt(i), Assets.animationList.getValueAt(i));
+                }
+
+            }
+            player = new Player(temp, new Vector2(0, gameStage.getHeight() / 2 - 100));
+            player.setZIndex(10000);
+        }
+
         //Objects initialization
         enemies = new Group();
         npcs = new Group();
@@ -74,7 +89,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         setMap();
         setDecor();
         setItems();
-        setPlayer();
+        setPlayer(startingPosX);
         setNPCS();
         setEnemies();
 
@@ -98,18 +113,12 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         completed = false;
     }
 
-    public GameScreen(Survivor game, String name, Player player) {
-        this(game, name);
-        this.player = player;
-        this.player.setX(0);
-        gameStage.addActor(player);
-    }//IDEAs
-
     //Update the logic every frame
     @Override
     public void update(float delta) {
         super.update(delta);
         this.proccessInput();
+        this.fireGun();
         this.playerZombieInteraction();
 
         stateTime += delta;
@@ -224,6 +233,35 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
             currentEnemy.setX(MathUtils.clamp(currentEnemy.getX(), 0, game.assetManager.get(Assets.Images.MAP, Texture.class).getWidth()));
             currentEnemy.setY(MathUtils.clamp(currentEnemy.getY(), 0, game.assetManager.get(Assets.Images.MAP, Texture.class).getHeight() - 200));
 
+        }
+    }
+
+    //Checks if the player fired the gun, and checks for the boundries of the bullets
+    private void fireGun() {
+        if(this.bullets.getChildren().size > 0) {
+            if (((Bullet)this.bullets.getChildren().items[this.bullets.getChildren().size - 1]).getTimeToLive() < 0) {
+                this.bullets.removeActor(this.bullets.getChildren().items[this.bullets.getChildren().size - 1]);
+            }
+        }
+        ImageEx[] array = enemies.getChildren().toArray(ImageEx.class);
+        for(NPC follower : (NPC[])followers.getChildren().toArray(NPC.class)) {
+            if(enemies.getChildren().size > 0) {
+                Vector2 closest = SideScroll.closestTo(array, follower).getOrigin().cpy().sub(follower.getOrigin()).nor();
+                switch (follower.getWeapon()) {
+                    case Pistol:
+                        if (follower.getCooldown() % 50 == 0) {
+                            this.bullets.addActor(new Bullet(follower.getX(), follower.getY(), closest));
+                            follower.resetCooldown();
+                        }
+                        break;
+                    case SMG:
+                        if (follower.getCooldown() % 30 == 0) {
+                            this.bullets.addActor(new Bullet(follower.getX(), follower.getY(), closest));
+                            follower.resetCooldown();
+                        }
+                        break;
+                }
+            }
         }
     }
 
