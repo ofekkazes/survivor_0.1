@@ -47,6 +47,10 @@ public class SideScroll extends GameScreen {
         super(game, "Prologue", 0);
         create(game);
     }
+    public SideScroll(Survivor game, float startingPosX) {
+        super(game, "Prologue", startingPosX);
+        create(game);
+    }
     @Override
     public void pauseLogic() {}
 
@@ -172,7 +176,7 @@ public class SideScroll extends GameScreen {
             Gdx.app.exit();
         }
 
-        if(player.getX() > 4000) {
+        if(player.getX() > map.getWidth() + 1) {
             game.setScreen(new Tribe(game, 0));
         }
 

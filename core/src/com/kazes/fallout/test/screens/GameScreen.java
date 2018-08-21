@@ -124,6 +124,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         this.fireGun();
         this.playerZombieInteraction();
         this.decorCollision();
+        this.fireplaceCheck();
 
         stateTime += delta;
         if(stateTime % 1 > 0.9f)
@@ -280,6 +281,13 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
                 Vector2 translation = new Vector2(MathUtils.clamp(player.getX() - decorRec.getX(), -1, 1),  MathUtils.clamp(player.getY() - decorRec.getY(), -1, 1));
                 player.playerTranslation.set(translation);
             }
+        }
+    }
+
+    public void fireplaceCheck() {
+        for(int i = 0; i < bonfires.getChildren().size; i++) {
+            if(((Bonfire)bonfires.getChildren().get(i)).getTimeout() < 0)
+                bonfires.removeActor(bonfires.getChildren().get(i));
         }
     }
 

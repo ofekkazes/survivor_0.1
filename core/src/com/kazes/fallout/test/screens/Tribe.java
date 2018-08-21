@@ -17,6 +17,15 @@ public class Tribe extends GameScreen {
     }
 
     @Override
+    public void update(float delta) {
+        super.update(delta);
+
+        if(player.getX() < 0) {
+            game.setScreen(new SideScroll(game, map.getWidth() - 1));
+        }
+    }
+
+    @Override
     public void render(float delta) {
         super.render(delta);
         ((SideScrollingCamera)gameStage.getCamera()).followPos(player.getOrigin());
@@ -64,6 +73,8 @@ public class Tribe extends GameScreen {
         followers.addActor(new Watcher((Watcher)followers.getChildren().items[followers.getChildren().size - 1]));
         followers.addActor(new Watcher((Watcher)followers.getChildren().items[followers.getChildren().size - 1]));
         followers.addActor(new Watcher(1400, 250, 1400, 0, 5f));
+
+
     }
 
     @Override
