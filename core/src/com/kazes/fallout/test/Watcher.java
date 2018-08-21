@@ -33,10 +33,10 @@ public class Watcher extends NPC {
         if(follow == null) {
             if (!this.hasActions()) {
                 if (ascending) {
-                    this.addAction(sequence(delay(1.5f), Actions.moveTo(endX, endY, time, Interpolation.sine)));
+                    this.addAction(sequence(delay(1.5f), Actions.moveTo(endX, endY, time, Interpolation.smooth)));
                     ascending = false;
                 } else {
-                    this.addAction(sequence(delay(1.5f), Actions.moveTo(startX, startY, time, Interpolation.sine)));
+                    this.addAction(sequence(delay(1.5f), Actions.moveTo(startX, startY, time, Interpolation.smooth)));
                     ascending = true;
                 }
             }

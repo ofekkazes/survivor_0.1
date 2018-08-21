@@ -43,6 +43,9 @@ public class Tribe extends GameScreen {
         decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE2, Texture.class), 1000, 300));
         decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE2, Texture.class), 1200, 300));
         decor.addActor(new WatchTower(500, 250, "Watcher"));
+        decor.addActor(new ImageEx(Assets.getAsset(Assets.Images.WALL, Texture.class), 500, 200));
+        decor.addActor(new ImageEx(Assets.getAsset(Assets.Images.WALL, Texture.class), 500, 0));
+        decor.addActor(new ImageEx(Assets.getAsset(Assets.Images.WALL, Texture.class), 500, 64));
         decor.addActor(new WatchTower(500, 100, "Watcher"));
         decor.addActor(new WatchTower(1500, 250, "Watcher"));
         decor.addActor(new WatchTower(1500, 100, "Watcher"));
@@ -56,14 +59,16 @@ public class Tribe extends GameScreen {
 
     @Override
     public void setNPCS() {
-        followers.addActor(new Watcher(600, 150, 1400, 150, 10f));
-        followers.addActor(new Watcher((Watcher)followers.getChildren().items[0]));
-        followers.addActor(new Watcher((Watcher)followers.getChildren().items[1]));
+        followers.addActor(new Watcher(700, 0, 700, 250, 5f));
+        followers.addActor(new Watcher(600, 250, 1400, 250, 10f));
+        followers.addActor(new Watcher((Watcher)followers.getChildren().items[followers.getChildren().size - 1]));
+        followers.addActor(new Watcher((Watcher)followers.getChildren().items[followers.getChildren().size - 1]));
+        followers.addActor(new Watcher(1400, 250, 1400, 0, 5f));
     }
 
     @Override
     public void setEnemies() {
-        
+
     }
 
     @Override

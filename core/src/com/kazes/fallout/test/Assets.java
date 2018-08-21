@@ -39,6 +39,7 @@ public class Assets {
         public static final String BEARTRAP = "images/maps/bear_trap.jpg";
         public static final String HOUSE1 = "images/maps/house.png";
         public static final String HOUSE2 = "images/maps/house2.png";
+        public static final String WALL = "images/maps/wall.png";
 
     }
     private static final String[] _Images = {
@@ -50,7 +51,8 @@ public class Assets {
             Images.MAP, Images.BONFIRE, Images.TREELOG,
             Images.TUNA, Images.WATER, Images.SPLASH,
             Images.MEDKIT, Images.BEARTRAP,
-            Images.HOUSE1, Images.HOUSE2
+            Images.HOUSE1, Images.HOUSE2,
+            Images.WALL
     };
 
     public static final String[] _Parallax1 = {
