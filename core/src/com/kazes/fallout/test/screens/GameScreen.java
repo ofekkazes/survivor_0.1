@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -117,9 +118,12 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     @Override
     public void update(float delta) {
         super.update(delta);
+        this.player.playerTranslation.setZero();
+
         this.proccessInput();
         this.fireGun();
         this.playerZombieInteraction();
+        this.decorCollision();
 
         stateTime += delta;
         if(stateTime % 1 > 0.9f)
@@ -152,7 +156,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         player.changeAnimation(Assets.Animations.HERO + "_idle");
 
         if(Gdx.input.isKeyPressed(Input.Keys.A)) {
-            player.translateX(-3);
+            player.playerTranslation.x = -3;
             if(((SideScrollingCamera)gameStage.getCamera()).getUpdateCamera())
                 parallaxBackground.setSpeed(-0.2f);
             if(!player.xFlipped)
@@ -160,7 +164,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
             player.changeAnimation(Assets.Animations.HERO + "_walking");
         }
         if(Gdx.input.isKeyPressed(Input.Keys.D)) {
-            player.translateX(3);
+            player.playerTranslation.x = 3;
             if(((SideScrollingCamera)gameStage.getCamera()).getUpdateCamera())
                 parallaxBackground.setSpeed(0.2f);
             if(player.xFlipped)
@@ -168,9 +172,9 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
             player.changeAnimation(Assets.Animations.HERO + "_walking");
         }
         if(Gdx.input.isKeyPressed(Input.Keys.W))
-            player.translateY(3);
+            player.playerTranslation.y = 3;
         if(Gdx.input.isKeyPressed(Input.Keys.S))
-            player.translateY(-3);
+            player.playerTranslation.y = -3;
     }
 
     //Player, Enemy and Bullets collision check, plus the most sophisticated AI the world has ever seen for a zombie
@@ -261,6 +265,20 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
                         }
                         break;
                 }
+            }
+        }
+    }
+
+    public void decorCollision() {
+        for(int i = 0; i < decor.getChildren().size; i++) {
+            Rectangle decorRec = Rectangle.tmp;
+            if(decor.getChildren().get(i) instanceof ImageEx)
+                decorRec = ((ImageEx)decor.getChildren().get(i)).getRectangle();
+            else if(decor.getChildren().get(i) instanceof Group)
+                decorRec = ((WatchTower)decor.getChildren().get(i)).getRectangle();
+            if(player.getRectangle().overlaps(decorRec)) {
+                Vector2 translation = new Vector2(MathUtils.clamp(player.getX() - decorRec.getX(), -1, 1),  MathUtils.clamp(player.getY() - decorRec.getY(), -1, 1));
+                player.playerTranslation.set(translation);
             }
         }
     }

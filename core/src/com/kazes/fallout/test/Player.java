@@ -29,6 +29,7 @@ public class Player extends AnimationActor {
     public float hunger;
     public float time;
     public float thirst;
+    public Vector2 playerTranslation;
 
     public Player(ObjectMap<String, Animation<TextureRegion>> t, Vector2 position) {
         super(t, "Player", position.x, position.y);
@@ -42,11 +43,14 @@ public class Player extends AnimationActor {
         this.time = 0;
         this.setOrigin(this.getWidth() / 2, this.getHeight() / 2);
         this.cooldown = 0;
+        this.playerTranslation = new Vector2();
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
+
+
         if(Gdx.input.isKeyJustPressed(Input.Keys.I)) {
             bag.setVisible(!bag.isVisible());
         }
@@ -75,6 +79,7 @@ public class Player extends AnimationActor {
             cooldown++;
 
 
+        this.translate(playerTranslation.x, playerTranslation.y);
     }
 
     public void addHealth(float amount) {

@@ -43,9 +43,9 @@ public class Tribe extends GameScreen {
         decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE2, Texture.class), 1000, 300));
         decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE2, Texture.class), 1200, 300));
         decor.addActor(new WatchTower(500, 250, "Watcher"));
-        decor.addActor(new ImageEx(Assets.getAsset(Assets.Images.WALL, Texture.class), 500, 200));
-        decor.addActor(new ImageEx(Assets.getAsset(Assets.Images.WALL, Texture.class), 500, 0));
-        decor.addActor(new ImageEx(Assets.getAsset(Assets.Images.WALL, Texture.class), 500, 64));
+        decor.addActor(new Wall(500, 200, false));
+        decor.addActor(new Wall(500, 0, false));
+        decor.addActor(new Wall(500, 64, false));
         decor.addActor(new WatchTower(500, 100, "Watcher"));
         decor.addActor(new WatchTower(1500, 250, "Watcher"));
         decor.addActor(new WatchTower(1500, 100, "Watcher"));

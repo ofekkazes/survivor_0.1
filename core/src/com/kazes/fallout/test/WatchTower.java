@@ -1,6 +1,7 @@
 package com.kazes.fallout.test;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Group;
 
 public class WatchTower extends Group {
@@ -15,5 +16,9 @@ public class WatchTower extends Group {
 
         this.addActor(tower);
         this.addActor(watcher);
+    }
+
+    public Rectangle getRectangle() {
+        return tower.getRectangle().merge(watcher.getRectangle());
     }
 }
