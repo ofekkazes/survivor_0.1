@@ -7,7 +7,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g3d.Shader;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -28,6 +31,8 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     Stage gameStage; //Game container
     Stage screenStage; //Screen container
     float stateTime; //How much time passed since the screen was created
+
+    ShaderProgram shader;
 
     ImageEx map; //Level map
     ParallaxBackground parallaxBackground; //Level background
@@ -56,6 +61,12 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         gameStage = new Stage(viewp);
         gameStage.getBatch().enableBlending();
         screenStage = new Stage(new ScreenViewport());
+
+        shader = new ShaderProgram(Gdx.files.internal("shaders/vertex_test.vs"), Gdx.files.internal("shaders/fragmant_test.fs"));
+        ShaderProgram.pedantic = false;
+        gameStage.getBatch().setShader(shader);
+        Gdx.app.log("Shader", shader.isCompiled() ? "Compiled" : shader.getLog());
+        //gameStage.getBatch().getShader().setUniformMatrix("u_projTrans", gameStage.getCamera().projection);
 
         //Limit the input implementation to the game and screen stages
         InputMultiplexer multiplexer = new InputMultiplexer();
@@ -137,6 +148,10 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     @Override
     public void render(float delta) {
         super.render(delta);
+        shader.begin();
+        shader.setUniformf("u_distort", MathUtils.random(4), MathUtils.random(4), 0);
+        shader.end();
+        
         gameStage.act(Gdx.graphics.getDeltaTime());
         gameStage.draw();
 
