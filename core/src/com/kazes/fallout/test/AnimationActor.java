@@ -1,29 +1,27 @@
 package com.kazes.fallout.test;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 
 public class AnimationActor extends ImageEx {
 
-    ObjectMap<String, Animation<TextureRegion>> animationsByNames;
+    private ObjectMap<String, Animation<TextureRegion>> animationsByNames;
     private String currentKey;
     private float stateTime = 0;
+    private boolean xFlip;
 
-    public AnimationActor(ObjectMap<String, Animation<TextureRegion>> animations, String name, float xPos, float yPos) {
-        super((TextureRegion)animations.get(animations.keys().toArray().get(0)).getKeyFrame(0), xPos, yPos);
+    AnimationActor(ObjectMap<String, Animation<TextureRegion>> animations, String name, float xPos, float yPos) {
+        super(animations.get(animations.keys().toArray().get(0)).getKeyFrame(0), xPos, yPos);
         this.setName(name);
         this.setPosition(xPos, yPos);
 
-        this.animationsByNames = new ObjectMap<String, Animation<TextureRegion>>();
-        this.currentKey = Assets.Animations.HERO + "_idle";
-
         this.animationsByNames = animations;
+        this.currentKey = animations.keys().toString();
+        this.xFlip = false;
 
 /*
         TextureRegion[][] tmp = TextureRegion.split(spritesheet,
@@ -48,7 +46,7 @@ public class AnimationActor extends ImageEx {
 
     }
     public void changeAnimation(String keyName) {
-        if(this.currentKey == keyName)
+        if(this.currentKey.equals(keyName))
             return;
 
         this.setDrawable(new TextureRegionDrawable(this.animationsByNames.get(keyName).getKeyFrame(0)));
@@ -66,13 +64,11 @@ public class AnimationActor extends ImageEx {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         TextureRegion tmp = this.animationsByNames.get(currentKey).getKeyFrame(stateTime);
-        batch.draw(tmp, xFlipped ? getX() + getWidth() : getX(), (this.currentKey.contains("walking")) ? getY() + 3 : getY(), xFlipped ? -getWidth() : getWidth(), getHeight());
+        batch.draw(tmp, xFlip ? getX() + getWidth() : getX(), (this.currentKey.contains("walking")) ? getY() + 3 : getY(), xFlip ? -getWidth() : getWidth(), getHeight());
     }
 
-    @Override
-    public void flip(boolean xFlip, boolean yFlip) {
-        this.xFlipped = (xFlip) ? !xFlipped : xFlipped;
-        this.yFlipped = yFlip;
+    public void flip(boolean xFlip) {
+        this.xFlip = !isxFlip();
     }
 
     private static TextureRegion getFirstFrame(Texture spritesheet) {
@@ -82,4 +78,7 @@ public class AnimationActor extends ImageEx {
         return tmp[0][0];
     }
 
+    public boolean isxFlip() {
+        return this.xFlip;
+    }
 }
