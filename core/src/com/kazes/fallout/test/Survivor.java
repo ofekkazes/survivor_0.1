@@ -6,7 +6,6 @@ import com.kazes.fallout.test.screens.LoadingScreen;
 
 public class Survivor extends Game {
     public AssetManager assetManager;
-    public static final int PPM = 32;
 
     public Survivor() {
         super();
