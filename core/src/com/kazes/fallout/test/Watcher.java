@@ -14,7 +14,7 @@ public class Watcher extends NPC {
     private float time;
     private Watcher follow;
     public Watcher(float startX, float startY, float endX, float endY, float time) {
-        super(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), "Watcher", startX, startY, false, Weapons.Pistol);
+        super(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), "Watcher", startX, startY, Weapons.Pistol);
         this.startX = startX;
         this.startY = startY;
         this.endX = endX;
@@ -23,7 +23,7 @@ public class Watcher extends NPC {
         this.ascending = true;
     }
     public Watcher(Watcher follow) {
-        super(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), "Watcher", follow.getX(), follow.getY(), false, Weapons.Pistol);
+        super(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), "Watcher", follow.getX(), follow.getY(), Weapons.Pistol);
         this.follow = follow;
     }
 
