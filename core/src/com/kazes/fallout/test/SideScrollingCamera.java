@@ -19,22 +19,32 @@ public class SideScrollingCamera extends OrthographicCamera {
         updateX = 50;
         updateY = 50;
     }
+    public SideScrollingCamera(float viewportWidth, float viewportHeight) {
+        super(viewportWidth, viewportHeight);
+
+        updateX = 50;
+        updateY = 50;
+    }
 
     public void followPos(Vector2 playerPos) {
         updateCamera = false;
 
         if (playerPos.x - position.x > updateX) {
-            position.x = playerPos.x - updateX;
+            //position.x = playerPos.x - updateX;
+            Vector3 target = new Vector3(playerPos.x - updateX, Gdx.graphics.getHeight() / 2, 0);
+            position.scl(0.9f);
+            target.scl(0.1f);
+            position.add(target);
             updateCamera = true;
         } else if (playerPos.x - position.x < -updateX) {
-            position.x = playerPos.x + updateX;
+            //position.x = playerPos.x + updateX;
+            Vector3 target = new Vector3(playerPos.x + updateX, Gdx.graphics.getHeight() / 2, 0);
+            position.scl(0.9f);
+            target.scl(0.1f);
+            position.add(target);
             updateCamera = true;
         }
 
-        /*Vector3 target = new Vector3(playerPos.x, Gdx.graphics.getHeight() / 2, 0);
-        position.scl(0.9f);
-        target.scl(0.1f);
-        position.add(target);*/
 
         if (position.x < -0 + viewportWidth / 2) {
             position.x = (int)(viewportWidth / 2);
