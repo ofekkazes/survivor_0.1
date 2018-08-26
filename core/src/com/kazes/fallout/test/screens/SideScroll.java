@@ -216,7 +216,7 @@ public class SideScroll extends GameScreen {
             if (Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT)) {
                 Vector2 mousePos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
                 mousePos = gameStage.screenToStageCoordinates(mousePos);
-                this.bullets.addActor(new Bullet(player.getX(), player.getY(), mousePos.cpy().sub(player.getOrigin()).nor()));
+                this.bullets.addActor(new Bullet(world, player.getX(), player.getY(), mousePos.cpy().sub(player.getOrigin()).nor()));
                 //gameStage.addActor(this.bullets.get(this.bullets.size - 1));
             }
         }
@@ -225,7 +225,7 @@ public class SideScroll extends GameScreen {
                 if(player.cooldown > 17) {
                     Vector2 mousePos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
                     mousePos = gameStage.screenToStageCoordinates(mousePos);
-                    this.bullets.addActor(new Bullet(player.getX(), player.getY(), mousePos.cpy().sub(player.getOrigin()).nor()));
+                    this.bullets.addActor(new Bullet(world, player.getX(), player.getY(), mousePos.cpy().sub(player.getOrigin()).nor()));
                     //gameStage.addActor(this.bullets.get(this.bullets.size - 1));
                     player.cooldown = 0;
                 }
@@ -274,7 +274,7 @@ public class SideScroll extends GameScreen {
 
         for(Actor follower : followers.getChildren()) {
             if(!follower.hasActions())
-                follower.addAction(moveTo(player.getX() + ((player.xFlipped) ? 50 + ( 50 * followers.getChildren().indexOf(follower, false)) : -50 - ( 70 * followers.getChildren().indexOf(follower, false))), player.getY(), 1f));
+                follower.addAction(moveTo(player.getX() + ((player.isxFlip()) ? 50 + ( 50 * followers.getChildren().indexOf(follower, false)) : -50 - ( 70 * followers.getChildren().indexOf(follower, false))), player.getY(), 1f));
         }
     }
 
@@ -496,7 +496,7 @@ public class SideScroll extends GameScreen {
         parallaxBackground = new ParallaxBackground(parallaxTextures);
         parallaxBackground.setSize(Gdx.graphics.getWidth() / 2,Gdx.graphics.getHeight() / 2);
 
-        map = new ImageEx(game.assetManager.get(Assets.Images.MAP, Texture.class));
+        map = new ImageEx(game.assetManager.get(Assets.Images.MAP, Texture.class), 0, 0);
     }
 
     @Override
@@ -512,8 +512,8 @@ public class SideScroll extends GameScreen {
 
     @Override
     public void setNPCS() {
-        npcs.addActor(new NPC(game.assetManager.get(Assets.Images.NPC_TEMP_2, Texture.class), "Harambe", 50, 50, false, Weapons.Pistol));
-        npcs.addActor(new NPC(game.assetManager.get(Assets.Images.NPC_TEMP_1, Texture.class), "Yilfa", 450, 50, true, Weapons.SMG));
+        npcs.addActor(new NPC(game.assetManager.get(Assets.Images.NPC_TEMP_2, Texture.class), "Harambe", 50, 50, Weapons.Pistol));
+        npcs.addActor(new NPC(game.assetManager.get(Assets.Images.NPC_TEMP_1, Texture.class), "Yilfa", 450, 50, Weapons.SMG));
         for (int i = 0; i < npcs.getChildren().size; i++) {
             npcs.getChildren().items[i].setSize(100, 150);
         }
@@ -523,7 +523,7 @@ public class SideScroll extends GameScreen {
     public void setEnemies() {
         texture = game.assetManager.get(Assets.Images.PIKACHU, Texture.class);
         for(int i = 0; i < 15; i++) {
-            enemies.addActor(new Zombie(texture, MathUtils.random(1000, 4000), MathUtils.random(500), true));
+            enemies.addActor(new Zombie(texture, MathUtils.random(1000, 4000), MathUtils.random(500)));
             enemies.getChildren().items[i].setName("Zombie " + i);
         }
     }
@@ -535,7 +535,7 @@ public class SideScroll extends GameScreen {
             items.getChildren().get(items.getChildren().size - 1).setName("Medicine number "+i);
         }
         for(int i = 0; i < 9; i++) {
-            items.addActor(new Wood(Assets.getAsset(Assets.Images.TREELOG, Texture.class), MathUtils.random(0, 4000), MathUtils.random(0, 280)));
+            items.addActor(new Wood(MathUtils.random(0, 4000), MathUtils.random(0, 280)));
             items.getChildren().get(items.getChildren().size - 1).setName("Wood number "+i);
         }
         for(int i = 0; i < 3; i++) {

@@ -6,8 +6,8 @@ import com.badlogic.gdx.utils.Array;
 public class Wood extends ImageEx implements Carryable{
     private String desc;
 
-    public Wood(Texture texture, float xPos, float yPos) {
-        super(texture, xPos, yPos);
+    public Wood(float xPos, float yPos) {
+        super(Assets.getAsset(Assets.Images.TREELOG, Texture.class), xPos, yPos);
 
         this.desc = "Used to make fire";
     }

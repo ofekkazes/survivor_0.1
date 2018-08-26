@@ -7,8 +7,7 @@ import com.badlogic.gdx.utils.Array;
 public class Medicine extends ImageEx implements Carryable {
     private String desc;
     public Medicine(float x, float y) {
-        super(Assets.getAsset(Assets.Images.MEDKIT, Texture.class));
-        this.setPosition(x, y);
+        super(Assets.getAsset(Assets.Images.MEDKIT, Texture.class), x, y);
         this.desc = "Used to heal 30 points";
     }
 

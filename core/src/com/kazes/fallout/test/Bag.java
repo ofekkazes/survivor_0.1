@@ -66,7 +66,7 @@ public class Bag extends Window {
 
             }
             if (item instanceof Wood) {
-                Wood clone = new Wood(((Wood) item).texture, item.getX(), item.getY());
+                Wood clone = new Wood(item.getX(), item.getY());
                 clone.setName(item.getName());
                 description.add(clone).grow().fillY().pad(Value.percentHeight(1f, item)).row();
                 description.add(new Label(clone.getName(), Assets.getAsset(Assets.UI_SKIN, Skin.class))).row();
@@ -110,4 +110,6 @@ public class Bag extends Window {
     public void removeActorFromTable(Actor actor) {
         items.getCell(actor).getActor().remove();
     }
+
+
 }

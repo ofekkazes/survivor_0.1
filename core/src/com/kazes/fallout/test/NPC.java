@@ -12,8 +12,8 @@ public class NPC extends ImageEx {
     private boolean moveable; //Can the actor move
     //DIALOGS
 
-    public NPC(Texture texture, String name, float xPos, float yPos, boolean vFlip, Weapons weapon) {
-        super(texture, vFlip, false);
+    public NPC(Texture texture, String name, float xPos, float yPos, Weapons weapon) {
+        super(texture, xPos, yPos);
         this.setName(name);
         this.setPosition(xPos, yPos);
         this.weapon = weapon;

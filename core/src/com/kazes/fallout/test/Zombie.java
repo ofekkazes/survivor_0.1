@@ -9,15 +9,8 @@ public class Zombie extends ImageEx {
     float health;
     public boolean wander;
 
-    public Zombie(Texture img, Vector2 position, boolean verticalFlip) {
-        super(img, verticalFlip, false);
-        this.setPosition(position.x, position.y);
-
-        init();
-    }
-    public Zombie(Texture img, int xPos, int yPos, boolean verticalFlip) {
-        super(img, verticalFlip, false);
-        this.setPosition(xPos, yPos);
+    public Zombie(Texture img, int xPos, int yPos) {
+        super(img, xPos, yPos);
 
         init();
     }
@@ -27,12 +20,17 @@ public class Zombie extends ImageEx {
         this.wander = true;
     }
 
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+    }
+
     public float getHealth(){ return this.health; }
 
     public void subHealth(float points) {
         this.health -= points;
 
-        if(this.health < -1)
-            this.health = 0;
+        if(this.health <= 0)
+            this.setRemove();
     }
 }

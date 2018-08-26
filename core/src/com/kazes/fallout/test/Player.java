@@ -6,12 +6,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.kazes.fallout.test.screens.GameScreen;
 import org.omg.CORBA.ValueBaseHolder;
 
 
@@ -44,6 +46,7 @@ public class Player extends AnimationActor {
         this.setOrigin(this.getWidth() / 2, this.getHeight() / 2);
         this.cooldown = 0;
         this.playerTranslation = new Vector2();
+
     }
 
     @Override
@@ -82,20 +85,16 @@ public class Player extends AnimationActor {
         this.translate(playerTranslation.x, playerTranslation.y);
     }
 
-    public void addHealth(float amount) {
+    void addHealth(float amount) {
         this.health = (amount + this.health > 100) ? 100 : amount + this.health;
     }
 
-    public boolean subHealth(float amount) {
+    public void subHealth(float amount) {
         this.health = (0 > this.health - amount) ? 0 : this.health - amount;
-        return this.health == 0;
+        this.setRemove();
     }
 
     public float getHealth() { return this.health; }
-
-    public Texture getTexture() {
-        return super.texture;
-    }
 
     public Weapons getWeapon() {
         return weapon;

@@ -43,7 +43,7 @@ public class Tribe extends GameScreen {
         parallaxBackground = new ParallaxBackground(parallaxTextures);
         parallaxBackground.setSize(Gdx.graphics.getWidth() / 2,Gdx.graphics.getHeight() / 2);
 
-        map = new ImageEx(game.assetManager.get(Assets.Images.MAP, Texture.class));
+        map = new ImageEx(game.assetManager.get(Assets.Images.MAP, Texture.class), 0, 0);
     }
 
     @Override

@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
@@ -76,7 +77,7 @@ public class Prologue extends GameScreen {
         parallaxBackground.setSize(Gdx.graphics.getWidth() / 2,Gdx.graphics.getHeight() / 2);
         gameStage.addActor(parallaxBackground);
 
-        gameStage.addActor(new ImageEx(game.assetManager.get(Assets.Images.MAP, Texture.class)));
+        gameStage.addActor(new ImageEx(game.assetManager.get(Assets.Images.MAP, Texture.class), 0, 0));
 
         bullets = new Array<Bullet>();
 
@@ -88,7 +89,7 @@ public class Prologue extends GameScreen {
 
         enemies = new Array<Zombie>();
         for(int i = 0; i < 150; i++) {
-            enemies.add(new Zombie(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), MathUtils.random(1000, 3000), MathUtils.random(250), true));
+            enemies.add(new Zombie(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), MathUtils.random(1000, 3000), MathUtils.random(250)));
             gameStage.addActor(enemies.get(i));
         }
 
@@ -117,7 +118,7 @@ public class Prologue extends GameScreen {
         secondMove = false;
         thirdMove = false;
 
-        fadeActor = new ImageEx(Assets.getAsset(Assets.Images.PIKACHU, Texture.class));
+        fadeActor = new ImageEx(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), 0, 0);
         fadeActor.setColor(Color.BLACK);
         fadeActor.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         fadeActor.setBounds(-1500, -1000, 3200, 2100);
@@ -171,7 +172,7 @@ public class Prologue extends GameScreen {
             turn = !turn;
             ImageEx position = (turn) ? npc1 : npc2;
             ImageEx[] array = enemies.toArray(ImageEx.class);
-            bullets.add(new Bullet(position.getX(), position.getY(), SideScroll.closestTo(array, position).getOrigin().cpy().sub(position.getOrigin()).nor()));
+            bullets.add(new Bullet(world, position.getX(), position.getY(), SideScroll.closestTo(array, position).getOrigin().cpy().sub(position.getOrigin()).nor()));
             gameStage.addActor(this.bullets.get(bullets.size - 1));
         }
         if(this.bullets.size > 0) {
