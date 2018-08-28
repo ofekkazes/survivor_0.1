@@ -3,18 +3,18 @@ package com.kazes.fallout.test;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
-class B2DBodyBuilder {
+public class B2DBodyBuilder {
 
-    static Body createBody(World world, float xPos, float yPos, float width, float height) {
+    public static Body createBody(World world, float xPos, float yPos, float width, float height, BodyDef.BodyType type) {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(width / 2, height / 2, new Vector2(width / 2, height / 2), 0f);
-        return createBody(world, shape, xPos, yPos, width, height);
+        return createBody(world, shape, xPos, yPos, width, height, type);
     }
-    static Body createBody(World world, Shape shape, float xPos, float yPos, float width, float height) {
+    public static Body createBody(World world, Shape shape, float xPos, float yPos, float width, float height, BodyDef.BodyType type) {
         Body body;
         BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set((xPos + width / 2) , (yPos + height / 2));
+        bodyDef.type = type;
+        bodyDef.position.set(xPos, yPos);
         body = world.createBody(bodyDef);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
