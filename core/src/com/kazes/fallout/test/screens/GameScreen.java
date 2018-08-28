@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.kazes.fallout.test.*;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
@@ -32,7 +33,8 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.color;
 public abstract class GameScreen extends AbstractScreen implements GameScreenInterface {
     public static final int SCREEN_WIDTH = Gdx.graphics.getWidth();
     public static final int SCREEN_HEIGHT = Gdx.graphics.getHeight();
-    public static final int PPM = 32; ////Pixels Per Meter
+    public static final int VIRTUAL_HEIGHT = 400;
+
     static Player player; //Game player
 
     Stage gameStage; //Game container
@@ -65,9 +67,9 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         stateTime = 0;
 
         //Changing the camera used by the game stage
-        SideScrollingCamera camera = new SideScrollingCamera();
-        camera.setToOrtho(false, SCREEN_WIDTH, SCREEN_HEIGHT);
-        FitViewport viewp = new FitViewport(SCREEN_WIDTH, SCREEN_HEIGHT, camera);
+        SideScrollingCamera camera = new SideScrollingCamera(30, 20);
+        camera.setToOrtho(false, 30, 20);
+        StretchViewport viewp = new StretchViewport(30.6f, 17, camera);
 
         gameStage = new Stage(viewp);
         gameStage.getBatch().enableBlending();
@@ -79,7 +81,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         rayHandler.setAmbientLight(0.1f, 0.1f, 0.1f, 0.2f);
         rayHandler.setBlurNum(3);
 
-        new PointLight(rayHandler, 20, Color.BLUE, 150, 400, 200);
+        new PointLight(rayHandler, 20, Color.BLUE, 150, Survivor.getInMeters(400), Survivor.getInMeters(200));
 
         shader = new ShaderProgram(Gdx.files.internal("shaders/vertex_test.vs"), Gdx.files.internal("shaders/fragmant_test.fs"));
         ShaderProgram.pedantic = false;
@@ -102,7 +104,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
                 }
 
             }
-            player = new Player(temp, new Vector2(0, gameStage.getHeight() / 2 - 100));
+            player = new Player(temp, new Vector2(0, 6));
             player.setZIndex(10000);
         }
         //player.createBody(world);
@@ -141,7 +143,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
         if(player != null)
             gameStage.addActor(player);
-
+        player.initPhysics(world);
 
 
         completed = false;
@@ -181,7 +183,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         screenStage.draw();
 
         rayHandler.setCombinedMatrix((SideScrollingCamera)gameStage.getCamera());
-        rayHandler.updateAndRender();
+        //rayHandler.updateAndRender();
         renderer.render(world, gameStage.getCamera().combined.cpy());
 
     }
@@ -202,6 +204,8 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
+        ((OrthographicCamera)gameStage.getCamera()).setToOrtho(false, VIRTUAL_HEIGHT * width / (float)height, VIRTUAL_HEIGHT);
+        gameStage.getCamera().update();
     }
 
     @Override
@@ -237,15 +241,15 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
             Zombie currentEnemy = (Zombie)enemies.getChildren().items[j];
             if(!currentEnemy.hasActions()) {
                 if(currentEnemy.wander && currentEnemy.getHealth() == 100)// OR there is not clean line of sight (obstacles/hiding spots)
-                    currentEnemy.addAction(sequence(delay(1.5f), moveBy(MathUtils.random(-30, 30), MathUtils.random(-15, 15f), MathUtils.random(1.5f, 3.0f)), new WanderAction()));
+                    currentEnemy.addAction(sequence(delay(1.5f), moveBy(MathUtils.random(Survivor.getInMeters(-30), Survivor.getInMeters(30)), MathUtils.random(Survivor.getInMeters(-15), Survivor.getInMeters(15)), MathUtils.random(1.5f, 3.0f)), new WanderAction()));
                 else {
                     float yTranslate = player.getY() - currentEnemy.getY();
                     float xTranslate = currentEnemy.getX() - player.getX();
-                    if((xTranslate > -400 && xTranslate < 400) || currentEnemy.getHealth() != 100) { //OR THERE IS A CLEAN LINE OF SIGHT
-                        if((xTranslate > -150 && xTranslate < 150))
-                            yTranslate = (yTranslate > 0 ) ? .4f : -.4f;
+                    if((xTranslate > Survivor.getInMeters(-400) && xTranslate < Survivor.getInMeters(400)) || currentEnemy.getHealth() != 100) { //OR THERE IS A CLEAN LINE OF SIGHT
+                        if((xTranslate > Survivor.getInMeters(-150) && xTranslate < Survivor.getInMeters(150)))
+                            yTranslate = (yTranslate > 0 ) ? Survivor.getInMeters(.4f) : Survivor.getInMeters(-.4f);
                         else yTranslate = 0;
-                        xTranslate = (xTranslate > 0) ? -.5f : .5f;
+                        xTranslate = (xTranslate > 0) ? Survivor.getInMeters(-.5f) : Survivor.getInMeters(.5f);
                         currentEnemy.clearActions();
                         currentEnemy.translate(xTranslate, yTranslate);
                         currentEnemy.wander = false;
@@ -281,12 +285,12 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
             for(ImageEx bonfire : (ImageEx[])bonfires.getChildren().toArray(ImageEx.class)) {
                 Vector2 range = getRange(bonfire.getX(), bonfire.getY(), currentEnemy.getX(), currentEnemy.getY());
-                if((range.x < 200 && range.x > -200) && (range.y < 100 && range.y > -100))
+                if((range.x < Survivor.getInMeters(200) && range.x > Survivor.getInMeters(-200)) && (range.y < Survivor.getInMeters(100) && range.y > Survivor.getInMeters(-100)))
                     currentEnemy.addAction(getHitAction(bonfire.getX(), bonfire.getY(), currentEnemy.getX(), currentEnemy.getY()));
             }
 
             currentEnemy.setX(MathUtils.clamp(currentEnemy.getX(), 0, game.assetManager.get(Assets.Images.MAP, Texture.class).getWidth()));
-            currentEnemy.setY(MathUtils.clamp(currentEnemy.getY(), 0, game.assetManager.get(Assets.Images.MAP, Texture.class).getHeight() - 200));
+            currentEnemy.setY(MathUtils.clamp(currentEnemy.getY(), 0, game.assetManager.get(Assets.Images.MAP, Texture.class).getHeight() - Survivor.getInMeters(200)));
 
         }
     }
@@ -364,7 +368,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
     //Create an hit action using the coordinates given
     private static ParallelAction getHitAction(float fromPosX, float fromPosY, float toPosX, float toPosY) {
-        return parallel(moveBy(((toPosX - fromPosX > 0)? 50 : -50) * 2, (toPosY - fromPosY), .3f),
+        return parallel(moveBy(((toPosX - fromPosX > 0)? Survivor.getInMeters(50) : Survivor.getInMeters(-50)) * 2, (toPosY - fromPosY), .3f),
                 sequence(color(Color.RED), color(Color.WHITE, 1f)));
     }
 
@@ -372,4 +376,6 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         if(enemies.getChildren().size == 0)
             completed = true;
     }
+
+
 }

@@ -43,13 +43,13 @@ public class LoadingScreen extends AbstractScreen {
         if (switchScreen) {
             Assets.finishLoading();
 
-            game.setScreen(new Tribe(game, 250));
+            game.setScreen(new SideScroll(game, Survivor.getInMeters(250)));
         }
     }
 
     @Override
     public void dispose() {
         super.dispose();
-
+        
     }
 }

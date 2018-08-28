@@ -43,36 +43,37 @@ public class Tribe extends GameScreen {
         parallaxBackground = new ParallaxBackground(parallaxTextures);
         parallaxBackground.setSize(Gdx.graphics.getWidth() / 2,Gdx.graphics.getHeight() / 2);
 
+
         map = new ImageEx(game.assetManager.get(Assets.Images.MAP, Texture.class), 0, 0);
     }
 
     @Override
     public void setDecor() {
-        decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE1, Texture.class), 800, 300));
-        decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE2, Texture.class), 1000, 300));
-        decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE2, Texture.class), 1200, 300));
-        decor.addActor(new WatchTower(500, 250, "Watcher"));
-        decor.addActor(new Wall(500, 200, false));
-        decor.addActor(new Wall(500, 0, false));
-        decor.addActor(new Wall(500, 64, false));
-        decor.addActor(new WatchTower(500, 100, "Watcher"));
-        decor.addActor(new WatchTower(1500, 250, "Watcher"));
-        decor.addActor(new WatchTower(1500, 100, "Watcher"));
-        bonfires.addActor(new Bonfire(900, 0));
+        decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE1, Texture.class), Survivor.getInMeters(800), Survivor.getInMeters(300)));
+        decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE2, Texture.class), Survivor.getInMeters(1000), Survivor.getInMeters(300)));
+        decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE2, Texture.class), Survivor.getInMeters(1200), Survivor.getInMeters(300)));
+        decor.addActor(new WatchTower(Survivor.getInMeters(500), Survivor.getInMeters(250), "Watcher"));
+        decor.addActor(new Wall(Survivor.getInMeters(500), Survivor.getInMeters(200), false));
+        decor.addActor(new Wall(Survivor.getInMeters(500), 0, false));
+        decor.addActor(new Wall(Survivor.getInMeters(500), Survivor.getInMeters(64), false));
+        decor.addActor(new WatchTower(Survivor.getInMeters(500), Survivor.getInMeters(100), "Watcher"));
+        decor.addActor(new WatchTower(Survivor.getInMeters(1500), Survivor.getInMeters(250), "Watcher"));
+        decor.addActor(new WatchTower(Survivor.getInMeters(1500), Survivor.getInMeters(100), "Watcher"));
+        bonfires.addActor(new Bonfire(Survivor.getInMeters(900), 0));
     }
 
     @Override
     public void setPlayer(float startingPointX) {
-        this.player.setX(startingPointX);
+        player.setX(startingPointX);
     }
 
     @Override
     public void setNPCS() {
-        followers.addActor(new Watcher(700, 0, 700, 250, 5f));
-        followers.addActor(new Watcher(600, 250, 1400, 250, 10f));
+        followers.addActor(new Watcher(Survivor.getInMeters(700), 0, Survivor.getInMeters(700), Survivor.getInMeters(250), 5f));
+        followers.addActor(new Watcher(Survivor.getInMeters(600), Survivor.getInMeters(250), Survivor.getInMeters(1400), Survivor.getInMeters(250), 10f));
         followers.addActor(new Watcher((Watcher)followers.getChildren().items[followers.getChildren().size - 1]));
         followers.addActor(new Watcher((Watcher)followers.getChildren().items[followers.getChildren().size - 1]));
-        followers.addActor(new Watcher(1400, 250, 1400, 0, 5f));
+        followers.addActor(new Watcher(Survivor.getInMeters(1400), Survivor.getInMeters(250), Survivor.getInMeters(1400), 0, 5f));
 
 
     }

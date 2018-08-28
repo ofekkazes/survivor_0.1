@@ -166,8 +166,8 @@ public class SideScroll extends GameScreen {
         this.pickItem();
         this.followPlayer();
 
-        if(player.getY() > 280)
-            player.setY(280);
+        if(player.getY() > 12.9)
+            player.setY(12.9f);
         if(player.getY() < 0)
             player.setY(0);
 
@@ -176,7 +176,7 @@ public class SideScroll extends GameScreen {
             Gdx.app.exit();
         }
 
-        if(player.getX() > map.getWidth() + 1) {
+        if(player.getX() > map.getWidth() + 0.003f) {
             game.setScreen(new Tribe(game, 0));
         }
 
@@ -242,7 +242,7 @@ public class SideScroll extends GameScreen {
                     if (bagItem instanceof Wood) {
                         player.bag.items.removeActor(player.bag.items.getCells().get(i).getActor());
                         ImageEx bonfire = new Bonfire(player.getOrigin().x, player.getOrigin().y);
-                        bonfire.setBounds(player.getX(), player.getY(), 200, 300);
+                        bonfire.setBounds(player.getX(), player.getY(), Survivor.getInMeters(200), Survivor.getInMeters(300));
                         bonfires.addActor(bonfire);
                         Gdx.app.log("Survivor", "Bonfire set");
                         break;
@@ -264,7 +264,7 @@ public class SideScroll extends GameScreen {
                 ImageEx item = (ImageEx)items.getChildren().get(i);
                 if (item.getRectangle().overlaps(player.getRectangle())) {
                     items.removeActor(item);
-                    this.player.bag.addItem(item);
+                    player.bag.addItem(item);
                 }
             }
         }
@@ -274,14 +274,8 @@ public class SideScroll extends GameScreen {
 
         for(Actor follower : followers.getChildren()) {
             if(!follower.hasActions())
-                follower.addAction(moveTo(player.getX() + ((player.isxFlip()) ? 50 + ( 50 * followers.getChildren().indexOf(follower, false)) : -50 - ( 70 * followers.getChildren().indexOf(follower, false))), player.getY(), 1f));
+                follower.addAction(moveTo(player.getX() + ((player.isxFlip()) ? Survivor.getInMeters(50) + ( Survivor.getInMeters(50) * followers.getChildren().indexOf(follower, false)) : Survivor.getInMeters(-50) - ( Survivor.getInMeters(70) * followers.getChildren().indexOf(follower, false))), player.getY(), 1f));
         }
-    }
-
-    //Create an hit action using the coordinates given
-    private ParallelAction getHitAction(float fromPosX, float fromPosY, float toPosX, float toPosY) {
-        return parallel(moveBy(((toPosX - fromPosX > 0)? 50 : -50) * 2, (toPosY - fromPosY), .3f),
-                sequence(color(Color.RED), color(Color.WHITE, 1f)));
     }
 
     private void createDialogue() {
@@ -501,8 +495,8 @@ public class SideScroll extends GameScreen {
 
     @Override
     public void setDecor() {
-        decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE1, Texture.class), 500, 300));
-        decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE2, Texture.class), 1000, 300));
+        decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE1, Texture.class), Survivor.getInMeters(500), Survivor.getInMeters(300), world));
+        decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE2, Texture.class), Survivor.getInMeters(1000), Survivor.getInMeters(300), world));
     }
 
     @Override
@@ -512,10 +506,10 @@ public class SideScroll extends GameScreen {
 
     @Override
     public void setNPCS() {
-        npcs.addActor(new NPC(game.assetManager.get(Assets.Images.NPC_TEMP_2, Texture.class), "Harambe", 50, 50, Weapons.Pistol));
-        npcs.addActor(new NPC(game.assetManager.get(Assets.Images.NPC_TEMP_1, Texture.class), "Yilfa", 450, 50, Weapons.SMG));
+        npcs.addActor(new NPC(game.assetManager.get(Assets.Images.NPC_TEMP_2, Texture.class), "Harambe", Survivor.getInMeters(50), Survivor.getInMeters(50), Weapons.Pistol));
+        npcs.addActor(new NPC(game.assetManager.get(Assets.Images.NPC_TEMP_1, Texture.class), "Yilfa", Survivor.getInMeters(450), Survivor.getInMeters(50), Weapons.SMG));
         for (int i = 0; i < npcs.getChildren().size; i++) {
-            npcs.getChildren().items[i].setSize(100, 150);
+            npcs.getChildren().items[i].setSize(Survivor.getInMeters(100), Survivor.getInMeters(150));
         }
     }
 
@@ -523,7 +517,7 @@ public class SideScroll extends GameScreen {
     public void setEnemies() {
         texture = game.assetManager.get(Assets.Images.PIKACHU, Texture.class);
         for(int i = 0; i < 15; i++) {
-            enemies.addActor(new Zombie(texture, MathUtils.random(1000, 4000), MathUtils.random(500)));
+            enemies.addActor(new Zombie(texture, Survivor.getInMeters(MathUtils.random(1000, 4000)), Survivor.getInMeters(MathUtils.random(500))));
             enemies.getChildren().items[i].setName("Zombie " + i);
         }
     }
@@ -531,23 +525,23 @@ public class SideScroll extends GameScreen {
     @Override
     public void setItems() {
         for(int i = 0; i < 7; i++) {
-            items.addActor(new Medicine(MathUtils.random(0, 4000), MathUtils.random(0, 280)));
+            items.addActor(new Medicine(Survivor.getInMeters(MathUtils.random(0, 4000)), Survivor.getInMeters(MathUtils.random(0, 280))));
             items.getChildren().get(items.getChildren().size - 1).setName("Medicine number "+i);
         }
         for(int i = 0; i < 9; i++) {
-            items.addActor(new Wood(MathUtils.random(0, 4000), MathUtils.random(0, 280)));
+            items.addActor(new Wood(Survivor.getInMeters(MathUtils.random(0, 4000)), Survivor.getInMeters(MathUtils.random(0, 280))));
             items.getChildren().get(items.getChildren().size - 1).setName("Wood number "+i);
         }
         for(int i = 0; i < 3; i++) {
-            items.addActor(new Tuna(MathUtils.random(0, 4000), MathUtils.random(0, 280)));
+            items.addActor(new Tuna(Survivor.getInMeters(MathUtils.random(0, 4000)), Survivor.getInMeters(MathUtils.random(0, 280))));
             items.getChildren().get(items.getChildren().size - 1).setName("Tuna number "+i);
         }
         for(int i = 0; i < 3; i++) {
-            items.addActor(new Water(MathUtils.random(0, 4000), MathUtils.random(0, 280)));
+            items.addActor(new Water(Survivor.getInMeters(MathUtils.random(0, 4000)), Survivor.getInMeters(MathUtils.random(0, 280))));
             items.getChildren().get(items.getChildren().size - 1).setName("Water number "+i);
         }
         for(int i = 0; i < 5; i++) {
-            items.addActor(new BearTrap(MathUtils.random(0, 4000), MathUtils.random(0, 280)));
+            items.addActor(new BearTrap(Survivor.getInMeters(MathUtils.random(0, 4000)), Survivor.getInMeters(MathUtils.random(0, 280))));
             items.getChildren().get(items.getChildren().size - 1).setName("Bear Trap number "+i);
         }
     }

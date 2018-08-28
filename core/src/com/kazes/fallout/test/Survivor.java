@@ -6,7 +6,7 @@ import com.kazes.fallout.test.screens.LoadingScreen;
 
 public class Survivor extends Game {
     public AssetManager assetManager;
-    public static final int PPM = 32;
+    public static final float PPM = 64 / 1.8f; ////Pixels Per Meter
 
     public Survivor() {
         super();
@@ -41,5 +41,9 @@ public class Survivor extends Game {
     public void render() {
         super.render();
 
+    }
+
+    public static float getInMeters(float point) {
+        return point / PPM;
     }
 }

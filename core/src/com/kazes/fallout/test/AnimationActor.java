@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.kazes.fallout.test.screens.GameScreen;
 
 public class AnimationActor extends ImageEx {
 
@@ -64,7 +65,7 @@ public class AnimationActor extends ImageEx {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         TextureRegion tmp = this.animationsByNames.get(currentKey).getKeyFrame(stateTime);
-        batch.draw(tmp, xFlip ? getX() + getWidth() : getX(), (this.currentKey.contains("walking")) ? getY() + 3 : getY(), xFlip ? -getWidth() : getWidth(), getHeight());
+        batch.draw(tmp, xFlip ? getX() + getWidth() : getX(), (this.currentKey.contains("walking")) ? getY() + Survivor.getInMeters(3) : getY(), xFlip ? -getWidth() : getWidth(), getHeight());
     }
 
     public void flip(boolean xFlip) {

@@ -3,6 +3,7 @@ package com.kazes.fallout.test;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.kazes.fallout.test.screens.GameScreen;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
@@ -43,7 +44,7 @@ public class Watcher extends NPC {
         }
         else {
             if(!this.hasActions()) {
-                this.addAction(Actions.moveTo(follow.getX() + ((follow.ascending) ? 50 : -50), follow.getY(), 1f));
+                this.addAction(Actions.moveTo(follow.getX() + ((follow.ascending) ? Survivor.getInMeters(50) : Survivor.getInMeters(-50)), follow.getY(), 1f));
                 this.ascending = follow.ascending;
             }
         }

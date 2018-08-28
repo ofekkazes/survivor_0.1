@@ -32,6 +32,7 @@ public class ParallaxBackground extends Actor {
         y = Gdx.graphics.getHeight() / 2;
         scaleX = scaleY = 1;
         flipX = flipY = false;
+        setVisible(false);
     }
 
     public void setSpeed(float newSpeed){
