@@ -3,6 +3,7 @@ package com.kazes.fallout.test;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.kazes.fallout.test.screens.LoadingScreen;
+import com.kazes.fallout.test.screens.Screens;
 
 public class Survivor extends Game {
     public AssetManager assetManager;
@@ -18,7 +19,7 @@ public class Survivor extends Game {
 
         Assets.loadFonts();
 
-        this.setScreen(new LoadingScreen(this));
+        this.setScreen(Screens.Loading.getScreen(this));
     }
 
     @Override
