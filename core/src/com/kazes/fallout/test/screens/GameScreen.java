@@ -15,8 +15,10 @@ import com.badlogic.gdx.graphics.g3d.Shader;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.utils.Box2DBuild;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -145,6 +147,8 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
             gameStage.addActor(player);
         player.initPhysics(world);
 
+        for(Actor zombie : enemies.getChildren())
+            ((Zombie)zombie).addInteractingObject(player);
 
         completed = false;
     }
@@ -159,7 +163,6 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         this.proccessInput();
         this.fireGun();
         this.playerZombieInteraction();
-        this.decorCollision();
         this.fireplaceCheck();
 
         stateTime += delta;
@@ -239,24 +242,6 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     private void playerZombieInteraction() {
         for (int j = 0; j < enemies.getChildren().size; j++) {
             Zombie currentEnemy = (Zombie)enemies.getChildren().items[j];
-            if(!currentEnemy.hasActions()) {
-                if(currentEnemy.wander && currentEnemy.getHealth() == 100)// OR there is not clean line of sight (obstacles/hiding spots)
-                    currentEnemy.addAction(sequence(delay(1.5f), moveBy(MathUtils.random(Survivor.getInMeters(-30), Survivor.getInMeters(30)), MathUtils.random(Survivor.getInMeters(-15), Survivor.getInMeters(15)), MathUtils.random(1.5f, 3.0f)), new WanderAction()));
-                else {
-                    float yTranslate = player.getY() - currentEnemy.getY();
-                    float xTranslate = currentEnemy.getX() - player.getX();
-                    if((xTranslate > Survivor.getInMeters(-400) && xTranslate < Survivor.getInMeters(400)) || currentEnemy.getHealth() != 100) { //OR THERE IS A CLEAN LINE OF SIGHT
-                        if((xTranslate > Survivor.getInMeters(-150) && xTranslate < Survivor.getInMeters(150)))
-                            yTranslate = (yTranslate > 0 ) ? Survivor.getInMeters(.4f) : Survivor.getInMeters(-.4f);
-                        else yTranslate = 0;
-                        xTranslate = (xTranslate > 0) ? Survivor.getInMeters(-.5f) : Survivor.getInMeters(.5f);
-                        currentEnemy.clearActions();
-                        currentEnemy.translate(xTranslate, yTranslate);
-                        currentEnemy.wander = false;
-                    }
-                    else currentEnemy.wander = true;
-                }
-            }
             //enemies.get(j).addAction(moveTo(player.getX(), player.getY(), (forcePositive(enemies.get(j).getX() - player.getX())) / 50, Interpolation.pow2In)); //add y to time calculation
 
             if(player.getRectangle().overlaps(currentEnemy.getRectangle())) {
@@ -289,9 +274,14 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
                     currentEnemy.addAction(getHitAction(bonfire.getX(), bonfire.getY(), currentEnemy.getX(), currentEnemy.getY()));
             }
 
-            currentEnemy.setX(MathUtils.clamp(currentEnemy.getX(), 0, game.assetManager.get(Assets.Images.MAP, Texture.class).getWidth()));
-            currentEnemy.setY(MathUtils.clamp(currentEnemy.getY(), 0, game.assetManager.get(Assets.Images.MAP, Texture.class).getHeight() - Survivor.getInMeters(200)));
-
+            if(currentEnemy.getY() + currentEnemy.getWidth() > map.getHeight() - Survivor.getInMeters(100)) {
+                currentEnemy.getBody().setTransform(currentEnemy.getX(), map.getHeight() - Survivor.getInMeters(100) - 2f, 0);
+                currentEnemy.getBody().setLinearVelocity(0,0);
+            }
+            if(currentEnemy.getY() < 0) {
+                currentEnemy.getBody().setTransform(currentEnemy.getX(), 1, 0);
+                currentEnemy.getBody().setLinearVelocity(0,0);
+            }
         }
     }
 
@@ -320,20 +310,6 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
                         }
                         break;
                 }
-            }
-        }
-    }
-
-    public void decorCollision() {
-        for(int i = 0; i < decor.getChildren().size; i++) {
-            Rectangle decorRec = Rectangle.tmp;
-            if(decor.getChildren().get(i) instanceof ImageEx)
-                decorRec = ((ImageEx)decor.getChildren().get(i)).getRectangle();
-            else if(decor.getChildren().get(i) instanceof Group)
-                decorRec = ((WatchTower)decor.getChildren().get(i)).getRectangle();
-            if(player.getRectangle().overlaps(decorRec)) {
-                Vector2 translation = new Vector2(MathUtils.clamp(player.getX() - decorRec.getX(), -1, 1),  MathUtils.clamp(player.getY() - decorRec.getY(), -1, 1));
-                player.playerTranslation.set(translation);
             }
         }
     }

@@ -2,9 +2,6 @@ package com.kazes.fallout.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.kazes.fallout.Colony;
-import com.kazes.fallout.ColonyCenter;
-import com.kazes.fallout.OrthographicCameraExample;
 import com.kazes.fallout.test.*;
 
 public class DesktopLauncher {
