@@ -10,20 +10,16 @@ import com.badlogic.gdx.physics.box2d.*;
 
 public class Bullet extends ImageEx {
     private static ShaderProgram shader = new ShaderProgram(Gdx.files.internal("shaders/shakyCam.vs"), Gdx.files.internal("shaders/shakyCam.fs"));
-    private Vector2 velocity;
-    private Vector2 direction;
     private float speed;
     private float timeToLive;
 
-    public Bullet(World world, float xPos, float yPos, Vector2 direction) {
+    public Bullet(World world, float xPos, float yPos, Vector2 direction    ) {
         super(createTexture(xPos, yPos), xPos, yPos);
-        speed = 100;
+        speed = 120;
         timeToLive = 3;
-        this.direction = direction;
-        velocity = direction.scl(speed);
-        //this.addAction(forever(Actions.moveBy(velocity.x, velocity.y, 0.001f)));
-        Gdx.app.log("Bullet", getWidth() + ", " + getHeight());
+
         CircleShape circle = new CircleShape();
+        //circle.setAsBox(getWidth() / 2, getHeight() / 2, new Vector2(getWidth() / 2, getHeight() / 2), MathUtils.degreesToRadians * direction.angle());
         circle.setRadius(this.getWidth()/2);
         circle.setPosition(new Vector2(getWidth() / 2, getHeight() / 2));
         this.world = world;
@@ -32,7 +28,11 @@ public class Bullet extends ImageEx {
         body.setTransform(body.getWorldCenter(), MathUtils.degreesToRadians * direction.angle());
         setOrigin(0, 0);
         setRotation(MathUtils.radiansToDegrees * body.getAngle());
-
+        Filter f = new Filter();
+        f.categoryBits = 1;
+        f.groupIndex = 2;
+        f.maskBits = (short)0;
+        body.getFixtureList().get(0).setFilterData(f);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class Bullet extends ImageEx {
         super.draw(batch, parentAlpha);
         if(timeToLive > 2.94) {
             shader.begin();
-            shader.setUniformf("rand", new Vector3(MathUtils.random(1, 4), MathUtils.random(1, 4), 0));
+            shader.setUniformf("rand", new Vector3(Survivor.getInMeters(MathUtils.random(1, 4)), Survivor.getInMeters(MathUtils.random(1, 4)), 0));
             shader.end();
             batch.setShader(shader);
         }

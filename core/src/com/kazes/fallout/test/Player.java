@@ -35,7 +35,6 @@ public class Player extends AnimationActor {
 
     public Player(ObjectMap<String, Animation<TextureRegion>> t, Vector2 position) {
         super(t, "Player", position.x, position.y);
-        this.setPosition(position.x, position.y);
         weapon = Weapons.Pistol;
         bag = new Bag("Bag", Assets.getAsset(Assets.UI_SKIN, Skin.class));
         bag.setVisible(false);
@@ -46,7 +45,11 @@ public class Player extends AnimationActor {
         this.setOrigin(this.getWidth() / 2, this.getHeight() / 2);
         this.cooldown = 0;
         this.playerTranslation = new Vector2();
+    }
 
+    public void initPhysics(World world) {
+        this.world = world;
+        body = B2DBodyBuilder.createBody(world, getX(), getY(), getWidth(), getHeight());
     }
 
     @Override
@@ -81,17 +84,17 @@ public class Player extends AnimationActor {
         if(cooldown <= 20)
             cooldown++;
 
-
-        this.translate(playerTranslation.x, playerTranslation.y);
+        body.setLinearVelocity(playerTranslation.x, playerTranslation.y);
+        //this.translate(playerTranslation.x, playerTranslation.y);
     }
 
     void addHealth(float amount) {
         this.health = (amount + this.health > 100) ? 100 : amount + this.health;
     }
 
-    public void subHealth(float amount) {
+    public boolean subHealth(float amount) {
         this.health = (0 > this.health - amount) ? 0 : this.health - amount;
-        this.setRemove();
+        return this.health == 0;
     }
 
     public float getHealth() { return this.health; }

@@ -9,7 +9,7 @@ public class Zombie extends ImageEx {
     float health;
     public boolean wander;
 
-    public Zombie(Texture img, int xPos, int yPos) {
+    public Zombie(Texture img, float xPos, float yPos) {
         super(img, xPos, yPos);
 
         init();

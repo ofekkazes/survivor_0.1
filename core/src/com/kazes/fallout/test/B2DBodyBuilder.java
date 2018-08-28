@@ -1,12 +1,13 @@
 package com.kazes.fallout.test;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
 class B2DBodyBuilder {
 
     static Body createBody(World world, float xPos, float yPos, float width, float height) {
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width / 2, height / 2);
+        shape.setAsBox(width / 2, height / 2, new Vector2(width / 2, height / 2), 0f);
         return createBody(world, shape, xPos, yPos, width, height);
     }
     static Body createBody(World world, Shape shape, float xPos, float yPos, float width, float height) {

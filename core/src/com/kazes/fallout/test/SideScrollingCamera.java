@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.kazes.fallout.test.screens.GameScreen;
 
 public class SideScrollingCamera extends OrthographicCamera {
 
@@ -13,17 +14,17 @@ public class SideScrollingCamera extends OrthographicCamera {
 
     boolean updateCamera;
 
-    public SideScrollingCamera() {
+    /*public SideScrollingCamera() {
         super();
 
-        updateX = 50;
-        updateY = 50;
-    }
+        updateX = 50 / GameScreen.PPM;
+        updateY = 50 / GameScreen.PPM;
+    }*/
     public SideScrollingCamera(float viewportWidth, float viewportHeight) {
         super(viewportWidth, viewportHeight);
 
-        updateX = 50;
-        updateY = 50;
+        updateX = Survivor.getInMeters(50);
+        updateY = Survivor.getInMeters(50);
     }
 
     public void followPos(Vector2 playerPos) {
@@ -31,14 +32,14 @@ public class SideScrollingCamera extends OrthographicCamera {
 
         if (playerPos.x - position.x > updateX) {
             //position.x = playerPos.x - updateX;
-            Vector3 target = new Vector3(playerPos.x - updateX, Gdx.graphics.getHeight() / 2, 0);
+            Vector3 target = new Vector3(playerPos.x - updateX, viewportHeight / 2, 0);
             position.scl(0.9f);
             target.scl(0.1f);
             position.add(target);
             updateCamera = true;
         } else if (playerPos.x - position.x < -updateX) {
             //position.x = playerPos.x + updateX;
-            Vector3 target = new Vector3(playerPos.x + updateX, Gdx.graphics.getHeight() / 2, 0);
+            Vector3 target = new Vector3(playerPos.x + updateX, viewportHeight / 2, 0);
             position.scl(0.9f);
             target.scl(0.1f);
             position.add(target);
