@@ -89,7 +89,7 @@ public class Prologue extends GameScreen {
 
         enemies = new Array<Zombie>();
         for(int i = 0; i < 150; i++) {
-            enemies.add(new Zombie(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), MathUtils.random(1000, 3000), MathUtils.random(250)));
+            enemies.add(new Zombie(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), MathUtils.random(1000, 3000), MathUtils.random(250), world));
             gameStage.addActor(enemies.get(i));
         }
 

@@ -23,7 +23,7 @@ public class Bullet extends ImageEx {
         circle.setRadius(this.getWidth()/2);
         circle.setPosition(new Vector2(getWidth() / 2, getHeight() / 2));
         this.world = world;
-        body = B2DBodyBuilder.createBody(world, circle, xPos, yPos, getWidth(), getHeight());
+        body = B2DBodyBuilder.createBody(world, circle, xPos, yPos, getWidth(), getHeight(), BodyDef.BodyType.DynamicBody);
         body.setUserData(this);
         body.setTransform(body.getWorldCenter(), MathUtils.degreesToRadians * direction.angle());
         setOrigin(0, 0);

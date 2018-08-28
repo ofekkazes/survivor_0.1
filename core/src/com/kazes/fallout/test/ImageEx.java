@@ -25,13 +25,13 @@ public class ImageEx extends Image {
         this.setSize(Survivor.getInMeters(getWidth()), Survivor.getInMeters(getHeight()));
         this.rectangle = new Rectangle(this.getX(), this.getY(), this.getWidth(), this.getHeight());
     }
-    public ImageEx(Texture texture, float xPos, float yPos, World world) {
+    public ImageEx(Texture texture, float xPos, float yPos, World world, BodyDef.BodyType type) {
         super(texture);
         this.setPosition(xPos, yPos);
         this.setSize(Survivor.getInMeters(getWidth()), Survivor.getInMeters(getHeight()));
         this.rectangle = new Rectangle(this.getX(), this.getY(), this.getWidth(), this.getHeight());
         this.world = world;
-        this.body = B2DBodyBuilder.createBody(world, xPos, yPos, getWidth(), getHeight());
+        this.body = B2DBodyBuilder.createBody(world, xPos, yPos, getWidth(), getHeight(), type);
     }
 
     public ImageEx(TextureRegion texture, float xPos, float yPos) {
@@ -43,16 +43,21 @@ public class ImageEx extends Image {
 
 
 
+
     @Override
     public void act(float delta) {
         super.act(delta);
 
         if(body != null) {
-            if(body.isAwake()) {
-                setX(body.getPosition().x);
-                setY(body.getPosition().y);
-                setOrigin(0, 0);
-                setRotation(MathUtils.radiansToDegrees * body.getAngle());
+            if(!hasActions()) {
+                if (body.isAwake()) {
+                    setX(body.getPosition().x);
+                    setY(body.getPosition().y);
+                    setRotation(MathUtils.radiansToDegrees * body.getAngle());
+                }
+            }
+            else {
+                body.setTransform(getX(), getY(), 0);
             }
         }
         this.rectangle.setX(this.getX());

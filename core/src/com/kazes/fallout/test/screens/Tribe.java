@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.kazes.fallout.test.*;
@@ -49,16 +50,16 @@ public class Tribe extends GameScreen {
 
     @Override
     public void setDecor() {
-        decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE1, Texture.class), Survivor.getInMeters(800), Survivor.getInMeters(300)));
-        decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE2, Texture.class), Survivor.getInMeters(1000), Survivor.getInMeters(300)));
-        decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE2, Texture.class), Survivor.getInMeters(1200), Survivor.getInMeters(300)));
-        decor.addActor(new WatchTower(Survivor.getInMeters(500), Survivor.getInMeters(250), "Watcher"));
-        decor.addActor(new Wall(Survivor.getInMeters(500), Survivor.getInMeters(200), false));
-        decor.addActor(new Wall(Survivor.getInMeters(500), 0, false));
-        decor.addActor(new Wall(Survivor.getInMeters(500), Survivor.getInMeters(64), false));
-        decor.addActor(new WatchTower(Survivor.getInMeters(500), Survivor.getInMeters(100), "Watcher"));
-        decor.addActor(new WatchTower(Survivor.getInMeters(1500), Survivor.getInMeters(250), "Watcher"));
-        decor.addActor(new WatchTower(Survivor.getInMeters(1500), Survivor.getInMeters(100), "Watcher"));
+        decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE1, Texture.class), Survivor.getInMeters(800), Survivor.getInMeters(300), world, BodyDef.BodyType.StaticBody));
+        decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE2, Texture.class), Survivor.getInMeters(1000), Survivor.getInMeters(300), world, BodyDef.BodyType.StaticBody));
+        decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE2, Texture.class), Survivor.getInMeters(1200), Survivor.getInMeters(300), world, BodyDef.BodyType.StaticBody));
+        decor.addActor(new WatchTower(Survivor.getInMeters(500), Survivor.getInMeters(250), "Watcher", world));
+        decor.addActor(new Wall(Survivor.getInMeters(500), Survivor.getInMeters(200), world));
+        decor.addActor(new Wall(Survivor.getInMeters(500), 0, world));
+        decor.addActor(new Wall(Survivor.getInMeters(500), Survivor.getInMeters(64), world));
+        decor.addActor(new WatchTower(Survivor.getInMeters(500), Survivor.getInMeters(100), "Watcher", world));
+        decor.addActor(new WatchTower(Survivor.getInMeters(1500), Survivor.getInMeters(250), "Watcher", world));
+        decor.addActor(new WatchTower(Survivor.getInMeters(1500), Survivor.getInMeters(100), "Watcher", world));
         bonfires.addActor(new Bonfire(Survivor.getInMeters(900), 0));
     }
 

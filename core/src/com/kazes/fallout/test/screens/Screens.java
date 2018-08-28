@@ -19,6 +19,11 @@ public enum Screens {
             return new Prologue(game);
         }
     },
+    Tribe {
+        public AbstractScreen getScreen(Survivor game) {
+            return new Tribe(game, 0);
+        }
+    },
     SplashScreen {
         public AbstractScreen getScreen(Survivor game) {
             return new SplashScreen(game);

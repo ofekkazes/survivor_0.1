@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -177,7 +178,7 @@ public class SideScroll extends GameScreen {
         }
 
         if(player.getX() > map.getWidth() + 0.003f) {
-            game.setScreen(new Tribe(game, 0));
+            game.setScreen(Screens.Tribe.getScreen(game));
         }
 
         updateDialogue();
@@ -298,6 +299,8 @@ public class SideScroll extends GameScreen {
                     //gameStage.getActors().removeValue(talkingTo, false);
                     Gdx.app.log("Followers", talkingTo.getName() + " was added");
                     followers.addActor(talkingTo);
+                    for(Actor actor : enemies.getChildren())
+                        ((Zombie)actor).addInteractingObject(talkingTo);
                 }
             }
         });
@@ -495,8 +498,8 @@ public class SideScroll extends GameScreen {
 
     @Override
     public void setDecor() {
-        decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE1, Texture.class), Survivor.getInMeters(500), Survivor.getInMeters(300), world));
-        decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE2, Texture.class), Survivor.getInMeters(1000), Survivor.getInMeters(300), world));
+        decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE1, Texture.class), Survivor.getInMeters(500), Survivor.getInMeters(300), world, BodyDef.BodyType.StaticBody));
+        decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE2, Texture.class), Survivor.getInMeters(1000), Survivor.getInMeters(300), world, BodyDef.BodyType.StaticBody));
     }
 
     @Override
@@ -516,8 +519,8 @@ public class SideScroll extends GameScreen {
     @Override
     public void setEnemies() {
         texture = game.assetManager.get(Assets.Images.PIKACHU, Texture.class);
-        for(int i = 0; i < 15; i++) {
-            enemies.addActor(new Zombie(texture, Survivor.getInMeters(MathUtils.random(1000, 4000)), Survivor.getInMeters(MathUtils.random(500))));
+        for(int i = 0; i < 35; i++) {
+            enemies.addActor(new Zombie(texture, Survivor.getInMeters(MathUtils.random(1000, 4000)), Survivor.getInMeters(MathUtils.random(500)), world));
             enemies.getChildren().items[i].setName("Zombie " + i);
         }
     }

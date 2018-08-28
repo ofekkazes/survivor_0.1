@@ -49,7 +49,8 @@ public class Player extends AnimationActor {
 
     public void initPhysics(World world) {
         this.world = world;
-        body = B2DBodyBuilder.createBody(world, getX(), getY(), getWidth(), getHeight());
+        body = B2DBodyBuilder.createBody(world, getX(), getY(), getWidth(), getHeight(), BodyDef.BodyType.DynamicBody);
+        body.setFixedRotation(true);
     }
 
     @Override

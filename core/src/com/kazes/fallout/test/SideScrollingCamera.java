@@ -47,13 +47,13 @@ public class SideScrollingCamera extends OrthographicCamera {
         }
 
 
-        if (position.x < -0 + viewportWidth / 2) {
+        if (position.x < 0 + viewportWidth / 2) {
             position.x = (int)(viewportWidth / 2);
             updateCamera = false;
         }
 
-        if (position.x > 4048 - viewportWidth / 2) {
-            position.x = 4048 - (int)(viewportWidth / 2);
+        if (position.x > Survivor.getInMeters(4048) - viewportWidth / 2) {
+            position.x = Survivor.getInMeters(4048) - (int)(viewportWidth / 2);
             updateCamera = false;
         }
 
