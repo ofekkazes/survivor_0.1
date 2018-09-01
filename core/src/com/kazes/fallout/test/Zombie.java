@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
+import com.kazes.fallout.test.physics.CollisionCategory;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveBy;
@@ -23,7 +24,7 @@ public class Zombie extends ImageEx {
     private Array<Actor> interactingObjects;
 
     public Zombie(Texture img, float xPos, float yPos, World world) {
-        super(img, xPos, yPos, world, BodyDef.BodyType.DynamicBody);
+        super(img, xPos, yPos, world, BodyDef.BodyType.DynamicBody, CollisionCategory.ENEMY, CollisionCategory.ENEMY_COLLIDER);
         body.setFixedRotation(true);
         interactingObjects = new Array<Actor>();
         init();

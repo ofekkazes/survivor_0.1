@@ -2,19 +2,14 @@ package com.kazes.fallout.test;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
-import com.kazes.fallout.test.screens.GameScreen;
-import org.omg.CORBA.ValueBaseHolder;
+import com.kazes.fallout.test.physics.B2DBodyBuilder;
+import com.kazes.fallout.test.physics.CollisionCategory;
 
 
 //rabbit valve gauge
@@ -32,6 +27,7 @@ public class Player extends AnimationActor {
     public float time;
     public float thirst;
     public Vector2 playerTranslation;
+    public int ammo;
 
     public Player(ObjectMap<String, Animation<TextureRegion>> t, Vector2 position) {
         super(t, "Player", position.x, position.y);
@@ -45,11 +41,12 @@ public class Player extends AnimationActor {
         this.setOrigin(this.getWidth() / 2, this.getHeight() / 2);
         this.cooldown = 0;
         this.playerTranslation = new Vector2();
+        this.ammo = 50;
     }
 
     public void initPhysics(World world) {
         this.world = world;
-        body = B2DBodyBuilder.createBody(world, getX(), getY(), getWidth(), getHeight(), BodyDef.BodyType.DynamicBody);
+        body = B2DBodyBuilder.createBody(world, getX(), getY(), getWidth(), getHeight(), BodyDef.BodyType.DynamicBody, CollisionCategory.FRIENDLY, CollisionCategory.FRIENDLY_COLLIDER);
         body.setFixedRotation(true);
     }
 

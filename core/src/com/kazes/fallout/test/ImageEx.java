@@ -1,16 +1,14 @@
 package com.kazes.fallout.test;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.kazes.fallout.test.screens.GameScreen;
+import com.kazes.fallout.test.physics.B2DBodyBuilder;
+import com.kazes.fallout.test.physics.CollisionCategory;
 
 public class ImageEx extends Image {
     private boolean remove;
@@ -25,13 +23,13 @@ public class ImageEx extends Image {
         this.setSize(Survivor.getInMeters(getWidth()), Survivor.getInMeters(getHeight()));
         this.rectangle = new Rectangle(this.getX(), this.getY(), this.getWidth(), this.getHeight());
     }
-    public ImageEx(Texture texture, float xPos, float yPos, World world, BodyDef.BodyType type) {
+    public ImageEx(Texture texture, float xPos, float yPos, World world, BodyDef.BodyType type, CollisionCategory categoryBits, CollisionCategory maskBits) {
         super(texture);
         this.setPosition(xPos, yPos);
         this.setSize(Survivor.getInMeters(getWidth()), Survivor.getInMeters(getHeight()));
         this.rectangle = new Rectangle(this.getX(), this.getY(), this.getWidth(), this.getHeight());
         this.world = world;
-        this.body = B2DBodyBuilder.createBody(world, xPos, yPos, getWidth(), getHeight(), type);
+        this.body = B2DBodyBuilder.createBody(world, xPos, yPos, getWidth(), getHeight(), type, categoryBits, maskBits);
     }
 
     public ImageEx(TextureRegion texture, float xPos, float yPos) {
@@ -57,7 +55,8 @@ public class ImageEx extends Image {
                 }
             }
             else {
-                body.setTransform(getX(), getY(), 0);
+                body.setTransform(getX(), getY(), getRotation() * MathUtils.degreesToRadians);
+                
             }
         }
         this.rectangle.setX(this.getX());

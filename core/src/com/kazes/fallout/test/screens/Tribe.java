@@ -1,11 +1,11 @@
 package com.kazes.fallout.test.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.kazes.fallout.test.*;
@@ -15,15 +15,15 @@ public class Tribe extends GameScreen {
 
     public Tribe(Survivor game, float startingPosX) {
         super(game, "Tribe", startingPosX);
+        weaponsAllowed = false;
+        lastScreen = Screens.SideScroll;
     }
 
     @Override
     public void update(float delta) {
         super.update(delta);
 
-        if(player.getX() < 0) {
-            game.setScreen(new SideScroll(game, map.getWidth() - 1));
-        }
+
     }
 
     @Override
@@ -50,9 +50,9 @@ public class Tribe extends GameScreen {
 
     @Override
     public void setDecor() {
-        decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE1, Texture.class), Survivor.getInMeters(800), Survivor.getInMeters(300), world, BodyDef.BodyType.StaticBody));
-        decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE2, Texture.class), Survivor.getInMeters(1000), Survivor.getInMeters(300), world, BodyDef.BodyType.StaticBody));
-        decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE2, Texture.class), Survivor.getInMeters(1200), Survivor.getInMeters(300), world, BodyDef.BodyType.StaticBody));
+        decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE1, Texture.class), Survivor.getInMeters(800), Survivor.getInMeters(300)));
+        decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE2, Texture.class), Survivor.getInMeters(1000), Survivor.getInMeters(300)));
+        decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE2, Texture.class), Survivor.getInMeters(1200), Survivor.getInMeters(300)));
         decor.addActor(new WatchTower(Survivor.getInMeters(500), Survivor.getInMeters(250), "Watcher", world));
         decor.addActor(new Wall(Survivor.getInMeters(500), Survivor.getInMeters(200), world));
         decor.addActor(new Wall(Survivor.getInMeters(500), 0, world));
@@ -70,11 +70,11 @@ public class Tribe extends GameScreen {
 
     @Override
     public void setNPCS() {
-        followers.addActor(new Watcher(Survivor.getInMeters(700), 0, Survivor.getInMeters(700), Survivor.getInMeters(250), 5f));
-        followers.addActor(new Watcher(Survivor.getInMeters(600), Survivor.getInMeters(250), Survivor.getInMeters(1400), Survivor.getInMeters(250), 10f));
-        followers.addActor(new Watcher((Watcher)followers.getChildren().items[followers.getChildren().size - 1]));
-        followers.addActor(new Watcher((Watcher)followers.getChildren().items[followers.getChildren().size - 1]));
-        followers.addActor(new Watcher(Survivor.getInMeters(1400), Survivor.getInMeters(250), Survivor.getInMeters(1400), 0, 5f));
+        followers.addActor(new Watcher(world, Survivor.getInMeters(700), 0, Survivor.getInMeters(700), Survivor.getInMeters(250), 5f));
+        followers.addActor(new Watcher(world, Survivor.getInMeters(600), Survivor.getInMeters(250), Survivor.getInMeters(1400), Survivor.getInMeters(250), 10f));
+        followers.addActor(new Watcher(world, (Watcher)followers.getChildren().items[followers.getChildren().size - 1]));
+        followers.addActor(new Watcher(world, (Watcher)followers.getChildren().items[followers.getChildren().size - 1]));
+        followers.addActor(new Watcher(world, Survivor.getInMeters(1400), Survivor.getInMeters(250), Survivor.getInMeters(1400), 0, 5f));
 
 
     }

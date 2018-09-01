@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.*;
 import com.badlogic.gdx.physics.box2d.*;
+import com.kazes.fallout.test.physics.B2DBodyBuilder;
+import com.kazes.fallout.test.physics.CollisionCategory;
 
 public class Bullet extends ImageEx {
     private static ShaderProgram shader = new ShaderProgram(Gdx.files.internal("shaders/shakyCam.vs"), Gdx.files.internal("shaders/shakyCam.fs"));
@@ -23,7 +25,7 @@ public class Bullet extends ImageEx {
         circle.setRadius(this.getWidth()/2);
         circle.setPosition(new Vector2(getWidth() / 2, getHeight() / 2));
         this.world = world;
-        body = B2DBodyBuilder.createBody(world, circle, xPos, yPos, getWidth(), getHeight(), BodyDef.BodyType.DynamicBody);
+        body = B2DBodyBuilder.createBody(world, circle, xPos, yPos, getWidth(), getHeight(), BodyDef.BodyType.DynamicBody, CollisionCategory.BULLET, CollisionCategory.BULLET_COLLIDER);
         body.setUserData(this);
         body.setTransform(body.getWorldCenter(), MathUtils.degreesToRadians * direction.angle());
         setOrigin(0, 0);
