@@ -28,6 +28,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.kazes.fallout.test.*;
+import com.kazes.fallout.test.physics.B2DBodyBuilder;
+import com.kazes.fallout.test.physics.CollisionCategory;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.color;
@@ -37,7 +39,11 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     public static final int SCREEN_HEIGHT = Gdx.graphics.getHeight();
     public static final int VIRTUAL_HEIGHT = 400;
 
+    Screens nextScreen;
+    Screens lastScreen;
+
     static Player player; //Game player
+    boolean weaponsAllowed;
 
     Stage gameStage; //Game container
     Stage screenStage; //Screen container
@@ -82,8 +88,10 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         rayHandler = new RayHandler(world);
         rayHandler.setAmbientLight(0.1f, 0.1f, 0.1f, 0.2f);
         rayHandler.setBlurNum(3);
+        new PointLight(rayHandler, 40, Color.CYAN, 10, 30, 2);
 
-        new PointLight(rayHandler, 20, Color.BLUE, 150, Survivor.getInMeters(400), Survivor.getInMeters(200));
+
+        //new PointLight(rayHandler, 20, Color.BLUE, 150, Survivor.getInMeters(400), Survivor.getInMeters(200));
 
         shader = new ShaderProgram(Gdx.files.internal("shaders/vertex_test.vs"), Gdx.files.internal("shaders/fragmant_test.fs"));
         ShaderProgram.pedantic = false;
@@ -97,6 +105,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         multiplexer.addProcessor(gameStage);
         Gdx.input.setInputProcessor(multiplexer);
 
+        weaponsAllowed = false;
         //Player init
         if(player == null) {
             ObjectMap<String, Animation<TextureRegion>> temp = new ObjectMap<String, Animation<TextureRegion>>();
@@ -142,6 +151,11 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         gameStage.addActor(bullets);
         gameStage.addActor(items);
 
+        //Create Boundaries
+        B2DBodyBuilder.createBody(world, map.getX(), map.getHeight() - 3, map.getWidth(), 2, BodyDef.BodyType.StaticBody, CollisionCategory.BOUNDARY, CollisionCategory.BOUNDARY_COLLIDER);
+        B2DBodyBuilder.createBody(world, map.getX(), 0-3.99f, map.getWidth(), 4, BodyDef.BodyType.StaticBody, CollisionCategory.BOUNDARY, CollisionCategory.BOUNDARY_COLLIDER);
+        B2DBodyBuilder.createBody(world, map.getX() - 2f, 0, 0.15f, map.getHeight() - 3, BodyDef.BodyType.StaticBody, CollisionCategory.BOUNDARY, CollisionCategory.BOUNDARY_COLLIDER);
+        B2DBodyBuilder.createBody(world, map.getWidth() + 2f, 0, 0.15f, map.getHeight() - 3, BodyDef.BodyType.StaticBody, CollisionCategory.BOUNDARY, CollisionCategory.BOUNDARY_COLLIDER);
 
         if(player != null)
             gameStage.addActor(player);
@@ -151,6 +165,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
             ((Zombie)zombie).addInteractingObject(player);
 
         completed = false;
+
     }
 
     //Update the logic every frame
@@ -169,7 +184,13 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         if(stateTime % 1 > 0.9f)
             stateTime += 1-(stateTime % 1);
 
+        if(player.getX() + player.getWidth() / 2 < 0 && lastScreen != null) {
+            game.setScreen(lastScreen.getScreen(game, map.getWidth() - 1));
+        }
         checkCompleteLevel();
+        if(player.getX() + player.getWidth() / 2 > map.getWidth() + 0.5f && nextScreen != null && this.completed) {
+            game.setScreen(nextScreen.getScreen(game, 0));
+        }
     }
 
     //Draws the current frame
@@ -186,7 +207,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         screenStage.draw();
 
         rayHandler.setCombinedMatrix((SideScrollingCamera)gameStage.getCamera());
-        //rayHandler.updateAndRender();
+        rayHandler.updateAndRender();
         renderer.render(world, gameStage.getCamera().combined.cpy());
 
     }
@@ -236,6 +257,26 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
             player.playerTranslation.y = 3;
         if(Gdx.input.isKeyPressed(Input.Keys.S))
             player.playerTranslation.y = -3;
+
+        if(weaponsAllowed) {
+            if(player.getWeapon() == Weapons.Pistol) {
+                if (Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT)) {
+                    Vector2 mousePos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
+                    mousePos = gameStage.screenToStageCoordinates(mousePos);
+                    this.bullets.addActor(new Bullet(world, player.getX(), player.getY(), mousePos.cpy().sub(player.getOrigin()).nor()));
+                }
+            }
+            if(player.getWeapon() == Weapons.SMG) {
+                if (Gdx.input.isTouched() || Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
+                    if(player.cooldown > 17) {
+                        Vector2 mousePos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
+                        mousePos = gameStage.screenToStageCoordinates(mousePos);
+                        this.bullets.addActor(new Bullet(world, player.getX(), player.getY(), mousePos.cpy().sub(player.getOrigin()).nor()));
+                        player.cooldown = 0;
+                    }
+                }
+            }
+        }
     }
 
     //Player, Enemy and Bullets collision check, plus the most sophisticated AI the world has ever seen for a zombie

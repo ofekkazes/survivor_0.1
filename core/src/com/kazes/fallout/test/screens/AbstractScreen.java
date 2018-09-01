@@ -27,6 +27,7 @@ public abstract class AbstractScreen implements Screen{
 		this.game = game;
 	}
 
+
 	public void update(float delta) {
 	}
 

@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.StringBuilder;
 import com.kazes.fallout.test.*;
+import com.kazes.fallout.test.physics.CollisionCategory;
 import com.kyper.yarn.Dialogue;
 import com.kyper.yarn.Library;
 import com.kyper.yarn.UserData;
@@ -27,6 +28,7 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 public class SideScroll extends GameScreen {
     public static Texture texture; //temp pikachu texture for testing
 
+    private Group injuredNPCS;
 
     private Window dialogWindow;
     private String line;
@@ -66,11 +68,7 @@ public class SideScroll extends GameScreen {
 
     //Load the content
     private void create (final Survivor game) {
-        //SuperObject.init();
-        //gameStage.setDebugAll(true);
-
-        //gameStage.getBatch().setShader(new ShaderProgram(Gdx.files.internal("shaders/basicVertex120.vs").readString(), Gdx.files.internal("shaders/basicFragment120.fs").readString()));
-
+        nextScreen = Screens.Tribe;
         screenStage.addActor(player.bag);
 
         player.bag.items.addListener(new ClickListener() {
@@ -167,19 +165,13 @@ public class SideScroll extends GameScreen {
         this.pickItem();
         this.followPlayer();
 
-        if(player.getY() > 12.9)
-            player.setY(12.9f);
-        if(player.getY() < 0)
-            player.setY(0);
 
         if(player.getHealth() == 0) {
             Gdx.app.log("Survivor", "Game over");
             Gdx.app.exit();
         }
 
-        if(player.getX() > map.getWidth() + 0.003f) {
-            game.setScreen(Screens.Tribe.getScreen(game));
-        }
+
 
         updateDialogue();
         //SuperObject.updateEnd();
@@ -213,25 +205,7 @@ public class SideScroll extends GameScreen {
             }
         }
 
-        if(player.getWeapon() == Weapons.Pistol) {
-            if (Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT)) {
-                Vector2 mousePos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
-                mousePos = gameStage.screenToStageCoordinates(mousePos);
-                this.bullets.addActor(new Bullet(world, player.getX(), player.getY(), mousePos.cpy().sub(player.getOrigin()).nor()));
-                //gameStage.addActor(this.bullets.get(this.bullets.size - 1));
-            }
-        }
-        if(player.getWeapon() == Weapons.SMG) {
-            if (Gdx.input.isTouched() || Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
-                if(player.cooldown > 17) {
-                    Vector2 mousePos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
-                    mousePos = gameStage.screenToStageCoordinates(mousePos);
-                    this.bullets.addActor(new Bullet(world, player.getX(), player.getY(), mousePos.cpy().sub(player.getOrigin()).nor()));
-                    //gameStage.addActor(this.bullets.get(this.bullets.size - 1));
-                    player.cooldown = 0;
-                }
-            }
-        }
+
 
 
 
@@ -299,8 +273,6 @@ public class SideScroll extends GameScreen {
                     //gameStage.getActors().removeValue(talkingTo, false);
                     Gdx.app.log("Followers", talkingTo.getName() + " was added");
                     followers.addActor(talkingTo);
-                    for(Actor actor : enemies.getChildren())
-                        ((Zombie)actor).addInteractingObject(talkingTo);
                 }
             }
         });
@@ -498,13 +470,14 @@ public class SideScroll extends GameScreen {
 
     @Override
     public void setDecor() {
-        decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE1, Texture.class), Survivor.getInMeters(500), Survivor.getInMeters(300), world, BodyDef.BodyType.StaticBody));
-        decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE2, Texture.class), Survivor.getInMeters(1000), Survivor.getInMeters(300), world, BodyDef.BodyType.StaticBody));
+        decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE1, Texture.class), Survivor.getInMeters(500), Survivor.getInMeters(300), world, BodyDef.BodyType.StaticBody, CollisionCategory.DECORATION, CollisionCategory.DECORATION_COLLIDER));
+        decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE2, Texture.class), Survivor.getInMeters(1000), Survivor.getInMeters(300), world, BodyDef.BodyType.StaticBody, CollisionCategory.DECORATION, CollisionCategory.DECORATION_COLLIDER));
     }
 
     @Override
     public void setPlayer(float startingPointX) {
         player.setX(startingPointX);
+        weaponsAllowed = true;
     }
 
     @Override
@@ -514,6 +487,8 @@ public class SideScroll extends GameScreen {
         for (int i = 0; i < npcs.getChildren().size; i++) {
             npcs.getChildren().items[i].setSize(Survivor.getInMeters(100), Survivor.getInMeters(150));
         }
+        //npcs.addActor(this.injuredNPCS);
+        ///injuredNPCS.addActor(new InjuredNPC(world, 15, 5, Weapons.Pistol));
     }
 
     @Override
