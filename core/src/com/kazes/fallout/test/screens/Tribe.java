@@ -29,8 +29,6 @@ public class Tribe extends GameScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-        ((SideScrollingCamera)gameStage.getCamera()).followPos(player.getOrigin());
-        parallaxBackground.setXPos(gameStage.getCamera().position.x - gameStage.getCamera().viewportWidth / 2);
 
     }
 
@@ -41,7 +39,7 @@ public class Tribe extends GameScreen {
             parallaxTextures.add(Assets.getAsset(Assets._Parallax1[i], Texture.class));
             parallaxTextures.get(i).setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat);
         }
-        parallaxBackground = new ParallaxBackground(parallaxTextures);
+        parallaxBackground = new ParallaxBackground(parallaxTextures, gameStage.getCamera().viewportWidth, gameStage.getCamera().viewportHeight);
         parallaxBackground.setSize(Gdx.graphics.getWidth() / 2,Gdx.graphics.getHeight() / 2);
 
 

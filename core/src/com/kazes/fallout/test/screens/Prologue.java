@@ -73,7 +73,7 @@ public class Prologue extends GameScreen {
             parallaxTextures.add(Assets.getAsset(Assets._Parallax1[i], Texture.class));
             parallaxTextures.get(i).setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat);
         }
-        parallaxBackground = new ParallaxBackground(parallaxTextures);
+        parallaxBackground = new ParallaxBackground(parallaxTextures, gameStage.getCamera().viewportWidth, gameStage.getCamera().viewportHeight);
         parallaxBackground.setSize(Gdx.graphics.getWidth() / 2,Gdx.graphics.getHeight() / 2);
         gameStage.addActor(parallaxBackground);
 
@@ -171,8 +171,7 @@ public class Prologue extends GameScreen {
         if(i % 30 == 0) {
             turn = !turn;
             ImageEx position = (turn) ? npc1 : npc2;
-            ImageEx[] array = enemies.toArray(ImageEx.class);
-            bullets.add(new Bullet(world, position.getX(), position.getY(), SideScroll.closestTo(array, position).getOrigin().cpy().sub(position.getOrigin()).nor()));
+            bullets.add(new Bullet(world, position.getX(), position.getY(), GameScreen.closestTo(new Array<Actor>(enemies), position).getOrigin().cpy().sub(position.getOrigin()).nor()));
             gameStage.addActor(this.bullets.get(bullets.size - 1));
         }
         if(this.bullets.size > 0) {

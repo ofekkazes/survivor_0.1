@@ -3,6 +3,7 @@ package com.kazes.fallout.test.screens;
 import box2dLight.DirectionalLight;
 import box2dLight.PointLight;
 import box2dLight.RayHandler;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
@@ -23,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -44,6 +46,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
     static Player player; //Game player
     boolean weaponsAllowed;
+
 
     Stage gameStage; //Game container
     Stage screenStage; //Screen container
@@ -76,7 +79,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
         //Changing the camera used by the game stage
         SideScrollingCamera camera = new SideScrollingCamera(30, 20);
-        camera.setToOrtho(false, 30, 20);
+        //camera.setToOrtho(false, 30, 20);
         StretchViewport viewp = new StretchViewport(30.6f, 17, camera);
 
         gameStage = new Stage(viewp);
@@ -179,24 +182,21 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         this.fireGun();
         this.playerZombieInteraction();
         this.fireplaceCheck();
+        this.screenChange();
 
         stateTime += delta;
         if(stateTime % 1 > 0.9f)
             stateTime += 1-(stateTime % 1);
 
-        if(player.getX() + player.getWidth() / 2 < 0 && lastScreen != null) {
-            game.setScreen(lastScreen.getScreen(game, map.getWidth() - 1));
-        }
-        checkCompleteLevel();
-        if(player.getX() + player.getWidth() / 2 > map.getWidth() + 0.5f && nextScreen != null && this.completed) {
-            game.setScreen(nextScreen.getScreen(game, 0));
-        }
+
     }
 
     //Draws the current frame
     @Override
     public void render(float delta) {
         super.render(delta);
+
+        parallaxBackground.setXPos(gameStage.getCamera().position.x - gameStage.getCamera().viewportWidth / 2);
 
         gameStage.act(Gdx.graphics.getDeltaTime());
         gameStage.getViewport().apply();
@@ -229,6 +229,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     public void resize(int width, int height) {
         super.resize(width, height);
         ((OrthographicCamera)gameStage.getCamera()).setToOrtho(false, VIRTUAL_HEIGHT * width / (float)height, VIRTUAL_HEIGHT);
+        ((OrthographicCamera)gameStage.getCamera()).position.set(Survivor.getInMeters(width/2f), Survivor.getInMeters(height/2f), 0);
         gameStage.getCamera().update();
     }
 
@@ -263,7 +264,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
                 if (Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT)) {
                     Vector2 mousePos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
                     mousePos = gameStage.screenToStageCoordinates(mousePos);
-                    this.bullets.addActor(new Bullet(world, player.getX(), player.getY(), mousePos.cpy().sub(player.getOrigin()).nor()));
+                    this.bullets.addActor(new Bullet(world, player.getOrigin().x, player.getOrigin().y, mousePos.cpy().sub(player.getOrigin()).nor()));
                 }
             }
             if(player.getWeapon() == Weapons.SMG) {
@@ -333,10 +334,9 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
                 ((Bullet)this.bullets.getChildren().get(0)).setRemove();
             }
         }
-        ImageEx[] array = enemies.getChildren().toArray(ImageEx.class);
         for(NPC follower : (NPC[])followers.getChildren().toArray(NPC.class)) {
             if(enemies.getChildren().size > 0) {
-                Vector2 closest = SideScroll.closestTo(array, follower).getOrigin().cpy().sub(follower.getOrigin()).nor();
+                Vector2 closest = GameScreen.closestTo(enemies.getChildren(), follower).getOrigin().cpy().sub(follower.getOrigin()).nor();
                 switch (follower.getWeapon()) {
                     case Pistol:
                         if (follower.getCooldown() % 50 == 0) {
@@ -355,10 +355,20 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         }
     }
 
-    public void fireplaceCheck() {
+    private void fireplaceCheck() {
         for(int i = 0; i < bonfires.getChildren().size; i++) {
             if(((Bonfire)bonfires.getChildren().get(i)).getTimeout() < 0)
                 bonfires.removeActor(bonfires.getChildren().get(i));
+        }
+    }
+
+    private void screenChange() {
+        if(player.getX() + player.getWidth() / 2 < 0 && lastScreen != null) {
+            game.setScreen(lastScreen.getScreen(game, map.getWidth() - 1));
+        }
+        checkCompleteLevel();
+        if(player.getX() + player.getWidth() / 2 > map.getWidth() + 0.5f && nextScreen != null && this.completed) {
+            game.setScreen(nextScreen.getScreen(game, 0));
         }
     }
 
@@ -366,17 +376,17 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         return (number < 0) ? number * -1 : number;
     }
 
-    static ImageEx closestTo(ImageEx[] vectorsArray, ImageEx checkVector) {
+    static ImageEx closestTo(Array<Actor> vectorsArray, ImageEx checkVector) {
         float shortestDist = 0;
-        ImageEx closestVector = null;
-        for(ImageEx point : vectorsArray){
+        ImageEx closestActor = null;
+        for(ImageEx point : (ImageEx[])vectorsArray.toArray(ImageEx.class)){
             float dst2 = checkVector.getOrigin().dst2(point.getOrigin());
-            if(closestVector == null || dst2 < shortestDist){
+            if(closestActor == null || dst2 < shortestDist){
                 shortestDist = dst2;
-                closestVector = point;
+                closestActor = point;
             }
         }
-        return closestVector;
+        return closestActor;
     }
 
     private static Vector2 getRange(float xOrigin, float yOrigin, float xTarget, float yTarget) {

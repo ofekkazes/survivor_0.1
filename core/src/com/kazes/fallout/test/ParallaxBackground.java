@@ -18,7 +18,7 @@ public class ParallaxBackground extends Actor {
 
     private float speed;
 
-    public ParallaxBackground(Array<Texture> textures){
+    public ParallaxBackground(Array<Texture> textures, float width, float height){
         layers = textures;
         for(int i = 0; i <textures.size;i++){
             layers.get(i).setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat);
@@ -27,12 +27,12 @@ public class ParallaxBackground extends Actor {
         speed = 0;
 
         //x = y = originX = originY = rotation = srcY = 0;
-        width =  Gdx.graphics.getWidth();
-        height = Gdx.graphics.getHeight() / 2;
-        y = Gdx.graphics.getHeight() / 2;
+        this.width =  width;
+        this.height = height / 2;
+        y = height / 2;
         scaleX = scaleY = 1;
         flipX = flipY = false;
-        setVisible(false);
+        setVisible(true);
     }
 
     public void setSpeed(float newSpeed){
@@ -51,7 +51,7 @@ public class ParallaxBackground extends Actor {
         scroll+=speed;
         for(int i = 0;i<layers.size;i++) {
             srcX = scroll + i*this.LAYER_SPEED_DIFFERENCE *scroll;
-            batch.draw(layers.get(i), x, y, 0, 0, width, height,scaleX,scaleY,0,(int)srcX,0,layers.get(i).getWidth(),layers.get(i).getHeight(),flipX,flipY);
+            batch.draw(layers.get(i), x, y, 0, 0, width, height,scaleX,scaleY,0,(int)srcX,0,layers.get(i).getWidth(),layers.get(i).getHeight(),false,false);
         }
     }
 

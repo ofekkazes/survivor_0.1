@@ -182,7 +182,7 @@ public class SideScroll extends GameScreen {
     public void render (float delta) {
         super.render(delta);
         ((SideScrollingCamera)gameStage.getCamera()).followPos(player.getOrigin());
-        parallaxBackground.setXPos(gameStage.getCamera().position.x - gameStage.getCamera().viewportWidth / 2);
+        //parallaxBackground.setXPos(gameStage.getCamera().position.x - gameStage.getCamera().viewportWidth / 2);
         renderDialogue();
     }
 
@@ -438,18 +438,6 @@ public class SideScroll extends GameScreen {
         return (number < 0) ? number * -1 : number;
     }
 
-    static ImageEx closestTo(ImageEx[] vectorsArray, ImageEx checkVector) {
-        float shortestDist = 0;
-        ImageEx closestVector = null;
-        for(ImageEx point : vectorsArray){
-            float dst2 = checkVector.getOrigin().dst2(point.getOrigin());
-            if(closestVector == null || dst2 < shortestDist){
-                shortestDist = dst2;
-                closestVector = point;
-            }
-        }
-        return closestVector;
-    }
 
     private static Vector2 getRange(float xOrigin, float yOrigin, float xTarget, float yTarget) {
         return new Vector2(xOrigin - xTarget, yOrigin - yTarget);
@@ -461,9 +449,10 @@ public class SideScroll extends GameScreen {
         for(int i = 0; i < 6;i++){
             parallaxTextures.add(Assets.getAsset(Assets._Parallax1[i], Texture.class));
             parallaxTextures.get(i).setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat);
+
         }
-        parallaxBackground = new ParallaxBackground(parallaxTextures);
-        parallaxBackground.setSize(Gdx.graphics.getWidth() / 2,Gdx.graphics.getHeight() / 2);
+        parallaxBackground = new ParallaxBackground(parallaxTextures, gameStage.getCamera().viewportWidth, gameStage.getCamera().viewportHeight);
+        //parallaxBackground.setSize(Survivor.getInMeters(Gdx.graphics.getWidth() / 2),Survivor.getInMeters(Gdx.graphics.getHeight() / 2));
 
         map = new ImageEx(game.assetManager.get(Assets.Images.MAP, Texture.class), 0, 0);
     }

@@ -9,10 +9,10 @@ import com.kazes.fallout.test.screens.GameScreen;
 
 public class SideScrollingCamera extends OrthographicCamera {
 
-    float updateX;
-    float updateY;
+    private float updateX;
+    private float updateY;
 
-    boolean updateCamera;
+    private boolean updateCamera;
 
     /*public SideScrollingCamera() {
         super();
@@ -47,7 +47,7 @@ public class SideScrollingCamera extends OrthographicCamera {
         }
 
 
-        if (position.x < 0 + viewportWidth / 2) {
+        if (position.x < viewportWidth / 2) {
             position.x = (int)(viewportWidth / 2);
             updateCamera = false;
         }
@@ -56,6 +56,7 @@ public class SideScrollingCamera extends OrthographicCamera {
             position.x = Survivor.getInMeters(4048) - (int)(viewportWidth / 2);
             updateCamera = false;
         }
+
 
         if(updateCamera) update();
 
