@@ -35,6 +35,7 @@ public class Bullet extends ImageEx {
         f.groupIndex = 2;
         f.maskBits = (short)0;
         body.getFixtureList().get(0).setFilterData(f);
+        body.setBullet(true);
     }
 
     @Override
