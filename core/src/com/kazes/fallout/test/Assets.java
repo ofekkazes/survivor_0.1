@@ -89,10 +89,12 @@ public class Assets {
         public static final String SALLY  = "dialogues/sally.json";
         public static final String EXAMPLE  = "dialogues/example.json";
         public static final String PROLOGUE  = "dialogues/prologue.json";
+        public static final String MERCENARIES  = "dialogues/mercenaries.json";
     }
     private static final String[] _Dialogues = {
             Dialogues.SHIP, Dialogues.SALLY,
-            Dialogues.EXAMPLE, Dialogues.PROLOGUE
+            Dialogues.EXAMPLE, Dialogues.PROLOGUE,
+            Dialogues.MERCENARIES
     };
 
     public static class FontSizes {

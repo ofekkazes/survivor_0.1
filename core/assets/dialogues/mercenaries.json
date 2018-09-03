@@ -1,0 +1,33 @@
+[
+	{
+		"title": "Start",
+		"tags": "",
+		"body": "A: Ready for battle?\nB: Always are\nB: We trained for this\nRisk is %risk and time is %time\n[[Send them away|Recruit]]\n[[Leave|Leave]]",
+		"position": {
+			"x": 592,
+			"y": 181
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Leave",
+		"tags": "",
+		"body": "Perhaps another time!",
+		"position": {
+			"x": 387,
+			"y": 487
+		},
+		"colorID": 0
+	},
+	{
+		"title": "Recruit",
+		"tags": "",
+		"body": "<<sendToMission()>>\nIt won't be easy, that I know\nStill, still that is what has to be done.",
+		"position": {
+			"x": 592,
+			"y": 181
+		},
+		"colorID": 0
+	},
+
+]
