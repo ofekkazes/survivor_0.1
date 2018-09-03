@@ -73,6 +73,8 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     RayHandler rayHandler;
     Box2DDebugRenderer renderer;
 
+    DialogueManager dialogueManager;
+
     GameScreen(Survivor game, String name, float startingPosX) {
         super(game);
         stateTime = 0;
@@ -91,7 +93,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         rayHandler = new RayHandler(world);
         rayHandler.setAmbientLight(0.1f, 0.1f, 0.1f, 0.2f);
         rayHandler.setBlurNum(3);
-        new PointLight(rayHandler, 40, Color.CYAN, 10, 30, 2);
+        new PointLight(rayHandler, 120, Color.FIREBRICK, 10, 29.8f, 2);
 
 
         //new PointLight(rayHandler, 20, Color.BLUE, 150, Survivor.getInMeters(400), Survivor.getInMeters(200));
@@ -169,6 +171,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
         completed = false;
 
+        this.dialogueManager = new DialogueManager();
     }
 
     //Update the logic every frame
@@ -184,11 +187,11 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         this.fireplaceCheck();
         this.screenChange();
 
+        dialogueManager.update();
+
         stateTime += delta;
         if(stateTime % 1 > 0.9f)
             stateTime += 1-(stateTime % 1);
-
-
     }
 
     //Draws the current frame
@@ -201,6 +204,8 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         gameStage.act(Gdx.graphics.getDeltaTime());
         gameStage.getViewport().apply();
         gameStage.draw();
+
+        dialogueManager.render();
 
         screenStage.act(Gdx.graphics.getDeltaTime());
         screenStage.getViewport().apply();
@@ -278,6 +283,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
                 }
             }
         }
+        dialogueManager.input();
     }
 
     //Player, Enemy and Bullets collision check, plus the most sophisticated AI the world has ever seen for a zombie

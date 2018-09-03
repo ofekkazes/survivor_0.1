@@ -42,4 +42,5 @@ public class SplashScreen extends GameScreen {
     public void setItems() {
 
     }
+
 }
