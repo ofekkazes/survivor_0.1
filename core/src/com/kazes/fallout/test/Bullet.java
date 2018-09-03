@@ -25,7 +25,7 @@ public class Bullet extends ImageEx {
         circle.setRadius(this.getWidth()/2);
         circle.setPosition(new Vector2(getWidth() / 2, getHeight() / 2));
         this.world = world;
-        body = B2DBodyBuilder.createBody(world, circle, xPos, yPos, getWidth(), getHeight(), BodyDef.BodyType.DynamicBody, CollisionCategory.BULLET, CollisionCategory.BULLET_COLLIDER);
+        body = B2DBodyBuilder.createBody(world, circle, xPos, yPos, BodyDef.BodyType.DynamicBody, CollisionCategory.BULLET, CollisionCategory.BULLET_COLLIDER);
         body.setUserData(this);
         body.setTransform(body.getWorldCenter(), MathUtils.degreesToRadians * direction.angle());
         setOrigin(0, 0);
