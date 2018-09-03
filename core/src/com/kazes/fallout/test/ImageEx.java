@@ -15,7 +15,8 @@ public class ImageEx extends Image {
     private Rectangle rectangle;
     World world;
     Body body;
-
+    float xOffset;
+    float yOffset;
 
     public ImageEx(Texture texture, float xPos, float yPos) {
         super(texture);
@@ -49,13 +50,13 @@ public class ImageEx extends Image {
         if(body != null) {
             if(!hasActions()) {
                 if (body.isAwake()) {
-                    setX(body.getPosition().x);
-                    setY(body.getPosition().y);
+                    setX(body.getPosition().x - xOffset);
+                    setY(body.getPosition().y - yOffset);
                     setRotation(MathUtils.radiansToDegrees * body.getAngle());
                 }
             }
             else {
-                body.setTransform(getX(), getY(), getRotation() * MathUtils.degreesToRadians);
+                body.setTransform(getX() + xOffset, getY() + yOffset, getRotation() * MathUtils.degreesToRadians);
                 
             }
         }
@@ -81,6 +82,14 @@ public class ImageEx extends Image {
 
     public Vector2 getOrigin() {
         return new Vector2(getX() + getWidth() / 2, getY() + getHeight() / 2);
+    }
+
+    public void setBody(World world, Body body) { this.world = world; this.body = body; }
+
+    public void setOffset(float x, float y) {
+        this.xOffset = x;
+        this.yOffset = y;
+        this.body.setTransform(getX() + xOffset, getY() + yOffset, 0f);
     }
 
     public void setRemove() { this.remove = true; }
