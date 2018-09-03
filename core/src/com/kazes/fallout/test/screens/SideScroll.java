@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
@@ -30,21 +31,7 @@ public class SideScroll extends GameScreen {
 
     private Group injuredNPCS;
 
-    private Window dialogWindow;
-    private String line;
     private NPC talkingTo;
-
-    ///////////////////////////////
-    //Dialogue vars
-    private int[] OP_KEYS = { Input.Keys.NUM_1, Input.Keys.NUM_2, Input.Keys.NUM_3, Input.Keys.NUM_4, Input.Keys.NUM_5 };
-    private Dialogue test_dialogue;
-    private Dialogue.LineResult current_line = null;
-    private Dialogue.OptionResult current_options = null;
-    private Dialogue.CommandResult current_command = null;
-    private Dialogue.NodeCompleteResult node_complete = null;
-    private StringBuilder option_string;
-    private boolean complete = true;
-
 
     public SideScroll(Survivor game) {
         super(game, "Prologue", 0);
@@ -142,19 +129,32 @@ public class SideScroll extends GameScreen {
             }
         });
 
+        dialogueManager.dialogue.getLibrary().registerFunction("setSallyAction", 1, new Library.Function() {
+            @Override
+            public void invoke(com.kyper.yarn.Value... params) {
+                // this function only has one parameter so check like so
+                //Value action = params[0];// this parameter will be the name of the action sprite to set sally to
 
-        createDialogue();
-        //test_dialogue.start("Start");
-        complete = true;
-        resetAllResults();
 
-        dialogWindow = new Window("Dialog", Assets.getAsset(Assets.UI_SKIN, Skin.class));
-        dialogWindow.setSize(Gdx.graphics.getWidth(), 200);
-        dialogWindow.setVisible(false);
-        dialogWindow.add(new Label("",  Assets.getAsset(Assets.UI_SKIN, Skin.class)));
-        screenStage.addActor(dialogWindow);
+            }
+        });
+        dialogueManager.dialogue.getLibrary().registerFunction("recruitAction", 0, new Library.Function() {
+            @Override
+            public void invoke(Value... params) {
+                if(talkingTo != null) {
+                    npcs.removeActor(talkingTo);
+                    //gameStage.getActors().removeValue(talkingTo, false);
+                    Gdx.app.log("Followers", talkingTo.getName() + " was added");
+                    followers.addActor(talkingTo);
+                }
+            }
+        });
+        dialogueManager.dialogue.loadFile(Assets.Dialogues.SALLY, false, false, null);
+        dialogueManager.dialogue.loadFile(Assets.Dialogues.SHIP, false, false, null);
+        dialogueManager.dialogue.loadFile(Assets.Dialogues.EXAMPLE, false, false, null);
 
-        line = "";
+        screenStage.addActor(dialogueManager.getWindow());
+
     }
 
     @Override
@@ -171,9 +171,6 @@ public class SideScroll extends GameScreen {
             Gdx.app.exit();
         }
 
-
-
-        updateDialogue();
         //SuperObject.updateEnd();
     }
 
@@ -183,7 +180,6 @@ public class SideScroll extends GameScreen {
         super.render(delta);
         ((SideScrollingCamera)gameStage.getCamera()).followPos(player.getOrigin());
         //parallaxBackground.setXPos(gameStage.getCamera().position.x - gameStage.getCamera().viewportWidth / 2);
-        renderDialogue();
     }
 
     //Every input given from the player is processed here
@@ -196,18 +192,11 @@ public class SideScroll extends GameScreen {
             for(int i = 0; i < npcs.getChildren().size; i++) {
                 if(player.getRectangle().overlaps(((NPC)npcs.getChildren().items[i]).getRectangle())) {
                     talkingTo = (NPC)npcs.getChildren().items[i];
-                    test_dialogue.start("TalkTo");
-                    complete = false;
-                    resetAllResults();
-                    dialogWindow.setVisible(true);
+                    dialogueManager.start("TalkTo");
                     break;
                 }
             }
         }
-
-
-
-
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.K)) {
             Actor bagItem;
@@ -225,12 +214,18 @@ public class SideScroll extends GameScreen {
                 }
             }
         }
-        inputDialogue();
+        if(dialogueManager.isCompleted()) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
+                // talk to ship
+                dialogueManager.start("Ship");
+            }
+
+            if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
+                // talk to sally
+                dialogueManager.start("Sally");
+            }
+        }
     }
-
-
-
-
 
     //Checks if the player picked up an item
     private void pickItem() {
@@ -251,180 +246,6 @@ public class SideScroll extends GameScreen {
             if(!follower.hasActions())
                 follower.addAction(moveTo(player.getX() + ((player.isxFlip()) ? Survivor.getInMeters(50) + ( Survivor.getInMeters(50) * followers.getChildren().indexOf(follower, false)) : Survivor.getInMeters(-50) - ( Survivor.getInMeters(70) * followers.getChildren().indexOf(follower, false))), player.getY(), 1f));
         }
-    }
-
-    private void createDialogue() {
-        option_string = new StringBuilder(400);
-        test_dialogue = new Dialogue(new UserData("test_data"));
-        test_dialogue.getLibrary().registerFunction("setSallyAction", 1, new Library.Function() {
-            @Override
-            public void invoke(com.kyper.yarn.Value... params) {
-                // this function only has one parameter so check like so
-                //Value action = params[0];// this parameter will be the name of the action sprite to set sally to
-
-
-            }
-        });
-        test_dialogue.getLibrary().registerFunction("recruitAction", 0, new Library.Function() {
-            @Override
-            public void invoke(Value... params) {
-                if(talkingTo != null) {
-                    npcs.removeActor(talkingTo);
-                    //gameStage.getActors().removeValue(talkingTo, false);
-                    Gdx.app.log("Followers", talkingTo.getName() + " was added");
-                    followers.addActor(talkingTo);
-                }
-            }
-        });
-        String ship_file = "dialogues/ship.json";
-        String sally_file = "dialogues/sally.json";
-        test_dialogue.loadFile(ship_file, false, false, null);
-        test_dialogue.loadFile(sally_file, false, false, null);
-        test_dialogue.loadFile("dialogues/example.json", false, false, null);
-    }
-
-    private void updateDialogue() {
-        // if we currently dont have any command available check if next result is a
-        // command
-        if (current_command == null && test_dialogue.isNextCommand()) {
-            // assign it
-            current_command = test_dialogue.getNextAsCommand();
-        }
-        // if we dont have a line - check if next result is a line
-        else if (current_line == null && test_dialogue.isNextLine()) {
-            // if there is a command result - execute it before the next line
-            executeCommand();
-            // assign the line
-            current_line = test_dialogue.getNextAsLine();
-
-        }
-        // if we dont have any options check if the next result is options
-        else if (current_options == null && test_dialogue.isNextOptions()) {
-            // assign the options
-            current_options = test_dialogue.getNextAsOptions();
-        }
-        // if the node has not found a complete result - check if next result is a node
-        // complete result
-        else if (node_complete == null && test_dialogue.isNextComplete()) {
-            // assign node complete result
-            node_complete = test_dialogue.getNextAsComplete();
-        } else {
-            // waiting to proccess line or no results available
-
-            // check if the current line is proccessed(null) and that we have a node
-            // complete result
-            if (current_line == null && node_complete != null) {
-                // execute any lingering commands
-                executeCommand();
-                // set complete to true
-                complete = true;
-
-                // lets clean up the results
-                resetAllResults();
-
-                // stop the dialogue
-                test_dialogue.stop();
-                //dialogWindow.addAction(parallel(scaleBy(Gdx.graphics.getWidth(), 200, 1f, Interpolation.sine), moveTo(0,0, 1f)));
-                dialogWindow.setVisible(false);
-            }
-        }
-
-    }
-
-    private void executeCommand() {
-        if (current_command != null) {
-            String params[] = current_command.getCommand().split("\\s+"); // commands are space delimited-- any space
-            for (int i = 0; i < params.length; i++) {
-                params[i] = params[i].trim(); // just trim to make sure
-            }
-            current_command = null;
-        }
-    }
-
-    private void inputDialogue() {
-        if (complete) {
-
-            if (Gdx.input.isKeyJustPressed(OP_KEYS[0])) {
-                // talk to ship
-                test_dialogue.start("Ship");
-                complete = false;
-                resetAllResults();
-            }
-
-            if (Gdx.input.isKeyJustPressed(OP_KEYS[1])) {
-                // talk to sally
-                test_dialogue.start("Sally");
-                complete = false;
-                resetAllResults();
-            }
-
-            return;
-
-        }
-
-        // space goes to next line unless there is options
-        if (current_line != null && current_options == null) {
-            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-                current_line = null;
-            }
-        }
-
-        // there is options so check all corresponding keys(1-5)
-        if (current_options != null) {
-            // check to see what is less - the amount of options or the size of keys we are
-            // using to accept options
-            int check_limit = Math.min(current_options.getOptions().size, OP_KEYS.length); // we do this to avoid array
-            // index exceptions
-            for (int i = 0; i < check_limit; i++) {
-                // loop to see if any of the corresponding keys to options is pressed
-                if (Gdx.input.isKeyJustPressed(OP_KEYS[i])) {
-                    // if yes then choose
-                    current_options.choose(i);
-
-                    // then clear options and current line - break out of for loop
-                    current_options = null;
-                    current_line = null;
-                    break;
-                }
-            }
-        }
-    }
-
-    private void renderDialogue() {
-        if (!complete) {
-            if(!dialogWindow.isVisible())
-                dialogWindow.setVisible(true);
-            //if(!dialogWindow.hasActions())
-             //   dialogWindow.addAction(scaleBy(Gdx.graphics.getWidth(), 200, 1f, Interpolation.sine));
-            // draw dialogue
-            if (current_line != null) {
-                line = current_line.getText();
-            }
-
-            // draw options
-            if (current_options != null) {
-                int check_limit = Math.min(current_options.getOptions().size, OP_KEYS.length); // we do this to avoid
-                // array
-                // index exceptions
-                for (int i = 0; i < check_limit; i++) {
-                    String option = current_options.getOptions().get(i);
-                    option_string.setLength(0);
-                    option_string.append('[').append(i + 1).append(']').append(':').append(' ').append(option);
-                    if(!line.isEmpty())
-                        line += "\n" + option_string.toString();
-                    else
-                        line = option_string.toString();
-                }
-            }
-            ((Label)dialogWindow.getCells().get(0).getActor()).setText(line);
-        }
-    }
-
-    private void resetAllResults() {
-        current_line = null;
-        current_options = null;
-        node_complete = null;
-        current_command = null;
     }
 
     @Override
@@ -512,6 +333,7 @@ public class SideScroll extends GameScreen {
             items.getChildren().get(items.getChildren().size - 1).setName("Bear Trap number "+i);
         }
     }
+
 }
 
 /*Ideas:
