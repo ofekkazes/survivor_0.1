@@ -8,9 +8,9 @@ public class B2DBodyBuilder {
     public static Body createBody(World world, float xPos, float yPos, float width, float height, BodyDef.BodyType type, CollisionCategory categoryBits, CollisionCategory maskBits) {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox(width / 2, height / 2, new Vector2(width / 2, height / 2), 0f);
-        return createBody(world, shape, xPos, yPos, width, height, type, categoryBits, maskBits);
+        return createBody(world, shape, xPos, yPos, type, categoryBits, maskBits);
     }
-    public static Body createBody(World world, Shape shape, float xPos, float yPos, float width, float height, BodyDef.BodyType type, CollisionCategory categoryBits, CollisionCategory maskBits) {
+    public static Body createBody(World world, Shape shape, float xPos, float yPos, BodyDef.BodyType type, CollisionCategory categoryBits, CollisionCategory maskBits) {
         Body body;
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = type;
