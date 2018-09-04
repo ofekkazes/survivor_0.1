@@ -371,7 +371,8 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
                     currentEnemy.subHealth(20);
                     currentEnemy.clearActions();
-                    currentEnemy.addAction(getHitAction(player.getX(), player.getY(), currentEnemy.getX(), currentEnemy.getY()));
+                    getHitAction(((Bullet) bullet).getBody(), currentEnemy.getBody(), currentEnemy);
+                    //currentEnemy.addAction(getHitAction(player.getX(), player.getY(), currentEnemy.getX(), currentEnemy.getY()));
                     ((Bullet) bullet).setRemove();
                     break;
                 }
@@ -473,6 +474,15 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     private static ParallelAction getHitAction(float fromPosX, float fromPosY, float toPosX, float toPosY) {
         return parallel(moveBy(((toPosX - fromPosX > 0)? Survivor.getInMeters(50) : Survivor.getInMeters(-50)) * 2, (toPosY - fromPosY), .3f),
                 sequence(color(Color.RED), color(Color.WHITE, 1f)));
+    }
+    //Create an hit action using the coordinates given
+    private static Vector2 getHitAction(Body attacker, Body defender, Actor defenderActor) {
+        Vector2 fromDirection = attacker.getPosition().sub(defender.getPosition());
+        fromDirection.scl(2f);
+        defender.setLinearVelocity(fromDirection);
+        defender.setLinearDamping(4f);
+        defenderActor.clearActions();
+        return fromDirection;
     }
 
     private void checkCompleteLevel() {

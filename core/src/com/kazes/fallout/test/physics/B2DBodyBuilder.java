@@ -20,8 +20,9 @@ public class B2DBodyBuilder {
         fixtureDef.shape = shape;
         if(categoryBits == CollisionCategory.BOUNDARY)
             fixtureDef.density = 100f;
-        else
-            fixtureDef.density = 1f;
+        else if(categoryBits == CollisionCategory.BULLET)
+            fixtureDef.density = 10f;
+        else fixtureDef.density = 1f;
         fixtureDef.filter.maskBits = maskBits.cat();
         fixtureDef.filter.categoryBits = categoryBits.cat();
         Fixture fixture = body.createFixture(fixtureDef);

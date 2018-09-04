@@ -57,7 +57,7 @@ public class ImageEx extends Image {
             }
             else {
                 body.setTransform(getX() + xOffset, getY() + yOffset, getRotation() * MathUtils.degreesToRadians);
-                
+
             }
         }
         this.rectangle.setX(this.getX());
