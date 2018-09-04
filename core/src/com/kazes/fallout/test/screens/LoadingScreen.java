@@ -43,7 +43,7 @@ public class LoadingScreen extends AbstractScreen {
         if (switchScreen) {
             Assets.finishLoading();
 
-            game.setScreen(new SideScroll(game, Survivor.getInMeters(0)));
+            game.setScreen(new Tribe(game, Survivor.getInMeters(0)));
         }
     }
 

@@ -9,6 +9,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -22,8 +23,13 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.utils.Box2DBuild;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -72,6 +78,9 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     World world;
     RayHandler rayHandler;
     Box2DDebugRenderer renderer;
+    private static float ambientAlpha = 0.65f;
+    private static float time = 0;
+    private static boolean day = true;
 
     DialogueManager dialogueManager;
 
@@ -88,10 +97,13 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         gameStage.getBatch().enableBlending();
         screenStage = new Stage(new ScreenViewport());
 
+        setGUI();
+
         world = new World(Vector2.Zero, false);
         renderer = new Box2DDebugRenderer(true, true, true, true, true, true);
         rayHandler = new RayHandler(world);
-        rayHandler.setAmbientLight(0.1f, 0.1f, 0.1f, 0.2f);
+
+        rayHandler.setAmbientLight(0.1f, 0.1f, 0.1f, ambientAlpha);
         rayHandler.setBlurNum(3);
         new PointLight(rayHandler, 120, Color.FIREBRICK, 10, 29.8f, 2);
 
@@ -171,7 +183,56 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
         completed = false;
 
+
         this.dialogueManager = new DialogueManager();
+    }
+
+    protected void setGUI() {
+        Skin skin = Assets.getAsset(Assets.UI_SKIN, Skin.class);
+        final TextButton menuButton = new TextButton("Menu", skin);
+        final com.badlogic.gdx.scenes.scene2d.ui.Window fastInventory = new Window("fast inventory", skin);
+        final Window playerStats = new Window("Stats", skin);
+
+        menuButton.setWidth(Gdx.graphics.getWidth() / 14.666f);
+        menuButton.setHeight(Gdx.graphics.getHeight() / 16.216f);
+        menuButton.setPosition(Gdx.graphics.getWidth() / 42, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 12);
+        menuButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+            }
+        });
+        Pixmap pixmap = new Pixmap(10, 10, Pixmap.Format.RGBA8888);
+        pixmap.setColor(Color.RED);
+        pixmap.fill();
+
+
+        TextureRegionDrawable textureRegionDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap)));
+        ProgressBar.ProgressBarStyle barStyle = new ProgressBar.ProgressBarStyle(skin.newDrawable("white", Color.DARK_GRAY), textureRegionDrawable);
+        barStyle.knobBefore = barStyle.knob;
+        ProgressBar health = new ProgressBar(0, 10, 0.5f, false, barStyle);
+        ProgressBar hunger = new ProgressBar(0, 10, 0.5f, false, barStyle);
+        ProgressBar thirst = new ProgressBar(0, 10, 0.5f, false, barStyle);
+        Table table = new Table();
+
+        table.add(health).row();
+        table.add(hunger).row();
+        table.add(thirst);
+
+        playerStats.setWidth(Gdx.graphics.getWidth() / 4.07f);
+        playerStats.setHeight(Gdx.graphics.getHeight() / 4.5f);
+        playerStats.setPosition(Gdx.graphics.getWidth() - playerStats.getX(), Gdx.graphics.getHeight() - playerStats.getY());
+        playerStats.setMovable(false);
+        playerStats.setDebug(true);
+
+        playerStats.add(new Label("Weapon", skin)).expand();
+        playerStats.add(new Label("Player", skin)).expand().spaceBottom(Value.percentHeight(1f));
+        playerStats.row();
+        playerStats.add(new Label("Ammo", skin));
+        playerStats.add(table).expandY().space(Value.percentHeight(0f));
+
+        screenStage.addActor(menuButton);
+        screenStage.addActor(playerStats);
     }
 
     //Update the logic every frame
@@ -215,6 +276,20 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         rayHandler.updateAndRender();
         renderer.render(world, gameStage.getCamera().combined.cpy());
 
+        if(day) {
+            time += 0.00005555555;
+            if (time > 1)
+                day = false;
+        }
+        else {
+            time -= 0.00005555555;
+            if (time < 0)
+                day = true;
+        }
+        ambientAlpha = MathUtils.sin(time);
+        ambientAlpha = MathUtils.clamp(ambientAlpha, 0.05f, 0.65f);
+        rayHandler.setAmbientLight(ambientAlpha);
+        Gdx.app.log("Time", ambientAlpha + "");
     }
 
     @Override
@@ -370,7 +445,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
     private void screenChange() {
         if(player.getX() + player.getWidth() / 2 < 0 && lastScreen != null) {
-            game.setScreen(lastScreen.getScreen(game, map.getWidth() - 1));
+            game.setScreen(lastScreen.getScreen(game, map.getWidth() - 1.5f));
         }
         checkCompleteLevel();
         if(player.getX() + player.getWidth() / 2 > map.getWidth() + 0.5f && nextScreen != null && this.completed) {
