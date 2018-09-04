@@ -185,7 +185,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         this.dialogueManager = new DialogueManager();
     }
 
-    protected void setGUI() {
+    private void setGUI() {
         Skin skin = Assets.getAsset(Assets.UI_SKIN, Skin.class);
         final TextButton menuButton = new TextButton("Menu", skin);
         final com.badlogic.gdx.scenes.scene2d.ui.Window fastInventory = new Window("fast inventory", skin);
@@ -212,7 +212,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         Table weaponTable = new Table();
         weaponTable.add(new Label("Weapon", skin)).expand().fillY();
         weaponTable.row();
-        weaponTable.add(new Label("Ammo", skin));
+        weaponTable.add(new Label(player.ammo + " / 50", skin));
 
         playerStats.setWidth(Gdx.graphics.getWidth() / 4.07f);
         playerStats.setHeight(Gdx.graphics.getHeight() / 4.5f);
@@ -222,8 +222,6 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
         playerStats.add(weaponTable).expand();
         playerStats.add(statsTable).expand();
-
-
 
         screenStage.addActor(menuButton);
         screenStage.addActor(playerStats);
@@ -260,18 +258,6 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         gameStage.getViewport().apply();
         gameStage.draw();
 
-        rayHandler.setCombinedMatrix((SideScrollingCamera)gameStage.getCamera());
-        rayHandler.updateAndRender();
-        renderer.render(world, gameStage.getCamera().combined.cpy());
-
-        dialogueManager.render();
-
-        screenStage.act(Gdx.graphics.getDeltaTime());
-        screenStage.getViewport().apply();
-        screenStage.draw();
-
-
-
         if(day) {
             time += 0.00005555555;
             if (time > 1)
@@ -285,6 +271,15 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         ambientAlpha = MathUtils.sin(time);
         ambientAlpha = MathUtils.clamp(ambientAlpha, 0.05f, 0.65f);
         rayHandler.setAmbientLight(ambientAlpha);
+        rayHandler.setCombinedMatrix((SideScrollingCamera)gameStage.getCamera());
+        rayHandler.updateAndRender();
+        renderer.render(world, gameStage.getCamera().combined.cpy());
+
+        dialogueManager.render();
+        screenStage.act(Gdx.graphics.getDeltaTime());
+        screenStage.getViewport().apply();
+        screenStage.draw();
+
     }
 
     @Override
@@ -336,20 +331,24 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
             player.playerTranslation.y = -3;
 
         if(weaponsAllowed) {
-            if(player.getWeapon() == Weapons.Pistol) {
-                if (Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT)) {
-                    Vector2 mousePos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
-                    mousePos = gameStage.screenToStageCoordinates(mousePos);
-                    this.bullets.addActor(new Bullet(world, player.getOrigin().x, player.getOrigin().y, mousePos.cpy().sub(player.getOrigin()).nor()));
-                }
-            }
-            if(player.getWeapon() == Weapons.SMG) {
-                if (Gdx.input.isTouched() || Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
-                    if(player.cooldown > 17) {
+            if(player.ammo > 0) {
+                if (player.getWeapon() == Weapons.Pistol) {
+                    if (Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT)) {
+                        player.ammo--;
                         Vector2 mousePos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
                         mousePos = gameStage.screenToStageCoordinates(mousePos);
-                        this.bullets.addActor(new Bullet(world, player.getX(), player.getY(), mousePos.cpy().sub(player.getOrigin()).nor()));
-                        player.cooldown = 0;
+                        this.bullets.addActor(new Bullet(world, player.getOrigin().x, player.getOrigin().y, mousePos.cpy().sub(player.getOrigin()).nor()));
+                    }
+                }
+                if (player.getWeapon() == Weapons.SMG) {
+                    if (Gdx.input.isTouched() || Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
+                        player.ammo--;
+                        if (player.cooldown > 17) {
+                            Vector2 mousePos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
+                            mousePos = gameStage.screenToStageCoordinates(mousePos);
+                            this.bullets.addActor(new Bullet(world, player.getX(), player.getY(), mousePos.cpy().sub(player.getOrigin()).nor()));
+                            player.cooldown = 0;
+                        }
                     }
                 }
             }

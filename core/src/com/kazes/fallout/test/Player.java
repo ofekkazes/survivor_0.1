@@ -107,7 +107,7 @@ public class Player extends AnimationActor {
         this.weapon = weapon;
     }
 
-    public void eat(float amount) {
+    void eat(float amount) {
         hunger.addValue(amount);
     }
 
