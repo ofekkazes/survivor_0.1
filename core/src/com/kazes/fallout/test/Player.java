@@ -21,11 +21,11 @@ public class Player extends AnimationActor {
 
     public Weapons weapon;
     public int cooldown;
-    public float health;
     public Bag bag;
-    public float hunger;
+    public Progress hunger;
+    public Progress thirst;
+    public Progress health;
     public float time;
-    public float thirst;
     public Vector2 playerTranslation;
     public int ammo;
 
@@ -34,9 +34,12 @@ public class Player extends AnimationActor {
         weapon = Weapons.Pistol;
         bag = new Bag("Bag", Assets.getAsset(Assets.UI_SKIN, Skin.class));
         bag.setVisible(false);
-        this.health = 10000;
-        this.hunger = 100;
-        this.thirst = 100;
+        this.health = new Progress(0, 1, 0.001f, false);
+        this.health.setValue(1);
+        this.hunger = new Progress(0, 1, 0.01f, false);
+        this.hunger.setValue(1);
+        this.thirst = new Progress(0, 1, 0.01f, false);
+        this.thirst.setValue(1);
         this.time = 0;
         this.setOrigin(this.getWidth() / 2, this.getHeight() / 2);
         this.cooldown = 0;
@@ -72,11 +75,11 @@ public class Player extends AnimationActor {
             time += 1-(time % 1);
 
         if((time % 60) == 0) {
-            hunger--;
-            Gdx.app.log("Hunger", hunger + "");
+            hunger.reduceValue(0.01f);
+            Gdx.app.log("Progress", hunger + "");
         }
         if((time % 30) == 0) {
-            thirst--;
+            thirst.reduceValue(0.01f);
             Gdx.app.log("Thirst", thirst + "");
         }
         if(cooldown <= 20)
@@ -87,15 +90,14 @@ public class Player extends AnimationActor {
     }
 
     void addHealth(float amount) {
-        this.health = (amount + this.health > 100) ? 100 : amount + this.health;
+        health.addValue(amount);
     }
 
-    public boolean subHealth(float amount) {
-        this.health = (0 > this.health - amount) ? 0 : this.health - amount;
-        return this.health == 0;
+    public float subHealth(float amount) {
+        return health.reduceValue(amount);
     }
 
-    public float getHealth() { return this.health; }
+    public float getHealth() { return this.health.getValue(); }
 
     public Weapons getWeapon() {
         return weapon;
@@ -106,11 +108,11 @@ public class Player extends AnimationActor {
     }
 
     public void eat(float amount) {
-        hunger += amount;
+        hunger.addValue(amount);
     }
 
     public void drink(float amount) {
-        thirst += amount;
+        thirst.addValue(amount);
     }
 
 

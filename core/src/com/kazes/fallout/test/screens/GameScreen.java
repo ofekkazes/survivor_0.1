@@ -78,8 +78,8 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     World world;
     RayHandler rayHandler;
     Box2DDebugRenderer renderer;
-    private static float ambientAlpha = 0.65f;
-    private static float time = 0;
+    private static float ambientAlpha = 0.5f;
+    private static float time = 0.5f;
     private static boolean day = true;
 
     DialogueManager dialogueManager;
@@ -96,8 +96,6 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         gameStage = new Stage(viewp);
         gameStage.getBatch().enableBlending();
         screenStage = new Stage(new ScreenViewport());
-
-        setGUI();
 
         world = new World(Vector2.Zero, false);
         renderer = new Box2DDebugRenderer(true, true, true, true, true, true);
@@ -169,8 +167,8 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         gameStage.addActor(items);
 
         //Create Boundaries
-        B2DBodyBuilder.createBody(world, map.getX(), map.getHeight() - 3, map.getWidth(), 2, BodyDef.BodyType.StaticBody, CollisionCategory.BOUNDARY, CollisionCategory.BOUNDARY_COLLIDER);
-        B2DBodyBuilder.createBody(world, map.getX(), 0-3.99f, map.getWidth(), 4, BodyDef.BodyType.StaticBody, CollisionCategory.BOUNDARY, CollisionCategory.BOUNDARY_COLLIDER);
+        B2DBodyBuilder.createBody(world, map.getX(), map.getHeight() - 3, map.getWidth(), 10, BodyDef.BodyType.StaticBody, CollisionCategory.BOUNDARY, CollisionCategory.BOUNDARY_COLLIDER);
+        B2DBodyBuilder.createBody(world, map.getX(), 0-9.99f, map.getWidth(), 10, BodyDef.BodyType.StaticBody, CollisionCategory.BOUNDARY, CollisionCategory.BOUNDARY_COLLIDER);
         B2DBodyBuilder.createBody(world, map.getX() - 2f, 0, 0.15f, map.getHeight() - 3, BodyDef.BodyType.StaticBody, CollisionCategory.BOUNDARY, CollisionCategory.BOUNDARY_COLLIDER);
         B2DBodyBuilder.createBody(world, map.getWidth() + 2f, 0, 0.15f, map.getHeight() - 3, BodyDef.BodyType.StaticBody, CollisionCategory.BOUNDARY, CollisionCategory.BOUNDARY_COLLIDER);
 
@@ -183,7 +181,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
         completed = false;
 
-
+        setGUI();
         this.dialogueManager = new DialogueManager();
     }
 
@@ -202,22 +200,19 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
                 super.clicked(event, x, y);
             }
         });
-        Pixmap pixmap = new Pixmap(10, 10, Pixmap.Format.RGBA8888);
-        pixmap.setColor(Color.RED);
-        pixmap.fill();
 
+        Table statsTable = new Table();
+        statsTable.add(new Label("Health", skin)).left().row();
+        statsTable.add(player.health).row();
+        statsTable.add(new Label("Hunger", skin)).left().row();
+        statsTable.add(player.hunger).row();
+        statsTable.add(new Label("Thirst", skin)).left().row();
+        statsTable.add(player.thirst);
 
-        TextureRegionDrawable textureRegionDrawable = new TextureRegionDrawable(new TextureRegion(new Texture(pixmap)));
-        ProgressBar.ProgressBarStyle barStyle = new ProgressBar.ProgressBarStyle(skin.newDrawable("white", Color.DARK_GRAY), textureRegionDrawable);
-        barStyle.knobBefore = barStyle.knob;
-        ProgressBar health = new ProgressBar(0, 10, 0.5f, false, barStyle);
-        ProgressBar hunger = new ProgressBar(0, 10, 0.5f, false, barStyle);
-        ProgressBar thirst = new ProgressBar(0, 10, 0.5f, false, barStyle);
-        Table table = new Table();
-
-        table.add(health).row();
-        table.add(hunger).row();
-        table.add(thirst);
+        Table weaponTable = new Table();
+        weaponTable.add(new Label("Weapon", skin)).expand().fillY();
+        weaponTable.row();
+        weaponTable.add(new Label("Ammo", skin));
 
         playerStats.setWidth(Gdx.graphics.getWidth() / 4.07f);
         playerStats.setHeight(Gdx.graphics.getHeight() / 4.5f);
@@ -225,11 +220,10 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         playerStats.setMovable(false);
         playerStats.setDebug(true);
 
-        playerStats.add(new Label("Weapon", skin)).expand();
-        playerStats.add(new Label("Player", skin)).expand().spaceBottom(Value.percentHeight(1f));
-        playerStats.row();
-        playerStats.add(new Label("Ammo", skin));
-        playerStats.add(table).expandY().space(Value.percentHeight(0f));
+        playerStats.add(weaponTable).expand();
+        playerStats.add(statsTable).expand();
+
+
 
         screenStage.addActor(menuButton);
         screenStage.addActor(playerStats);
@@ -266,15 +260,17 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         gameStage.getViewport().apply();
         gameStage.draw();
 
+        rayHandler.setCombinedMatrix((SideScrollingCamera)gameStage.getCamera());
+        rayHandler.updateAndRender();
+        renderer.render(world, gameStage.getCamera().combined.cpy());
+
         dialogueManager.render();
 
         screenStage.act(Gdx.graphics.getDeltaTime());
         screenStage.getViewport().apply();
         screenStage.draw();
 
-        rayHandler.setCombinedMatrix((SideScrollingCamera)gameStage.getCamera());
-        rayHandler.updateAndRender();
-        renderer.render(world, gameStage.getCamera().combined.cpy());
+
 
         if(day) {
             time += 0.00005555555;
@@ -289,7 +285,6 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         ambientAlpha = MathUtils.sin(time);
         ambientAlpha = MathUtils.clamp(ambientAlpha, 0.05f, 0.65f);
         rayHandler.setAmbientLight(ambientAlpha);
-        Gdx.app.log("Time", ambientAlpha + "");
     }
 
     @Override
@@ -302,6 +297,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         shader.dispose();
         parallaxBackground.dispose();
         renderer.dispose();
+        dialogueManager.dialogue.unloadAll();
     }
 
 
@@ -369,7 +365,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
             if(player.getRectangle().overlaps(currentEnemy.getRectangle())) {
                 player.addAction(getHitAction(currentEnemy.getX(), currentEnemy.getY(), player.getX(), player.getY()));
-                player.subHealth(30);
+                player.subHealth(0.01f);
             }
             for (Actor bullet : this.bullets.getChildren()) {
                 if (((Bullet)bullet).getRectangle().overlaps(currentEnemy.getRectangle())) {

@@ -20,7 +20,7 @@ public class Medicine extends ImageEx implements Carryable {
     public <T> boolean useItem(T usedOn, Array<Float> objects) {
         if(((Player)usedOn).getHealth() == 100)
             return false;
-        ((Player)usedOn).addHealth(20);
+        ((Player)usedOn).addHealth(.20f);
         return true;
     }
 }

@@ -18,7 +18,7 @@ public class Tuna extends ImageEx implements Carryable {
 
     @Override
     public <T> boolean useItem(T usedOn, Array<Float> objects) {
-        ((Player)usedOn).eat(10);
+        ((Player)usedOn).eat(.1f);
         return true;
     }
 }
