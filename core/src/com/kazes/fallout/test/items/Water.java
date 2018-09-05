@@ -1,8 +1,12 @@
-package com.kazes.fallout.test;
+package com.kazes.fallout.test.items;
 
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
+import com.kazes.fallout.test.Assets;
+import com.kazes.fallout.test.ImageEx;
+import com.kazes.fallout.test.Player;
+import com.kazes.fallout.test.items.Carryable;
 
 public class Water extends ImageEx implements Carryable {
     private String desc;

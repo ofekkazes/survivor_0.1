@@ -1,8 +1,7 @@
-package com.kazes.fallout.test;
+package com.kazes.fallout.test.dialogues;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -10,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 
 import java.util.ArrayList;
-
+@Deprecated
 public class Dialog extends Window {
     Label label;
     Image image;
@@ -19,7 +18,7 @@ public class Dialog extends Window {
     boolean waitFlag;
 
     ArrayList<String> texts;
-
+    @Deprecated
     public Dialog(String name, Skin skin, Texture img) {
         super( name, skin);
         this.setDebug(true);
@@ -41,19 +40,20 @@ public class Dialog extends Window {
         index = 0;
         toIndex = -1;
     }
-
+    @Deprecated
     public void makeStop(int toIndex) {
         this.toIndex = toIndex;
         waitFlag = true;
     }
-
+    @Deprecated
     public void addLine(String text) {
         texts.add(text);
     }
+    @Deprecated
     public void addLine(String text, Texture image) {//TO BE IMPROVED
         texts.add(text);
     }
-
+    @Deprecated
     public void update() {
         if(toIndex >= index) {
             this.setVisible(true);
@@ -68,9 +68,9 @@ public class Dialog extends Window {
             }
         }
     }
-
+    @Deprecated
     public void setText(String text) { label.setText(text); }
-
+    @Deprecated
     public void setImage(Texture img) { image = new Image(img);}
 
 }

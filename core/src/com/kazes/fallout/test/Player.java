@@ -89,7 +89,7 @@ public class Player extends AnimationActor {
         //this.translate(playerTranslation.x, playerTranslation.y);
     }
 
-    void addHealth(float amount) {
+    public void addHealth(float amount) {
         health.addValue(amount);
     }
 
@@ -107,7 +107,7 @@ public class Player extends AnimationActor {
         this.weapon = weapon;
     }
 
-    void eat(float amount) {
+    public void eat(float amount) {
         hunger.addValue(amount);
     }
 

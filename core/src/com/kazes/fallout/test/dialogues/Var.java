@@ -1,4 +1,4 @@
-package com.kazes.fallout.test;
+package com.kazes.fallout.test.dialogues;
 
 public class Var {
     public String varName;

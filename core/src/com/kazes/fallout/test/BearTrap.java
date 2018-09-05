@@ -1,10 +1,9 @@
 package com.kazes.fallout.test;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+import com.kazes.fallout.test.items.Carryable;
 
 public class BearTrap extends ImageEx implements Trap, Carryable {
     String desc;

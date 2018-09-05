@@ -3,6 +3,7 @@ package com.kazes.fallout.test;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.kazes.fallout.test.items.*;
 
 public class Bag extends Window {
     int x;

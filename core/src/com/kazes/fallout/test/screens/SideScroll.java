@@ -1,26 +1,17 @@
 package com.kazes.fallout.test.screens;
 
 import com.badlogic.gdx.*;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.scenes.scene2d.*;
-import com.badlogic.gdx.scenes.scene2d.actions.*;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.ObjectMap;
-import com.badlogic.gdx.utils.StringBuilder;
 import com.kazes.fallout.test.*;
+import com.kazes.fallout.test.items.*;
 import com.kazes.fallout.test.physics.CollisionCategory;
-import com.kyper.yarn.Dialogue;
 import com.kyper.yarn.Library;
-import com.kyper.yarn.UserData;
 import com.kyper.yarn.Value;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
