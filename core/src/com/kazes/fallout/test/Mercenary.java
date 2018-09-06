@@ -50,6 +50,11 @@ public class Mercenary extends ImageEx {
         setVisible(false);
     }
 
+    public void init() {
+        isDone = false;
+        time = 0;
+    }
+
     public boolean isDone() {
         return isDone;
     }
