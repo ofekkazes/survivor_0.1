@@ -25,9 +25,10 @@ public class Player extends AnimationActor {
     public Progress hunger;
     public Progress thirst;
     public Progress health;
+    public Progress ammo;
     public float time;
     public Vector2 playerTranslation;
-    public int ammo;
+    //public int ammo;
 
     public Player(ObjectMap<String, Animation<TextureRegion>> t, Vector2 position) {
         super(t, "Player", position.x, position.y);
@@ -44,7 +45,8 @@ public class Player extends AnimationActor {
         this.setOrigin(this.getWidth() / 2, this.getHeight() / 2);
         this.cooldown = 0;
         this.playerTranslation = new Vector2();
-        this.ammo = 50;
+        this.ammo = new Progress(0, 100, 1, false);
+        this.ammo.setValue(50);
     }
 
     public void initPhysics(World world) {
@@ -60,6 +62,7 @@ public class Player extends AnimationActor {
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.I)) {
             bag.setVisible(!bag.isVisible());
+
         }
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             if(weapon == Weapons.Pistol)
@@ -115,5 +118,12 @@ public class Player extends AnimationActor {
         thirst.addValue(amount);
     }
 
+    public void fillAmmo(float amount) {
+        ammo.addValue(amount);
+    }
 
+    public boolean isAmmoEmpty() { return ammo.getValue() == 0;}
+    public void shoot() {
+        ammo.reduceValue(1);
+    }
 }
