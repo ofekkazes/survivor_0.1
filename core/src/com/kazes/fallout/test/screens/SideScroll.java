@@ -216,6 +216,13 @@ public class SideScroll extends GameScreen {
                 dialogueManager.start("Sally");
             }
         }
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.F)) {
+            for(int i = 0; i < injuredNPCS.getChildren().size; i++) {
+                if(player.getRectangle().overlaps(((ImageEx)injuredNPCS.getChildren().get(i)).getRectangle()))
+                    ((InjuredNPC)injuredNPCS.getChildren().get(i)).save();
+            }
+        }
     }
 
     //Checks if the player picked up an item
@@ -288,8 +295,10 @@ public class SideScroll extends GameScreen {
         for (int i = 0; i < npcs.getChildren().size; i++) {
             npcs.getChildren().items[i].setSize(Survivor.getInMeters(100), Survivor.getInMeters(150));
         }
-        //npcs.addActor(this.injuredNPCS);
-        ///injuredNPCS.addActor(new InjuredNPC(world, 15, 5, Weapons.Pistol));
+        this.injuredNPCS = new Group();
+        npcs.addActor(this.injuredNPCS);
+        for(int i = 0; i < MathUtils.random(6); i++)
+            injuredNPCS.addActor(new InjuredNPC(world, MathUtils.random(5,40), MathUtils.random(1,9),  Weapons.Pistol));
     }
 
     @Override
