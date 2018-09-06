@@ -22,7 +22,8 @@ public class Water extends ImageEx implements Carryable {
 
     @Override
     public <T> boolean useItem(T usedOn, Array<Float> objects) {
-        ((Player)usedOn).thirst.addValue(.1f);
+        ((Player)usedOn).drink(.1f);
+
         return true;
     }
 }

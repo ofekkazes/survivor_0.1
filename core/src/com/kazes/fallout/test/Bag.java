@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.kazes.fallout.test.items.*;
 
-public class Bag extends Window {
+public class Bag extends com.badlogic.gdx.scenes.scene2d.ui.Window {
     int x;
     public Table items;
     public Table description;
