@@ -196,7 +196,7 @@ public class SideScroll extends GameScreen {
                 if(bagItem != null) {
                     if (bagItem instanceof Wood) {
                         player.bag.items.removeActor(player.bag.items.getCells().get(i).getActor());
-                        ImageEx bonfire = new Bonfire(player.getOrigin().x, player.getOrigin().y);
+                        ImageEx bonfire = new Bonfire(player.getOrigin().x, player.getOrigin().y, rayHandler);
                         bonfire.setBounds(player.getX(), player.getY(), Survivor.getInMeters(200), Survivor.getInMeters(300));
                         bonfires.addActor(bonfire);
                         Gdx.app.log("Survivor", "Bonfire set");
@@ -232,7 +232,12 @@ public class SideScroll extends GameScreen {
                 ImageEx item = (ImageEx)items.getChildren().get(i);
                 if (item.getRectangle().overlaps(player.getRectangle())) {
                     items.removeActor(item);
-                    player.bag.addItem(item);
+                    if(item instanceof Ammo) {
+                        ((Ammo) item).useItem(player, null);
+                    }
+                    else {
+                        player.bag.addItem(item);
+                    }
                 }
             }
         }
@@ -298,7 +303,7 @@ public class SideScroll extends GameScreen {
         this.injuredNPCS = new Group();
         npcs.addActor(this.injuredNPCS);
         for(int i = 0; i < MathUtils.random(6); i++)
-            injuredNPCS.addActor(new InjuredNPC(world, MathUtils.random(5,40), MathUtils.random(1,9),  Weapons.Pistol));
+            injuredNPCS.addActor(new InjuredNPC(world, MathUtils.random(1,Survivor.getInMeters(map.getWidth())), MathUtils.random(1,9),  Weapons.Pistol));
     }
 
     @Override
@@ -331,6 +336,10 @@ public class SideScroll extends GameScreen {
         for(int i = 0; i < 5; i++) {
             items.addActor(new BearTrap(Survivor.getInMeters(MathUtils.random(0, 4000)), Survivor.getInMeters(MathUtils.random(0, 280))));
             items.getChildren().get(items.getChildren().size - 1).setName("Bear Trap number "+i);
+        }
+        for(int i = 0; i < 5; i++) {
+            items.addActor(new Ammo(Survivor.getInMeters(MathUtils.random(0, 4000)), Survivor.getInMeters(MathUtils.random(0, 280))));
+            //items.getChildren().get(items.getChildren().size - 1).setName("Bear Trap number "+i);
         }
     }
 
