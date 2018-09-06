@@ -52,16 +52,16 @@ public class SlotActor extends ImageButton implements SlotListener {
 	}
 
 	private static ImageButtonStyle createStyle(Skin skin, Slot slot) {
-		TextureAtlas icons = Assets.getAsset("icons/icons.atlas", TextureAtlas.class);
+		/*TextureAtlas icons = Assets.getAsset("icons/icons.atlas", TextureAtlas.class);
 		TextureRegion image;
 		if (slot.getItem() != null) {
 			image = icons.findRegion(slot.getItem().getTextureRegion());
 		} else {
 			image = icons.findRegion("nothing");
-		}
+		}*/
 		ImageButtonStyle style = new ImageButtonStyle(skin.get(ButtonStyle.class));
-		style.imageUp = new TextureRegionDrawable(image);
-		style.imageDown = new TextureRegionDrawable(image);
+		//style.imageUp = new TextureRegionDrawable(image);
+		//style.imageDown = new TextureRegionDrawable(image);
 
 		return style;
 	}

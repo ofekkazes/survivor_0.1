@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
 import com.kazes.fallout.test.*;
 import com.kazes.fallout.test.dialogues.Var;
+import com.kazes.fallout.test.inventory.InventoryScreen;
 import com.kyper.yarn.Library;
 import com.kyper.yarn.Value;
 
@@ -17,6 +18,7 @@ public class Tribe extends GameScreen {
         super(game, "Tribe", startingPosX);
         weaponsAllowed = false;
         lastScreen = Screens.SideScroll;
+        nextScreen = Screens.Battlegrounds;
         screenStage.addActor(dialogueManager.getWindow());
 
         dialogueManager.dialogue.getLibrary().registerFunction("sendToMission", 0, new Library.Function() {
@@ -40,14 +42,23 @@ public class Tribe extends GameScreen {
                 dialogueManager.updateVar("%time", mercenary.getTime());
             }
         }
-        if(mercenary.isDone())
-            Gdx.app.log("Mercenary returned", mercenary.getNumberOfKills() + " enemies killed\n" + mercenary.getNumOfMercenaries() + " mercenaries returned");
+        if(mercenary.isDone()) {
+            GameScreen.notifications.add(mercenary.getNumOfMercenaries() + " mercenaries returned" + mercenary.getNumberOfKills() + " enemies killed");
+            mercenary.init();
+        }
+    }
+
+    @Override
+    public void proccessInput() {
+        super.proccessInput();
+
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
         ((SideScrollingCamera)gameStage.getCamera()).followPos(player.getOrigin());
+
     }
 
     @Override
@@ -73,7 +84,7 @@ public class Tribe extends GameScreen {
         decor.addActor(new WatchTower(Survivor.getInMeters(500), Survivor.getInMeters(0), "Watcher", world));
         decor.addActor(new WatchTower(Survivor.getInMeters(1500), Survivor.getInMeters(250), "Watcher", world));
         decor.addActor(new WatchTower(Survivor.getInMeters(1500), Survivor.getInMeters(100), "Watcher", world));
-        bonfires.addActor(new Bonfire(Survivor.getInMeters(900), 0));
+        bonfires.addActor(new Bonfire(Survivor.getInMeters(900), 0, rayHandler));
     }
 
     @Override

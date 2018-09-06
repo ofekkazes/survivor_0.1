@@ -36,6 +36,14 @@ public enum Screens {
             return new Tribe(game, 0);
         }
     },
+    Battlegrounds {
+        public AbstractScreen getScreen(Survivor game, float startingPosX) {
+            return new Battlegrounds(game, startingPosX);
+        }
+        public AbstractScreen getScreen(Survivor game) {
+            return new Battlegrounds(game, 0);
+        }
+    },
     SplashScreen {
         public AbstractScreen getScreen(Survivor game, float startingPosX) {
             return new SplashScreen(game);
