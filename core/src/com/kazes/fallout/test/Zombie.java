@@ -22,11 +22,16 @@ public class Zombie extends ImageEx {
     float health;
     public boolean wander;
     private Array<Actor> interactingObjects;
+    private Vector2 prevPos;
+
+    int frameCount;
 
     public Zombie(Texture img, float xPos, float yPos, World world) {
         super(img, xPos, yPos, world, BodyDef.BodyType.DynamicBody, CollisionCategory.ENEMY, CollisionCategory.ENEMY_COLLIDER);
         body.setFixedRotation(true);
         interactingObjects = new Array<Actor>();
+        prevPos = new Vector2();
+        frameCount = 0;
         init();
     }
 
@@ -61,6 +66,18 @@ public class Zombie extends ImageEx {
                 }
             }
         }
+        if(body.getPosition().x == prevPos.x && body.getPosition().y == prevPos.y) {
+            frameCount++;
+            if(frameCount > 100) {
+                clearActions();
+                this.wander = true;
+                this.getBody().setLinearVelocity(MathUtils.random(1) , MathUtils.random(1));
+                this.getBody().setLinearDamping(1f);
+            }
+        }
+        else
+            frameCount = 0;
+        prevPos.set(body.getPosition().x, body.getPosition().y);
     }
 
     public float getHealth(){ return this.health; }
