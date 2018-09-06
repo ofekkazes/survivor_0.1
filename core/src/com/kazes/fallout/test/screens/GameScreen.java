@@ -77,6 +77,8 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
     DialogueManager dialogueManager;
 
+    public static Array<String> notifications = new Array<String>();
+
     GameScreen(Survivor game, String name, float startingPosX) {
         super(game);
         stateTime = 0;
@@ -232,6 +234,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         this.playerZombieInteraction();
         this.fireplaceCheck();
         this.screenChange();
+        this.checkNotifications();
 
         dialogueManager.update();
 
@@ -272,6 +275,11 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         screenStage.act(Gdx.graphics.getDeltaTime());
         screenStage.getViewport().apply();
         screenStage.draw();
+
+        screenStage.getBatch().begin();
+        for(int i = 0; i < notifications.size; i++)
+            Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.TWO_HUNDRED).draw(screenStage.getBatch(), notifications.get(i) + "\n", 0, Gdx.graphics.getHeight() - 200 -  i * Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.TWO_HUNDRED).getLineHeight());
+        screenStage.getBatch().end();
 
     }
 
@@ -356,7 +364,8 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
             //enemies.get(j).addAction(moveTo(player.getX(), player.getY(), (forcePositive(enemies.get(j).getX() - player.getX())) / 50, Interpolation.pow2In)); //add y to time calculation
 
             if(player.getRectangle().overlaps(currentEnemy.getRectangle())) {
-                player.addAction(getHitAction(currentEnemy.getX(), currentEnemy.getY(), player.getX(), player.getY()));
+                getHitAction(currentEnemy.getBody(), player.getBody(), player);
+                //player.addAction(getHitAction(currentEnemy.getX(), currentEnemy.getY(), player.getX(), player.getY()));
                 player.subHealth(0.01f);
             }
             for (Actor bullet : this.bullets.getChildren()) {
@@ -442,6 +451,13 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         }
     }
 
+    private void checkNotifications() {
+        if(notifications.size > 0 && stateTime > 1)
+            if(stateTime % 15 == 0)
+                notifications.removeIndex(0);
+
+    }
+
     public static float forcePositive(float number) {
         return (number < 0) ? number * -1 : number;
     }
@@ -471,9 +487,9 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     //Create an hit action using the coordinates given
     private static Vector2 getHitAction(Body attacker, Body defender, Actor defenderActor) {
         Vector2 fromDirection = attacker.getPosition().sub(defender.getPosition());
-        fromDirection.scl(2f);
+        fromDirection.scl(8f);
         defender.setLinearVelocity(fromDirection);
-        defender.setLinearDamping(4f);
+        defender.setLinearDamping(8f);
         defenderActor.clearActions();
         return fromDirection;
     }
