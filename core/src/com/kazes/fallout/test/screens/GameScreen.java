@@ -72,7 +72,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     RayHandler rayHandler;
     Box2DDebugRenderer renderer;
     private static float ambientAlpha = 0.5f;
-    private static float time = 0.5f;
+    public static float time = 0.5f;
     private static boolean day = true;
 
     DialogueManager dialogueManager;
@@ -98,7 +98,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
         rayHandler.setAmbientLight(0.1f, 0.1f, 0.1f, ambientAlpha);
         rayHandler.setBlurNum(3);
-        new PointLight(rayHandler, 120, Color.FIREBRICK, 10, 29.8f, 2);
+        //new PointLight(rayHandler, 120, Color.FIREBRICK, 10, 29.8f, 2);
 
 
         //new PointLight(rayHandler, 20, Color.BLUE, 150, Survivor.getInMeters(400), Survivor.getInMeters(200));
@@ -111,8 +111,9 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
         //Limit the input implementation to the game and screen stages
         InputMultiplexer multiplexer = new InputMultiplexer();
-        multiplexer.addProcessor(screenStage);
         multiplexer.addProcessor(gameStage);
+        multiplexer.addProcessor(screenStage);
+
         Gdx.input.setInputProcessor(multiplexer);
 
         weaponsAllowed = false;
@@ -207,7 +208,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         Table weaponTable = new Table();
         weaponTable.add(new Label("Weapon", skin)).expand().fillY();
         weaponTable.row();
-        weaponTable.add(new Label(player.ammo + " / 50", skin));
+        weaponTable.add(player.ammo);
 
         playerStats.setWidth(Gdx.graphics.getWidth() / 4.07f);
         playerStats.setHeight(Gdx.graphics.getHeight() / 4.5f);
@@ -331,11 +332,11 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         if(Gdx.input.isKeyPressed(Input.Keys.S))
             player.playerTranslation.y = -3;
 
-        if(weaponsAllowed) {
-            if(player.ammo > 0) {
+        if(weaponsAllowed && !player.bag.isVisible()) {
+            if(!player.isAmmoEmpty()) {
                 if (player.getWeapon() == Weapons.Pistol) {
                     if (Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT)) {
-                        player.ammo--;
+                        player.shoot();
                         Vector2 mousePos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
                         mousePos = gameStage.screenToStageCoordinates(mousePos);
                         this.bullets.addActor(new Bullet(world, player.getOrigin().x, player.getOrigin().y, mousePos.cpy().sub(player.getOrigin()).nor()));
@@ -343,7 +344,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
                 }
                 if (player.getWeapon() == Weapons.SMG) {
                     if (Gdx.input.isTouched() || Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
-                        player.ammo--;
+                        player.shoot();
                         if (player.cooldown > 17) {
                             Vector2 mousePos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
                             mousePos = gameStage.screenToStageCoordinates(mousePos);
