@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.StringBuilder;
 import com.kazes.fallout.test.Assets;
+import com.kazes.fallout.test.WindowEx;
 import com.kyper.yarn.Dialogue;
 import com.kyper.yarn.UserData;
 
@@ -15,7 +16,7 @@ import com.kyper.yarn.UserData;
 public class DialogueManager {
     private int[] OP_KEYS = { Input.Keys.NUM_1, Input.Keys.NUM_2, Input.Keys.NUM_3, Input.Keys.NUM_4, Input.Keys.NUM_5 };
 
-    Window dialogWindow;
+    WindowEx dialogWindow;
 
     public Dialogue dialogue;
     public Dialogue.LineResult current_line = null;
@@ -37,7 +38,7 @@ public class DialogueManager {
         this.complete = true;
         this.variables = new Array<Var>();
 
-        dialogWindow = new Window("Dialog", Assets.getAsset(Assets.UI_SKIN, Skin.class));
+        dialogWindow = new WindowEx(Assets.getAsset(Assets.UI_SKIN, Skin.class));
         dialogWindow.setSize(Gdx.graphics.getWidth(), 200);
         dialogWindow.setVisible(false);
         dialogWindow.add(new Label("",  Assets.getAsset(Assets.UI_SKIN, Skin.class)));

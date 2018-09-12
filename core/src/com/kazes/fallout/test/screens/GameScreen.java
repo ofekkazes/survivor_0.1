@@ -185,7 +185,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         Skin skin = Assets.getAsset(Assets.UI_SKIN, Skin.class);
         final TextButton menuButton = new TextButton("Menu", skin);
         final com.badlogic.gdx.scenes.scene2d.ui.Window fastInventory = new Window("fast inventory", skin);
-        final Window playerStats = new Window("Stats", skin);
+        final WindowEx playerStats = new WindowEx(skin);
 
         menuButton.setWidth(Gdx.graphics.getWidth() / 14.666f);
         menuButton.setHeight(Gdx.graphics.getHeight() / 16.216f);
