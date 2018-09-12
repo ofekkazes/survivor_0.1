@@ -21,29 +21,33 @@
  */
 package com.kazes.fallout.test.inventory;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+import com.kazes.fallout.test.WindowEx;
+
 /**
  * @author Daniel Holderbaum
  */
-public class InventoryActor extends Window {
+public class InventoryActor extends WindowEx {
 
-	public InventoryActor(Inventory inventory, DragAndDrop dragAndDrop, Skin skin) {
-		super("Inventory...", skin);
+	public InventoryActor(Inventory inventory, DragAndDrop dragAndDrop, Skin skin, Stage parent) {
+		super(skin);
 
 		TextButton closeButton = new TextButton("X", skin);
 		closeButton.addListener(new HidingClickListener(this));
 		this.add(closeButton).height(getPadTop());
 
-		setPosition(400, 100);
+
 		defaults().space(8);
 		row().fill().expandX();
 
 		int i = 0;
 		for (Slot slot : inventory.getSlots()) {
-			SlotActor slotActor = new SlotActor(skin, slot);
+			SlotActor slotActor = new SlotActor(skin, slot, parent);
 			dragAndDrop.addSource(new SlotSource(slotActor));
 			dragAndDrop.addTarget(new SlotTarget(slotActor));
 			add(slotActor);
@@ -58,6 +62,8 @@ public class InventoryActor extends Window {
 
 		// it is hidden by default
 		setVisible(false);
+
+		setPosition(Gdx.graphics.getWidth() / 2 - getWidth() / 2, Gdx.graphics.getHeight() / 2 - getHeight() / 2);
 	}
 
 }

@@ -47,8 +47,10 @@ public class InventoryScreen implements Screen {
 
 		Skin skin = Assets.getAsset(Assets.UI_SKIN, Skin.class);
 		DragAndDrop dragAndDrop = new DragAndDrop();
-		inventoryActor = new InventoryActor(new Inventory(), dragAndDrop, skin);
+		inventoryActor = new InventoryActor(new Inventory(25), dragAndDrop, skin, stage);
 		stage.addActor(inventoryActor);
+
+
 	}
 
 	@Override

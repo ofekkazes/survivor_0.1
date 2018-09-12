@@ -82,6 +82,7 @@ public class Slot {
 			if (this.amount == 0) {
 				item = null;
 			}
+
 			notifyListeners();
 			return true;
 		}

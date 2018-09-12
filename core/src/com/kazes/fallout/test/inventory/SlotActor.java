@@ -21,8 +21,10 @@
  */
 package com.kazes.fallout.test.inventory;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -38,7 +40,7 @@ public class SlotActor extends ImageButton implements SlotListener {
 
 	private Skin skin;
 
-	public SlotActor(Skin skin, Slot slot) {
+	public SlotActor(Skin skin, Slot slot, Stage parent) {
 		super(createStyle(skin, slot));
 		this.slot = slot;
 		this.skin = skin;
@@ -47,21 +49,22 @@ public class SlotActor extends ImageButton implements SlotListener {
 
 		SlotTooltip tooltip = new SlotTooltip(slot, skin);
 		tooltip.setTouchable(Touchable.disabled); // allows for mouse to hit tooltips in the top-right corner of the screen without flashing
-		InventoryScreen.stage.addActor(tooltip);
+		parent.addActor(tooltip);
 		addListener(new TooltipListener(tooltip, true));
 	}
 
 	private static ImageButtonStyle createStyle(Skin skin, Slot slot) {
-		/*TextureAtlas icons = Assets.getAsset("icons/icons.atlas", TextureAtlas.class);
+		TextureAtlas icons = Assets.getAsset(Assets.Atlases.items, TextureAtlas.class);
 		TextureRegion image;
 		if (slot.getItem() != null) {
 			image = icons.findRegion(slot.getItem().getTextureRegion());
+			//image = icons.findRegion("crate");
 		} else {
-			image = icons.findRegion("nothing");
-		}*/
+			image = icons.findRegion("crate");
+		}
 		ImageButtonStyle style = new ImageButtonStyle(skin.get(ButtonStyle.class));
-		//style.imageUp = new TextureRegionDrawable(image);
-		//style.imageDown = new TextureRegionDrawable(image);
+		style.imageUp = new TextureRegionDrawable(image);
+		style.imageDown = new TextureRegionDrawable(image);
 
 		return style;
 	}

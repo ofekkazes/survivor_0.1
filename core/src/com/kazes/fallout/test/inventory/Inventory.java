@@ -31,9 +31,9 @@ public class Inventory {
 
 	private Array<Slot> slots;
 
-	public Inventory() {
-		slots = new Array<Slot>(25);
-		for (int i = 0; i < 25; i++) {
+	public Inventory(int capacity) {
+		slots = new Array<Slot>(capacity);
+		for (int i = 0; i < capacity; i++) {
 			slots.add(new Slot(null, 0));
 		}
 

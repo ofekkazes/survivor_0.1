@@ -54,7 +54,7 @@ public class SlotSource extends Source {
 		sourceSlot.take(sourceSlot.getAmount());
 		payload.setObject(payloadSlot);
 
-		TextureAtlas icons = Assets.getAsset( "icons/icons.atlas", TextureAtlas.class);
+		TextureAtlas icons = Assets.getAsset( Assets.Atlases.items, TextureAtlas.class);
 		TextureRegion icon = icons.findRegion(payloadSlot.getItem().getTextureRegion());
 
 		Actor dragActor = new Image(icon);
