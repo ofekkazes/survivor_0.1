@@ -6,6 +6,7 @@ import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
@@ -41,7 +42,7 @@ public class Assets {
         public static final String HOUSE2 = "images/maps/house2.png";
         public static final String WALL = "images/maps/wall.png";
         public static final String CRATE = "images/maps/crate.png";
-
+        public static final String ITEMS = "images/maps/items.png";
     }
     private static final String[] _Images = {
             Images.PIKACHU,
@@ -53,7 +54,16 @@ public class Assets {
             Images.TUNA, Images.WATER, Images.SPLASH,
             Images.MEDKIT, Images.BEARTRAP,
             Images.HOUSE1, Images.HOUSE2,
-            Images.WALL, Images.CRATE
+            Images.WALL, Images.CRATE,
+            Images.ITEMS
+    };
+
+    public static class Atlases {
+        public static final String items = "images/maps/items.atlas";
+    }
+
+    private static final String[] _Atlases = {
+            Atlases.items
     };
 
     public static final String[] _Parallax1 = {
@@ -139,6 +149,7 @@ public class Assets {
 
         for (String image: _Images) assetManager.load(image, Texture.class);
         for (String animation: _Animations) assetManager.load(animation, Texture.class);
+        for (String atlas: _Atlases) assetManager.load(atlas, TextureAtlas.class);
 
         //for (String dialogues: _Dialogues) assetManager.load(dialogues, String.class);
 

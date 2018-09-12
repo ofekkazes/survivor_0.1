@@ -1,0 +1,49 @@
+items.png
+size: 64, 351
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+bear_trap
+  rotate: false
+  xy: 0, 0
+  size: 64, 42
+  orig: 64, 42
+  offset: 0, 0
+  index: -1
+crate
+  rotate: false
+  xy: 0, 42
+  size: 64, 53
+  orig: 64, 53
+  offset: 0, 0
+  index: -1
+medkit
+  rotate: false
+  xy: 0, 95
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+tuna
+  rotate: false
+  xy: 0, 159
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+water
+  rotate: false
+  xy: 0, 223
+  size: 64, 64
+  split: 16, 16, 13, 16
+  pad: 16, 16, 16, 16
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+wood
+  rotate: false
+  xy: 0, 287
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
