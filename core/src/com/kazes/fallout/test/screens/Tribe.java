@@ -3,9 +3,18 @@ package com.kazes.fallout.test.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Array;
 import com.kazes.fallout.test.*;
 import com.kazes.fallout.test.dialogues.Var;
+import com.kazes.fallout.test.inventory.FastInventoryActor;
+import com.kazes.fallout.test.inventory.Inventory;
+import com.kazes.fallout.test.inventory.InventoryActor;
 import com.kazes.fallout.test.inventory.InventoryScreen;
 import com.kyper.yarn.Library;
 import com.kyper.yarn.Value;
@@ -13,6 +22,8 @@ import com.kyper.yarn.Value;
 public class Tribe extends GameScreen {
 
     Mercenary mercenary;
+    Group randomNPCs;
+    InventoryActor inventoryActor;
 
     public Tribe(Survivor game, float startingPosX) {
         super(game, "Tribe", startingPosX);
@@ -30,6 +41,14 @@ public class Tribe extends GameScreen {
         dialogueManager.dialogue.loadFile(Assets.Dialogues.MERCENARIES, false, false, null);
         dialogueManager.addVar(new Var("%risk", 0));
         dialogueManager.addVar(new Var("%time", 0));
+
+        DragAndDrop dragAndDrop = new DragAndDrop();
+        inventoryActor = new InventoryActor(new Inventory(20), dragAndDrop, Assets.getAsset(Assets.UI_SKIN, Skin.class), screenStage);
+        screenStage.addActor(inventoryActor);
+
+        FastInventoryActor fastPull = new FastInventoryActor(new Inventory(5), dragAndDrop, Assets.getAsset(Assets.UI_SKIN, Skin.class), screenStage);
+        screenStage.addActor(fastPull);
+
     }
 
     @Override
@@ -46,12 +65,36 @@ public class Tribe extends GameScreen {
             GameScreen.notifications.add(mercenary.getNumOfMercenaries() + " mercenaries returned" + mercenary.getNumberOfKills() + " enemies killed");
             mercenary.init();
         }
+        for(Actor npc : randomNPCs.getChildren()) {
+            if(!npc.hasActions()) {
+                npc.addAction(Actions.sequence(Actions.moveBy(MathUtils.random(Survivor.getInMeters(-500), Survivor.getInMeters(500)), MathUtils.random(Survivor.getInMeters(-200), Survivor.getInMeters(200)), MathUtils.random(1, 4.5f)),
+                        Actions.fadeOut(1f), Actions.moveTo(MathUtils.random(0, MathUtils.random(map.getWidth())), MathUtils.random(0, 5f)), Actions.fadeIn(1f)));
+            }
+            if(npc.getY() > map.getHeight() - 1) {
+                npc.clearActions();
+                npc.addAction(Actions.moveBy(0, -1f, 2f));
+            }
+            if(npc.getY() < 0) {
+                npc.clearActions();
+                npc.addAction(Actions.moveBy(0, 1f, 2f));
+            }
+            if(npc.getX() > map.getWidth()) {
+                npc.clearActions();
+                npc.addAction(Actions.moveBy(-1f, 0, 2f));
+            }
+            if(npc.getX() < 0) {
+                npc.clearActions();
+                npc.addAction(Actions.moveBy(1f, 0, 2f));
+            }
+        }
     }
 
     @Override
     public void proccessInput() {
         super.proccessInput();
 
+        if(Gdx.input.isKeyJustPressed(Input.Keys.N))
+            inventoryActor.setVisible(!inventoryActor.isVisible());
     }
 
     @Override
@@ -102,6 +145,14 @@ public class Tribe extends GameScreen {
 
         mercenary = new Mercenary(Survivor.getInMeters(600), Survivor.getInMeters(200), 5, 30, 30);
         npcs.addActor(mercenary);
+
+        randomNPCs = new Group();
+        npcs.addActor(randomNPCs);
+        for (int i = 0; i < ClanProperties.getNPCCount(); i++) {
+            if(i % 5 == 0) {
+                randomNPCs.addActor(new ImageEx(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), MathUtils.random(Survivor.getInMeters(700), Survivor.getInMeters(1400)), MathUtils.random(1, Survivor.getInMeters(280))));
+            }
+        }
     }
 
     @Override
