@@ -6,9 +6,9 @@ com.badlogic.gdx.graphics.g2d.BitmapFont: {
 }
 com.badlogic.gdx.graphics.Color: {
 	color: {
-		r: 0.49
-		g: 0.79
-		b: 0.79
+		r: 1
+		g: 1
+		b: 1
 		a: 1
 	}
 	selection: {
