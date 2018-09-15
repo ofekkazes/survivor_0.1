@@ -12,6 +12,6 @@ public class AmmoCrate extends Item {
     @Override
     public <T> boolean useItem(T usedOn) {
         ((Player)usedOn).fillAmmo(30);
-        return false;
+        return true;
     }
 }
