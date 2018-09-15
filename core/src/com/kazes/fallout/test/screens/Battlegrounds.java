@@ -6,12 +6,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.kazes.fallout.test.*;
+import com.kazes.fallout.test.enemies.Zombie;
 import com.kazes.fallout.test.items.*;
-import javafx.scene.PointLight;
 
 /**
  * A game screen for 24/7 enemy spawning and items renewal

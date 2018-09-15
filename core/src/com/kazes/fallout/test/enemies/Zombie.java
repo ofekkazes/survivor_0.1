@@ -1,16 +1,13 @@
-package com.kazes.fallout.test;
+package com.kazes.fallout.test.enemies;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
-import com.kazes.fallout.test.physics.CollisionCategory;
+import com.kazes.fallout.test.Survivor;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveBy;
@@ -38,7 +35,7 @@ public class Zombie extends Enemy {
         super.act(delta);
         if(!this.hasActions()) {
             if(this.wander && this.getHealth() == 100)// OR there is not clean line of sight (obstacles/hiding spots)
-                this.addAction(sequence(delay(1.5f), Actions.moveBy(MathUtils.random(Survivor.getInMeters(-30), Survivor.getInMeters(30)), MathUtils.random(Survivor.getInMeters(-15), Survivor.getInMeters(15)), MathUtils.random(1.5f, 3.0f)), new WanderAction()));
+                this.addAction(Actions.sequence(delay(1.5f), Actions.moveBy(MathUtils.random(Survivor.getInMeters(-30), Survivor.getInMeters(30)), MathUtils.random(Survivor.getInMeters(-15), Survivor.getInMeters(15)), MathUtils.random(1.5f, 3.0f)), new WanderAction()));
             else {
                 for(Actor actor : interactingObjects) {
                     float yTranslate = actor.getY() - this.getY();

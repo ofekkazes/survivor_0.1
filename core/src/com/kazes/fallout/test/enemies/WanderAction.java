@@ -1,6 +1,8 @@
-package com.kazes.fallout.test;
+package com.kazes.fallout.test.enemies;
 
 import com.badlogic.gdx.scenes.scene2d.Action;
+import com.kazes.fallout.test.enemies.Enemy;
+import com.kazes.fallout.test.enemies.Zombie;
 
 /**
  * Enemy wandering enable

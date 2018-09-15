@@ -20,7 +20,7 @@ public class ImageEx extends Image {
     private boolean remove;
     private Rectangle rectangle;
     World world;
-    Body body;
+    public Body body;
     float xOffset;
     float yOffset;
 
