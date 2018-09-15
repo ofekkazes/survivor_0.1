@@ -13,7 +13,7 @@ public class FastInventoryActor extends WindowEx {
 
     public FastInventoryActor(Inventory inventory, DragAndDrop dragAndDrop, Skin skin, Stage parent) {
         super(skin);
-
+        this.setMovable(false);
         defaults().space(8);
         row().fill().expandX();
 
