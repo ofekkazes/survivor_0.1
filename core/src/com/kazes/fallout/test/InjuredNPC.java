@@ -25,7 +25,7 @@ public class InjuredNPC extends ImageEx {
         this.weapon = weapon;
         desire = Jobs.setValue(MathUtils.random(0,4));
         Gdx.app.log("NPC", desire.toString());
-
+        this.body.setTransform(body.getPosition(), 90 * MathUtils.degreesToRadians);
     }
 
     public float decHealth(float amount) {
