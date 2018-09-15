@@ -6,7 +6,7 @@ import com.kazes.fallout.test.Assets;
 import com.kazes.fallout.test.ImageEx;
 import com.kazes.fallout.test.Player;
 import com.kazes.fallout.test.items.Carryable;
-
+@Deprecated
 public class Medicine extends ImageEx implements Carryable {
     private String desc;
     public Medicine(float x, float y) {
