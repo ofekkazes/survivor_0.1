@@ -1,33 +1,17 @@
 package com.kazes.fallout.test.inventory;
 
-import com.badlogic.gdx.utils.Array;
-import com.kazes.fallout.test.items.Carryable;
 
-public enum Item implements Carryable {
-    BEAR_TRAP("bear_trap"),
-    CRATE("crate"),
-    MEDKIT("medkit"),
-    TUNA("tuna"),
-    WATER("water"),
-    WOOD("wood");
+public abstract class Item {
+    public String region;
+    public String description;
 
-    private String textureRegion;
-
-    Item(String textureRegion) {
-        this.textureRegion = textureRegion;
+    public Item(String textureRegion, String description) {
+        this.region = textureRegion;
+        this.description = description;
     }
 
     public String getTextureRegion() {
-        return textureRegion;
+        return this.region;
     }
-
-    @Override
-    public String getDescription() {
-        return null;
-    }
-
-    @Override
-    public <T> boolean useItem(T usedOn, Array<Float> objects) {
-        return false;
-    }
+    public abstract <T> boolean useItem(T usedOn);
 }
