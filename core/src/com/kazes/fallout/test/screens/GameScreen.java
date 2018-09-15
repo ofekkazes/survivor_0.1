@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
@@ -48,6 +49,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
     Screens nextScreen;
     Screens lastScreen;
+    Boolean[] screenChange = {false};
 
     public static Player player; //Game player
     static InventoryActor inventoryActor;
@@ -94,11 +96,11 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
         //Changing the camera used by the game stage
         SideScrollingCamera camera = new SideScrollingCamera(30, 20);
-        //camera.setToOrtho(false, 30, 20);
         StretchViewport viewp = new StretchViewport(30.6f, 17, camera);
 
         gameStage = new Stage(viewp);
         gameStage.getBatch().enableBlending();
+        gameStage.addAction(sequence(Actions.alpha(0), Actions.delay(.2f), Actions.fadeIn(.25f)));
 
         if(screenStage == null) {
             screenStage = new Stage(new ScreenViewport());
@@ -315,7 +317,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     public void resize(int width, int height) {
         super.resize(width, height);
         ((OrthographicCamera)gameStage.getCamera()).setToOrtho(false, VIRTUAL_HEIGHT * width / (float)height, VIRTUAL_HEIGHT);
-        ((OrthographicCamera)gameStage.getCamera()).position.set(Survivor.getInMeters(width/2f), Survivor.getInMeters(height/2f), 0);
+        ((OrthographicCamera)gameStage.getCamera()).position.set(player.getX(), Survivor.getInMeters(height/2f), 0);
         gameStage.getCamera().update();
     }
 
@@ -468,12 +470,15 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     }
 
     private void screenChange() {
+
         if(player.getX() + player.getWidth() / 2 < 0 && lastScreen != null) {
-            game.setScreen(lastScreen.getScreen(game, map.getWidth() - 1.5f));
+            gameStage.addAction(sequence(Actions.fadeOut(.25f), new BoolAction(screenChange)));
+            if(screenChange[0]) game.setScreen(lastScreen.getScreen(game, map.getWidth() - 1.5f));
         }
         checkCompleteLevel();
         if(player.getX() + player.getWidth() / 2 > map.getWidth() + 0.5f && nextScreen != null && this.completed) {
-            game.setScreen(nextScreen.getScreen(game, 0));
+            gameStage.addAction(sequence(Actions.fadeOut(.25f), new BoolAction(screenChange)));
+            if(screenChange[0]) game.setScreen(nextScreen.getScreen(game, 0));
         }
     }
 
