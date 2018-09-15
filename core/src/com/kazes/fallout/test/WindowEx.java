@@ -19,7 +19,7 @@ public class WindowEx extends Window {
 
         this.getTitleTable().clearChildren();
         this.removeActor(this.getTitleTable());
-
+        this.padTop(this.getPadBottom());
 
     }
 }
