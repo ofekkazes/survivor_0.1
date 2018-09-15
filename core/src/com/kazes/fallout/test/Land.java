@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  * @version 1.0
  * @since 2018-09-15
  */
+@Deprecated
 public class Land extends Actor {
     private Texture texture;
     private Vector2[] avalibleLocations;
