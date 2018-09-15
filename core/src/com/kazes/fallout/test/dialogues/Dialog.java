@@ -7,6 +7,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.StringBuilder;
+import com.kazes.fallout.test.Assets;
+import com.kyper.yarn.Dialogue;
+import com.kyper.yarn.UserData;
 
 import java.util.ArrayList;
 @Deprecated
@@ -74,3 +79,4 @@ public class Dialog extends Window {
     public void setImage(Texture img) { image = new Image(img);}
 
 }
+
