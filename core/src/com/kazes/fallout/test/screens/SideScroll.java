@@ -47,7 +47,6 @@ public class SideScroll extends GameScreen {
     //Load the content
     private void create (final Survivor game) {
         nextScreen = Screens.Tribe;
-        screenStage.addActor(player.bag);
 
         dialogueManager.dialogue.getLibrary().registerFunction("setSallyAction", 1, new Library.Function() {
             @Override
@@ -118,7 +117,7 @@ public class SideScroll extends GameScreen {
             }
         }
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.K)) {
+        /*if(Gdx.input.isKeyJustPressed(Input.Keys.K)) {
             Actor bagItem;
             for (int i = 0; i < player.bag.items.getCells().size; i++) {
                 bagItem = player.bag.items.getCells().get(i).getActor();
@@ -133,7 +132,7 @@ public class SideScroll extends GameScreen {
                     }
                 }
             }
-        }
+        }*/
         if(dialogueManager.isCompleted()) {
             if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
                 // talk to ship
@@ -156,7 +155,6 @@ public class SideScroll extends GameScreen {
 
 
     private void followPlayer() {
-
         for(Actor follower : followers.getChildren()) {
             if(!follower.hasActions())
                 follower.addAction(moveTo(player.getX() + ((player.isxFlip()) ? Survivor.getInMeters(50) + ( Survivor.getInMeters(50) * followers.getChildren().indexOf(follower, false)) : Survivor.getInMeters(-50) - ( Survivor.getInMeters(70) * followers.getChildren().indexOf(follower, false))), player.getY(), 1f));

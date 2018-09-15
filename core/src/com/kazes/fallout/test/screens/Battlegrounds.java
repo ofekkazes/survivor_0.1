@@ -18,8 +18,6 @@ public class Battlegrounds extends GameScreen {
     Battlegrounds(Survivor game, float startingPosX) {
         super(game, "Battlegrounds", startingPosX);
         lastScreen = Screens.Tribe;
-
-        screenStage.addActor(player.bag);
     }
 
     @Override
@@ -41,7 +39,7 @@ public class Battlegrounds extends GameScreen {
                     ((InjuredNPC)injuredNPCS.getChildren().get(i)).save();
             }
         }
-        if(Gdx.input.isKeyJustPressed(Input.Keys.K)) {
+        /*if(Gdx.input.isKeyJustPressed(Input.Keys.K)) {
             Actor bagItem;
             for (int i = 0; i < player.bag.items.getCells().size; i++) {
                 bagItem = player.bag.items.getCells().get(i).getActor();
@@ -57,7 +55,7 @@ public class Battlegrounds extends GameScreen {
                     }
                 }
             }
-        }
+        }*/
     }
 
     @Override

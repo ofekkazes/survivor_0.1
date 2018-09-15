@@ -21,7 +21,6 @@ public class Player extends AnimationActor {
 
     public Weapons weapon;
     public int cooldown;
-    public Bag bag;
     public Progress hunger;
     public Progress thirst;
     public Progress health;
@@ -33,14 +32,12 @@ public class Player extends AnimationActor {
     public Player(ObjectMap<String, Animation<TextureRegion>> t, Vector2 position) {
         super(t, "Player", position.x, position.y);
         weapon = Weapons.Pistol;
-        bag = new Bag("Bag", Assets.getAsset(Assets.UI_SKIN, Skin.class));
-        bag.setVisible(false);
         this.health = new Progress(0, 1, 0.001f, false);
         this.health.setValue(1);
         this.hunger = new Progress(0, 1, 0.01f, false);
         this.hunger.setValue(1);
         this.thirst = new Progress(0, 1, 0.01f, false);
-        this.thirst.setValue(1);
+        this.thirst.setValue(.5f);
         this.time = 0;
         this.setOrigin(this.getWidth() / 2, this.getHeight() / 2);
         this.cooldown = 0;
@@ -59,11 +56,6 @@ public class Player extends AnimationActor {
     public void act(float delta) {
         super.act(delta);
 
-
-        if(Gdx.input.isKeyJustPressed(Input.Keys.I)) {
-            bag.setVisible(!bag.isVisible());
-
-        }
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             if(weapon == Weapons.Pistol)
                 weapon = Weapons.SMG;
