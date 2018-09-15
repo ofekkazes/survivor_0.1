@@ -57,7 +57,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
 
     Stage gameStage; //Game container
-    Stage screenStage; //Screen container
+    static Stage screenStage; //Screen container
     float stateTime; //How much time passed since the screen was created
 
     ShaderProgram shader;
@@ -99,7 +99,33 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
         gameStage = new Stage(viewp);
         gameStage.getBatch().enableBlending();
-        screenStage = new Stage(new ScreenViewport());
+
+        if(screenStage == null) {
+            screenStage = new Stage(new ScreenViewport());
+            if(inventoryActor == null && fastInventoryActor == null) {
+                DragAndDrop dragAndDrop = new DragAndDrop();
+                inventoryActor = new InventoryActor(new Inventory(20), dragAndDrop, Assets.getAsset(Assets.UI_SKIN, Skin.class), screenStage);
+                fastInventoryActor = new FastInventoryActor(new Inventory(5), dragAndDrop, Assets.getAsset(Assets.UI_SKIN, Skin.class), screenStage);
+
+            }
+            screenStage.addActor(inventoryActor);
+            screenStage.addActor(fastInventoryActor);
+
+            //Player init
+            if(player == null) {
+                ObjectMap<String, Animation<TextureRegion>> temp = new ObjectMap<String, Animation<TextureRegion>>();
+                for(int i = 0; i < Assets.animationList.size; i++) {
+                    if(Assets.animationList.getKeyAt(i).contains(Assets.Animations.HERO)) {
+                        temp.put(Assets.animationList.getKeyAt(i), Assets.animationList.getValueAt(i));
+                    }
+
+                }
+                player = new Player(temp, new Vector2(0, 6));
+                player.setZIndex(10000);
+            }
+
+            setGUI();
+        }
 
         world = new World(Vector2.Zero, false);
         renderer = new Box2DDebugRenderer(true, true, true, true, true, true);
@@ -114,32 +140,9 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         multiplexer.addProcessor(screenStage);
         Gdx.input.setInputProcessor(multiplexer);
 
-        if(inventoryActor == null && fastInventoryActor == null) {
-            DragAndDrop dragAndDrop = new DragAndDrop();
-            inventoryActor = new InventoryActor(new Inventory(20), dragAndDrop, Assets.getAsset(Assets.UI_SKIN, Skin.class), screenStage);
-            fastInventoryActor = new FastInventoryActor(new Inventory(5), dragAndDrop, Assets.getAsset(Assets.UI_SKIN, Skin.class), screenStage);
 
-        }
-        else {
-
-        }
-        screenStage.addActor(inventoryActor);
-        screenStage.addActor(fastInventoryActor);
 
         weaponsAllowed = false;
-        //Player init
-        if(player == null) {
-            ObjectMap<String, Animation<TextureRegion>> temp = new ObjectMap<String, Animation<TextureRegion>>();
-            for(int i = 0; i < Assets.animationList.size; i++) {
-                if(Assets.animationList.getKeyAt(i).contains(Assets.Animations.HERO)) {
-                    temp.put(Assets.animationList.getKeyAt(i), Assets.animationList.getValueAt(i));
-                }
-
-            }
-            player = new Player(temp, new Vector2(0, 6));
-            player.setZIndex(10000);
-        }
-        //player.createBody(world);
 
         //Objects initialization
         enemies = new Group();
@@ -178,23 +181,23 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         B2DBodyBuilder.createBody(world, map.getX() - 2f, 0, 0.15f, map.getHeight() - 3, BodyDef.BodyType.StaticBody, CollisionCategory.BOUNDARY, CollisionCategory.BOUNDARY_COLLIDER);
         B2DBodyBuilder.createBody(world, map.getWidth() + 2f, 0, 0.15f, map.getHeight() - 3, BodyDef.BodyType.StaticBody, CollisionCategory.BOUNDARY, CollisionCategory.BOUNDARY_COLLIDER);
 
-        if(player != null)
+        if(player != null) {
             gameStage.addActor(player);
-        player.initPhysics(world);
+            player.initPhysics(world);
+        }
 
         for(Actor zombie : enemies.getChildren())
             ((Zombie)zombie).addInteractingObject(player);
 
         completed = false;
 
-        setGUI();
         this.dialogueManager = new DialogueManager();
+        screenStage.addActor(this.dialogueManager.getWindow());
     }
 
     private void setGUI() {
         Skin skin = Assets.getAsset(Assets.UI_SKIN, Skin.class);
         final TextButton menuButton = new TextButton("Menu", skin);
-        final com.badlogic.gdx.scenes.scene2d.ui.Window fastInventory = new Window("fast inventory", skin);
         final WindowEx playerStats = new WindowEx(skin);
 
         menuButton.setWidth(Gdx.graphics.getWidth() / 14.666f);
@@ -349,7 +352,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
                     inventoryActor.getInventory().store(itemActor.getItem(), 1);
             }
 
-        if(weaponsAllowed && !player.bag.isVisible()) {
+        if(weaponsAllowed && !inventoryActor.isVisible()) {
             if(!player.isAmmoEmpty()) {
                 if (player.getWeapon() == Weapons.Pistol) {
                     if (Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT)) {

@@ -34,7 +34,6 @@ public class Tribe extends GameScreen {
         weaponsAllowed = false;
         lastScreen = Screens.SideScroll;
         nextScreen = Screens.Battlegrounds;
-        screenStage.addActor(dialogueManager.getWindow());
 
         dialogueManager.dialogue.getLibrary().registerFunction("sendToMission", 0, new Library.Function() {
             @Override
