@@ -15,10 +15,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -45,7 +42,7 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.color;
 /**
  * Most of the game's logic will be coded here.
  * @author Ofek Kazes
- * @version 1.0
+ * @version 1.01
  * @since 2018-09-15
  */
 public abstract class GameScreen extends AbstractScreen implements GameScreenInterface {
@@ -147,8 +144,6 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         multiplexer.addProcessor(gameStage);
         multiplexer.addProcessor(screenStage);
         Gdx.input.setInputProcessor(multiplexer);
-
-
 
         weaponsAllowed = false;
 
@@ -362,6 +357,18 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
                 }
 
             }
+        for(int i = 0; i < InputHelper.fastInventoryKeys.length; i++) {
+            if (Gdx.input.isKeyJustPressed(InputHelper.fastInventoryKeys[i])) {
+                ImageButton button = ((ImageButton)fastInventoryActor.getCells().get(i).getActor());
+                InputEvent event1 = new InputEvent();
+                event1.setType(InputEvent.Type.touchDown);
+                button.fire(event1);
+
+                InputEvent event2 = new InputEvent();
+                event2.setType(InputEvent.Type.touchUp);
+                button.fire(event2);
+            }
+        }
 
         if(weaponsAllowed && !inventoryActor.isVisible()) {
             if(!player.isAmmoEmpty()) {
@@ -392,6 +399,15 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
             inventoryActor.setVisible(!inventoryActor.isVisible());
         if(Gdx.input.isKeyJustPressed(Input.Keys.C))
             inventoryActor.getInventory().store(new SmallMedkit(), 2);
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            if(inventoryActor.isVisible())
+                inventoryActor.setVisible(false);
+            else {
+                //PAUSE SCREEN
+                //ROLL CREDITS
+            }
+        }
     }
 
     //Player, Enemy and Bullets collision check, plus the most sophisticated AI the world has ever seen for a zombie
