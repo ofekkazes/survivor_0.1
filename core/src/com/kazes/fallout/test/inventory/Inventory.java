@@ -38,9 +38,9 @@ public class Inventory {
 		}
 
 		// create some random items
-		for (Slot slot : slots) {
-			slot.add(Item.values()[MathUtils.random(0, Item.values().length - 1)], 1);
-		}
+		/*for (Slot slot : slots) {
+			slot.add(new SmallMedkit(), 2);
+		}*/
 
 		// create a few random empty slots
 		for (int i = 0; i < 3; i++) {
@@ -53,7 +53,7 @@ public class Inventory {
 		int amount = 0;
 
 		for (Slot slot : slots) {
-			if (slot.getItem() == item) {
+			if (slot.getItem().getClass().equals(item.getClass())) {
 				amount += slot.getAmount();
 			}
 		}
@@ -86,9 +86,14 @@ public class Inventory {
 
 	private Slot firstSlotWithItem(Item item) {
 		for (Slot slot : slots) {
-			if (slot.getItem() == item) {
-				return slot;
+			if(item == null) {
+				if(slot.getItem() == null)
+					return slot;
 			}
+			if(slot.getItem() != null && item != null)
+				if (slot.getItem().getClass().equals(item.getClass())) {
+					return slot;
+				}
 		}
 
 		return null;

@@ -33,7 +33,7 @@ import com.kazes.fallout.test.WindowEx;
  * @author Daniel Holderbaum
  */
 public class InventoryActor extends WindowEx {
-
+	Inventory inventory;
 	public InventoryActor(Inventory inventory, DragAndDrop dragAndDrop, Skin skin, Stage parent) {
 		super(skin);
 
@@ -47,7 +47,7 @@ public class InventoryActor extends WindowEx {
 
 		int i = 0;
 		for (Slot slot : inventory.getSlots()) {
-			SlotActor slotActor = new SlotActor(skin, slot, parent);
+			SlotActor slotActor = new SlotActor(skin, slot, parent, true);
 			dragAndDrop.addSource(new SlotSource(slotActor));
 			dragAndDrop.addTarget(new SlotTarget(slotActor));
 			add(slotActor);
@@ -63,7 +63,12 @@ public class InventoryActor extends WindowEx {
 		// it is hidden by default
 		setVisible(false);
 
+		this.inventory = inventory;
+
 		setPosition(Gdx.graphics.getWidth() / 2 - getWidth() / 2, Gdx.graphics.getHeight() / 2 - getHeight() / 2);
 	}
 
+	public Inventory getInventory() {
+		return inventory;
+	}
 }

@@ -4,11 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.kazes.fallout.test.WindowEx;
+import com.kazes.fallout.test.screens.GameScreen;
 
 public class FastInventoryActor extends WindowEx {
 
@@ -20,15 +19,16 @@ public class FastInventoryActor extends WindowEx {
 
         int i = 0;
         for (final Slot slot : inventory.getSlots()) {
-            SlotActor slotActor = new SlotActor(skin, slot, parent);
+            SlotActor slotActor = new SlotActor(skin, slot, parent, false);
             dragAndDrop.addSource(new SlotSource(slotActor));
             dragAndDrop.addTarget(new SlotTarget(slotActor));
             add(slotActor);
             slotActor.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    slot.take(1);
-
+                    if(slot.getItem() != null)
+                        if(slot.getItem().useItem(GameScreen.player))
+                            slot.take(1);
                 }
             });
 

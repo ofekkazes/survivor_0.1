@@ -27,6 +27,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.kazes.fallout.test.Assets;
@@ -40,17 +41,18 @@ public class SlotActor extends ImageButton implements SlotListener {
 
 	private Skin skin;
 
-	public SlotActor(Skin skin, Slot slot, Stage parent) {
+	public SlotActor(Skin skin, Slot slot, Stage parent, boolean tooltipEnabled) {
 		super(createStyle(skin, slot));
 		this.slot = slot;
 		this.skin = skin;
 
 		slot.addListener(this);
-
-		SlotTooltip tooltip = new SlotTooltip(slot, skin);
-		tooltip.setTouchable(Touchable.disabled); // allows for mouse to hit tooltips in the top-right corner of the screen without flashing
-		parent.addActor(tooltip);
-		addListener(new TooltipListener(tooltip, true));
+		if(tooltipEnabled) {
+			SlotTooltip tooltip = new SlotTooltip(slot, skin);
+			tooltip.setTouchable(Touchable.disabled); // allows for mouse to hit tooltips in the top-right corner of the screen without flashing
+			parent.addActor(tooltip);
+			addListener(new TooltipListener(tooltip, true));
+		}
 	}
 
 	private static ImageButtonStyle createStyle(Skin skin, Slot slot) {

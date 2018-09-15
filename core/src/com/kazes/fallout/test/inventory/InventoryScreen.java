@@ -67,8 +67,8 @@ public class InventoryScreen implements Screen {
 			inventoryActor.setVisible(true);
 		}
 
-		stage.act(delta);
-		stage.draw();
+		//stage.act(delta);
+		//stage.draw();
 	}
 
 	@Override

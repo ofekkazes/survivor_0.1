@@ -66,13 +66,17 @@ public class Slot {
 	}
 
 	public boolean add(Item item, int amount) {
-		if (this.item == item || this.item == null) {
+		if (this.item == null) {
 			this.item = item;
 			this.amount += amount;
 			notifyListeners();
 			return true;
 		}
-
+		else if(this.item.getClass().equals(item.getClass())) {
+			this.amount += amount;
+			notifyListeners();
+			return true;
+		}
 		return false;
 	}
 

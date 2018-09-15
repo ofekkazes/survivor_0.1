@@ -24,18 +24,19 @@ package com.kazes.fallout.test.inventory;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.kazes.fallout.test.WindowEx;
 
 /**
  * @author Daniel Holderbaum
  */
-public class SlotTooltip extends Window implements SlotListener {
+public class SlotTooltip extends WindowEx implements SlotListener {
 
 	private Skin skin;
 
 	private Slot slot;
 
 	public SlotTooltip(Slot slot, Skin skin) {
-		super("Tooltip...", skin);
+		super(skin);
 		this.slot = slot;
 		this.skin = skin;
 		hasChanged(slot);
@@ -53,7 +54,7 @@ public class SlotTooltip extends Window implements SlotListener {
 		// title displays the amount
 		setName(slot.getAmount() + "x " + slot.getItem());
 		clear();
-		Label label = new Label("Super awesome description of " + slot.getItem(), skin);
+		Label label = new Label(slot.getAmount() + ", " + slot.getItem().description, skin);
 		add(label);
 		pack();
 	}

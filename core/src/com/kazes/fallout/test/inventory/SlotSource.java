@@ -76,7 +76,7 @@ public class SlotSource extends Source {
 		Slot payloadSlot = (Slot) payload.getObject();
 		if (target != null) {
 			Slot targetSlot = ((SlotActor) target.getActor()).getSlot();
-			if (targetSlot.getItem() == payloadSlot.getItem() || targetSlot.getItem() == null) {
+			if (targetSlot.getItem() == null || targetSlot.getItem().getClass().equals(payloadSlot.getItem().getClass())) {
 				targetSlot.add(payloadSlot.getItem(), payloadSlot.getAmount());
 			} else {
 				Item targetType = targetSlot.getItem();
@@ -89,4 +89,6 @@ public class SlotSource extends Source {
 			sourceSlot.add(payloadSlot.getItem(), payloadSlot.getAmount());
 		}
 	}
+
+
 }
