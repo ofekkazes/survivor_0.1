@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.kazes.fallout.test.items.Carryable;
-
+@Deprecated
 public class BearTrap extends ImageEx implements Trap, Carryable {
     String desc;
     public BearTrap(float xPos, float yPos) {
