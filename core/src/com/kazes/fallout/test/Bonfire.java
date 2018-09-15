@@ -8,6 +8,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Timer;
 import com.kazes.fallout.test.screens.GameScreen;
 
+/**
+ * Bonfire with light
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-09-15
+ */
 public class Bonfire extends ImageEx {
     float timeout;
     public Bonfire(float xPos, float yPos, RayHandler rayHandler) {

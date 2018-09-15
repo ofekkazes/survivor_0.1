@@ -1,5 +1,11 @@
 package com.kazes.fallout.test;
 
+/**
+ * All jobs NPC's will be choosing
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-09-15
+ */
 public enum Jobs {
     Warrior(0),
     Doctor(1),

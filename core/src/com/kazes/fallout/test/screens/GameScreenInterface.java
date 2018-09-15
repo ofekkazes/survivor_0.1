@@ -1,5 +1,11 @@
 package com.kazes.fallout.test.screens;
 
+/**
+ * Each game screen will need these methods
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-09-15
+ */
 public interface GameScreenInterface {
 
     //Map and parallax loading

@@ -10,6 +10,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.kazes.fallout.test.physics.B2DBodyBuilder;
 import com.kazes.fallout.test.physics.CollisionCategory;
 
+/**
+ * Image extending for the game usage
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-09-15
+ */
 public class ImageEx extends Image {
     private boolean remove;
     private Rectangle rectangle;

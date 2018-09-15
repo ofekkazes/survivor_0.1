@@ -42,6 +42,12 @@ import com.kazes.fallout.test.physics.CollisionCategory;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.color;
 
+/**
+ * Most of the game's logic will be coded here.
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-09-15
+ */
 public abstract class GameScreen extends AbstractScreen implements GameScreenInterface {
     public static final int SCREEN_WIDTH = Gdx.graphics.getWidth();
     public static final int SCREEN_HEIGHT = Gdx.graphics.getHeight();

@@ -1,5 +1,11 @@
 package com.kazes.fallout.test.physics;
 
+/**
+ * Box2d colliders definition
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-09-15
+ */
 public enum CollisionCategory {
     BOUNDARY ((short)0x0001),
     DECORATION ((short)0x0002),

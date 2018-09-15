@@ -8,6 +8,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.kazes.fallout.test.screens.GameScreen;
 
+/**
+ * A sprite animation class for stage and Scene2d usage
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-09-15
+ */
 public class AnimationActor extends ImageEx {
 
     private ObjectMap<String, Animation<TextureRegion>> animationsByNames;

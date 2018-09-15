@@ -16,7 +16,12 @@ import com.kyper.yarn.Value;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
-
+/**
+ * Game logic testing screen
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-09-15
+ */
 public class SideScroll extends GameScreen {
     public static Texture texture; //temp pikachu texture for testing
 

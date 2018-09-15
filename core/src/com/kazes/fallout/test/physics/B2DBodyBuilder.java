@@ -3,6 +3,12 @@ package com.kazes.fallout.test.physics;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
+/**
+ * Static class storing methods to build Box2d shapes
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-09-15
+ */
 public class B2DBodyBuilder {
 
     public static Body createBody(World world, float xPos, float yPos, float width, float height, BodyDef.BodyType type, CollisionCategory categoryBits, CollisionCategory maskBits) {

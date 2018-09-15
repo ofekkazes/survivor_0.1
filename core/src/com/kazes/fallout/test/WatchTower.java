@@ -8,6 +8,12 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.kazes.fallout.test.physics.B2DBodyBuilder;
 import com.kazes.fallout.test.physics.CollisionCategory;
 
+/**
+ * Watch towers to see if enemies arrive from a distance
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-09-15
+ */
 public class WatchTower extends Group {
 
     public WatchTower(float xPos, float yPos, String name, World world) {

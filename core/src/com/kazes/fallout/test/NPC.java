@@ -5,6 +5,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 
+/**
+ * NPC a player will be interacting
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-09-15
+ */
 public class NPC extends ImageEx {
     private Weapons weapon;
     private Array<Bullet> bullets;

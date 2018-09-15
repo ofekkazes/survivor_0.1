@@ -11,6 +11,12 @@ import com.kazes.fallout.test.physics.CollisionCategory;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 
+/**
+ * NPC's that will watching for enemies
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-09-15
+ */
 public class Watcher extends NPC {
 
     private boolean ascending;

@@ -13,6 +13,12 @@ import com.kazes.fallout.test.*;
 import com.kazes.fallout.test.items.*;
 import javafx.scene.PointLight;
 
+/**
+ * A game screen for 24/7 enemy spawning and items renewal
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-09-15
+ */
 public class Battlegrounds extends GameScreen {
     Group injuredNPCS;
     Battlegrounds(Survivor game, float startingPosX) {

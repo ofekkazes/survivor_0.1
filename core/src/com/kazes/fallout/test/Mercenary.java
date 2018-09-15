@@ -7,7 +7,12 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Timer;
 
 
-
+/**
+ * Enemy killer for payment
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-09-15
+ */
 public class Mercenary extends ImageEx {
     private int numOfMercenaries;
     private int numberOfKills;

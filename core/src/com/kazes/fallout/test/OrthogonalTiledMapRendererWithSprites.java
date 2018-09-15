@@ -12,6 +12,12 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Legacy code for testing
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-09-15
+ */
 public class OrthogonalTiledMapRendererWithSprites extends OrthogonalTiledMapRenderer {
     private Sprite sprite;
     private List<Sprite> sprites;

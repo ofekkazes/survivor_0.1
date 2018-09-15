@@ -2,6 +2,12 @@ package com.kazes.fallout.test;
 
 import com.badlogic.gdx.scenes.scene2d.Action;
 
+/**
+ * Boolean action for Scene2d usage
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-09-15
+ */
 public class BoolAction extends Action {
     public Boolean[] actionTarget;
     public BoolAction(Boolean[] target) {

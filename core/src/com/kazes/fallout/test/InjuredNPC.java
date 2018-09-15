@@ -10,6 +10,12 @@ import com.kazes.fallout.test.physics.B2DBodyBuilder;
 import com.kazes.fallout.test.physics.CollisionCategory;
 import com.kazes.fallout.test.screens.GameScreen;
 
+/**
+ * NPC the player should save
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-09-15
+ */
 public class InjuredNPC extends ImageEx {
     private Dialog dialog; //each will have some things to say
     private float health;

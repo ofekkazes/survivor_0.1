@@ -28,6 +28,12 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.color;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 
+/**
+ * Legacy Prologue for the game
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-09-15
+ */
 public class Prologue extends GameScreen {
 
     private ParallaxBackground parallaxBackground;

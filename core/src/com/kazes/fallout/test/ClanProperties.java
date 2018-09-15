@@ -1,5 +1,11 @@
 package com.kazes.fallout.test;
 
+/**
+ * City's properties
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-09-15
+ */
 public class ClanProperties {
     public static int Warriors = 0;
     public static int Doctors = 0;

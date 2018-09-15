@@ -8,7 +8,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.kazes.fallout.test.WindowEx;
 import com.kazes.fallout.test.screens.GameScreen;
-
+/**
+ * Top inventory, always on screen
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-09-15
+ */
 public class FastInventoryActor extends WindowEx {
 
     public FastInventoryActor(Inventory inventory, DragAndDrop dragAndDrop, Skin skin, Stage parent) {

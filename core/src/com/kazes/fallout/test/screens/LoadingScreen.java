@@ -6,6 +6,12 @@ import com.kazes.fallout.test.Survivor;
 import com.kazes.fallout.test.screens.AbstractScreen;
 import com.kazes.fallout.test.screens.Tribe;
 
+/**
+ * Basic loading screen, using to load all assets
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-09-15
+ */
 public class LoadingScreen extends AbstractScreen {
     private static final float LOAD_DELAY = 0.5f;
 

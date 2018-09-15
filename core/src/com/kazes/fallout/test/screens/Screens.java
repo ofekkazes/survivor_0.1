@@ -3,6 +3,12 @@ package com.kazes.fallout.test.screens;
 import com.kazes.fallout.test.Survivor;
 import com.kazes.fallout.test.screens.*;
 
+/**
+ * All game screens
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-09-15
+ */
 public enum Screens {
     Loading {
         public AbstractScreen getScreen(Survivor game) {

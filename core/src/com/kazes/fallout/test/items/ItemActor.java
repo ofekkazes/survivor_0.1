@@ -5,6 +5,13 @@ import com.kazes.fallout.test.Assets;
 import com.kazes.fallout.test.ImageEx;
 import com.kazes.fallout.test.inventory.Item;
 
+/**
+ * Game items for use in the game stage using ImageEx
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-09-15
+ * @see Item
+ */
 public class ItemActor extends ImageEx {
     private static TextureAtlas icons = Assets.getAsset(Assets.Atlases.items, TextureAtlas.class);
 

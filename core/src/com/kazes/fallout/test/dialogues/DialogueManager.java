@@ -13,6 +13,12 @@ import com.kyper.yarn.Dialogue;
 import com.kyper.yarn.UserData;
 
 //Future updates: Dialogue window with Images of the person speaking
+/**
+ * A YarnGdx manager for all dialogues with the addition of reference vars
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-09-15
+ */
 public class DialogueManager {
     private int[] OP_KEYS = { Input.Keys.NUM_1, Input.Keys.NUM_2, Input.Keys.NUM_3, Input.Keys.NUM_4, Input.Keys.NUM_5 };
 

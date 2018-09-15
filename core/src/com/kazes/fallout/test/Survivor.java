@@ -4,6 +4,12 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.kazes.fallout.test.screens.LoadingScreen;
 
+/**
+ * The game
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-09-15
+ */
 public class Survivor extends Game {
     public AssetManager assetManager;
     public static final float PPM = 64 / 1.8f; ////Pixels Per Meter

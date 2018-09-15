@@ -7,6 +7,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.kazes.fallout.test.screens.GameScreen;
 
+/**
+ * Camera for following the player
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-09-15
+ */
 public class SideScrollingCamera extends OrthographicCamera {
 
     private float updateX;

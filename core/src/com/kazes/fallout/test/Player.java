@@ -17,6 +17,12 @@ import com.kazes.fallout.test.physics.CollisionCategory;
 //assist truth blur
 //void pulp shadow
 
+/**
+ * Main player code
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-09-15
+ */
 public class Player extends AnimationActor {
 
     public Weapons weapon;

@@ -6,6 +6,13 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 
+/**
+ * Parallax used in the game
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-09-15
+ * @see com.kazes.fallout.test.screens.GameScreen
+ */
 public class ParallaxBackground extends Actor {
 
     private float scroll;

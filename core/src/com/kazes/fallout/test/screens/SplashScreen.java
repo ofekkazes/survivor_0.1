@@ -5,7 +5,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.kazes.fallout.test.Assets;
 import com.kazes.fallout.test.Survivor;
 import com.kazes.fallout.test.screens.GameScreen;
-
+/**
+ * A screen showing the game's title
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-09-15
+ */
 public class SplashScreen extends GameScreen {
     public SplashScreen(Survivor game) {
         super(game, "Splash", 0);

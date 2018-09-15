@@ -10,6 +10,12 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.kazes.fallout.test.physics.B2DBodyBuilder;
 import com.kazes.fallout.test.physics.CollisionCategory;
 
+/**
+ * Physics bullet
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-09-15
+ */
 public class Bullet extends ImageEx {
     private static ShaderProgram shader = new ShaderProgram(Gdx.files.internal("shaders/shakyCam.vs"), Gdx.files.internal("shaders/shakyCam.fs"));
     private float speed;
