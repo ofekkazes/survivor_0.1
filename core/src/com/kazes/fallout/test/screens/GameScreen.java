@@ -356,8 +356,11 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         if(Gdx.input.isKeyJustPressed(Input.Keys.F))
             for(Actor item : items.getChildren()) {
                 ItemActor itemActor = (ItemActor)item;
-                if(itemActor.getRectangle().overlaps(player.getRectangle()))
-                    inventoryActor.getInventory().store(itemActor.getItem(), 1);
+                if(itemActor.getRectangle().overlaps(player.getRectangle())) {
+                    if(!fastInventoryActor.getInventory().store(itemActor.getItem(), 1))
+                        inventoryActor.getInventory().store(itemActor.getItem(), 1);
+                }
+
             }
 
         if(weaponsAllowed && !inventoryActor.isVisible()) {
