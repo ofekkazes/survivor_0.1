@@ -22,6 +22,7 @@
 package com.kazes.fallout.test.inventory;
 
 import com.badlogic.gdx.utils.Array;
+import com.kazes.fallout.test.screens.GameScreen;
 
 /**
  * @author Daniel Holderbaum
@@ -29,7 +30,6 @@ import com.badlogic.gdx.utils.Array;
 public class Slot {
 
 	private Item item;
-
 	private int amount;
 
 	private Array<SlotListener> slotListeners = new Array<SlotListener>();
@@ -82,7 +82,13 @@ public class Slot {
 
 	public boolean take(int amount) {
 		if (this.amount >= amount) {
-			this.amount -= amount;
+			//this.amount -= amount;
+			for(int i = amount; i > 0; i--) {
+				if (getItem().useItem(GameScreen.player)) {
+					i--;
+					this.amount--;
+				}
+			}
 			if (this.amount == 0) {
 				item = null;
 			}

@@ -16,6 +16,8 @@ import com.kazes.fallout.test.screens.GameScreen;
  */
 public class FastInventoryActor extends WindowEx {
 
+    Inventory inventory;
+
     public FastInventoryActor(Inventory inventory, DragAndDrop dragAndDrop, Skin skin, Stage parent) {
         super(skin);
         this.setMovable(false);
@@ -32,8 +34,7 @@ public class FastInventoryActor extends WindowEx {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     if(slot.getItem() != null)
-                        if(slot.getItem().useItem(GameScreen.player))
-                            slot.take(1);
+                        slot.take(1);
                 }
             });
 
@@ -48,9 +49,15 @@ public class FastInventoryActor extends WindowEx {
         // it is hidden by default
         setVisible(true);
 
+        this.inventory = inventory;
+
         setScale(0.8f, 0.8f);
         //setSize(Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 10);
         setPosition(Gdx.graphics.getWidth() / 2 - this.getWidth() / 2, Gdx.graphics.getHeight() - this.getHeight());
 
+    }
+
+    public Inventory getInventory() {
+        return inventory;
     }
 }
