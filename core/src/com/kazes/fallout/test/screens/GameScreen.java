@@ -23,12 +23,18 @@ import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.kazes.fallout.test.*;
 import com.kazes.fallout.test.dialogues.DialogueManager;
+import com.kazes.fallout.test.inventory.FastInventoryActor;
+import com.kazes.fallout.test.inventory.Inventory;
+import com.kazes.fallout.test.inventory.InventoryActor;
+import com.kazes.fallout.test.items.ItemActor;
+import com.kazes.fallout.test.items.SmallMedkit;
 import com.kazes.fallout.test.physics.B2DBodyBuilder;
 import com.kazes.fallout.test.physics.CollisionCategory;
 
@@ -43,7 +49,10 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     Screens nextScreen;
     Screens lastScreen;
 
-    static Player player; //Game player
+    public static Player player; //Game player
+    static InventoryActor inventoryActor;
+    static FastInventoryActor fastInventoryActor;
+    static DragAndDrop dragAndDrop;
     boolean weaponsAllowed;
 
 
@@ -98,23 +107,24 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
         rayHandler.setAmbientLight(0.1f, 0.1f, 0.1f, ambientAlpha);
         rayHandler.setBlurNum(3);
-        //new PointLight(rayHandler, 120, Color.FIREBRICK, 10, 29.8f, 2);
-
-
-        //new PointLight(rayHandler, 20, Color.BLUE, 150, Survivor.getInMeters(400), Survivor.getInMeters(200));
-
-        shader = new ShaderProgram(Gdx.files.internal("shaders/vertex_test.vs"), Gdx.files.internal("shaders/fragmant_test.fs"));
-        ShaderProgram.pedantic = false;
-        //gameStage.getBatch().setShader(shader);
-        Gdx.app.log("Shader", shader.isCompiled() ? "Compiled" : shader.getLog());
-        //gameStage.getBatch().getShader().setUniformMatrix("u_projTrans", gameStage.getCamera().projection);
 
         //Limit the input implementation to the game and screen stages
         InputMultiplexer multiplexer = new InputMultiplexer();
         multiplexer.addProcessor(gameStage);
         multiplexer.addProcessor(screenStage);
-
         Gdx.input.setInputProcessor(multiplexer);
+
+        if(inventoryActor == null && fastInventoryActor == null) {
+            DragAndDrop dragAndDrop = new DragAndDrop();
+            inventoryActor = new InventoryActor(new Inventory(20), dragAndDrop, Assets.getAsset(Assets.UI_SKIN, Skin.class), screenStage);
+            fastInventoryActor = new FastInventoryActor(new Inventory(5), dragAndDrop, Assets.getAsset(Assets.UI_SKIN, Skin.class), screenStage);
+
+        }
+        else {
+
+        }
+        screenStage.addActor(inventoryActor);
+        screenStage.addActor(fastInventoryActor);
 
         weaponsAllowed = false;
         //Player init
@@ -332,6 +342,13 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         if(Gdx.input.isKeyPressed(Input.Keys.S))
             player.playerTranslation.y = -3;
 
+        if(Gdx.input.isKeyJustPressed(Input.Keys.F))
+            for(Actor item : items.getChildren()) {
+                ItemActor itemActor = (ItemActor)item;
+                if(itemActor.getRectangle().overlaps(player.getRectangle()))
+                    inventoryActor.getInventory().store(itemActor.getItem(), 1);
+            }
+
         if(weaponsAllowed && !player.bag.isVisible()) {
             if(!player.isAmmoEmpty()) {
                 if (player.getWeapon() == Weapons.Pistol) {
@@ -356,6 +373,11 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
             }
         }
         dialogueManager.input();
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.N))
+            inventoryActor.setVisible(!inventoryActor.isVisible());
+        if(Gdx.input.isKeyJustPressed(Input.Keys.C))
+            inventoryActor.getInventory().store(new SmallMedkit(), 2);
     }
 
     //Player, Enemy and Bullets collision check, plus the most sophisticated AI the world has ever seen for a zombie

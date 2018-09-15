@@ -20,83 +20,11 @@ public class Battlegrounds extends GameScreen {
         lastScreen = Screens.Tribe;
 
         screenStage.addActor(player.bag);
-
-        player.bag.items.addListener(new ClickListener() {
-
-            @Override
-            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                //BAG>DESCRIPTION>ADD(ITEM)
-                //COLOR>GLOW
-            }
-
-            @Override
-            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                //BAG>DESCRIPTION>REMOVE(ITEM)
-                //COLOR>DEFAULT
-            }
-
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                if(player.bag.isVisible()) {
-                    Actor temp;
-                    for (int i = 0; i < player.bag.items.getCells().size; i++) {
-                        temp = player.bag.items.getCells().get(i).getActor();
-                        if (temp != null) {
-                            if (((ImageEx) temp).getRectangle().contains(x, y)) {
-                                //player.bag.items.removeActor(temp);
-
-                                player.bag.changeDescription(temp);
-                                return;
-                            }
-                        }
-                    }
-                }
-            }
-        });
-        player.bag.useButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                if(player.bag.isVisible()) {
-                    Actor descItem;
-                    descItem = player.bag.description.getCells().get(0).getActor();
-                    if (descItem != null) {
-                        if (descItem instanceof Carryable) {
-                            Actor bagItem;
-                            for (int i = 0; i < player.bag.items.getCells().size; i++) {
-                                bagItem = player.bag.items.getCells().get(i).getActor();
-                                if(bagItem != null) {
-                                    if (bagItem.getName().compareTo(descItem.getName()) == 0) {
-                                        if(descItem instanceof Trap) {
-                                            Array<Float> array = new Array<Float>();
-                                            array.add(player.getX());
-                                            array.add(player.getY());
-                                            if (((Carryable) descItem).useItem(traps, array)) {
-                                                player.bag.items.removeActor(player.bag.items.getCells().get(i).getActor());
-                                                Gdx.app.log("Bag", descItem.getName() + " removed from bag");
-                                                player.bag.changeDescription(null);
-                                                return;
-                                            }
-                                        }
-                                        else if (((Carryable) descItem).useItem(player, new Array<Float>())) {
-                                            player.bag.items.removeActor(player.bag.items.getCells().get(i).getActor());
-                                            Gdx.app.log("Bag", descItem.getName() + " removed from bag");
-                                            player.bag.changeDescription(null);
-                                            return;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        });
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
-        this.pickItem();
         if(player.getHealth() == 0) {
             Gdx.app.log("Survivor", "Game over");
             Gdx.app.exit();
@@ -126,23 +54,6 @@ public class Battlegrounds extends GameScreen {
 
                         Gdx.app.log("Survivor", "Bonfire set");
                         break;
-                    }
-                }
-            }
-        }
-    }
-
-    private void pickItem() {
-        if(Gdx.input.isKeyJustPressed(Input.Keys.F)) {
-            for (int i = 0; i < items.getChildren().size; i++) {
-                ImageEx item = (ImageEx)items.getChildren().get(i);
-                if (item.getRectangle().overlaps(player.getRectangle())) {
-                    items.removeActor(item);
-                    if(item instanceof Ammo) {
-                        ((Ammo) item).useItem(player, null);
-                    }
-                    else {
-                        player.bag.addItem(item);
                     }
                 }
             }
@@ -190,18 +101,19 @@ public class Battlegrounds extends GameScreen {
     }
 
     public void addItem() {
-        Carryable item = new Ammo(1,1);
+        ItemActor item = new ItemActor(new AmmoCrate(), 1, 1);
         switch (MathUtils.random(1,10)) {
             case 9:
             case 10:
-            case 1: item = new Medicine(Survivor.getInMeters(MathUtils.random(0, 4000)), Survivor.getInMeters(MathUtils.random(0, 280))); break;
+            case 5:
+            case 1: item = new ItemActor(new SmallMedkit(), Survivor.getInMeters(MathUtils.random(0, 4000)), Survivor.getInMeters(MathUtils.random(0, 280))); break;
             case 6:
             case 7:
             case 8:
-            case 2: item = new Ammo(Survivor.getInMeters(MathUtils.random(0, 4000)), Survivor.getInMeters(MathUtils.random(0, 280))); break;
-            case 3: item = new Tuna(Survivor.getInMeters(MathUtils.random(0, 4000)), Survivor.getInMeters(MathUtils.random(0, 280))); break;
-            case 4: item = new Water(Survivor.getInMeters(MathUtils.random(0, 4000)), Survivor.getInMeters(MathUtils.random(0, 280))); break;
-            case 5: item = new Wood(Survivor.getInMeters(MathUtils.random(0, 4000)), Survivor.getInMeters(MathUtils.random(0, 280))); break;
+            case 2: item = new ItemActor(new AmmoCrate(), Survivor.getInMeters(MathUtils.random(0, 4000)), Survivor.getInMeters(MathUtils.random(0, 280))); break;
+            case 3: item = new ItemActor(new TunaCan(), Survivor.getInMeters(MathUtils.random(0, 4000)), Survivor.getInMeters(MathUtils.random(0, 280))); break;
+            case 4: item = new ItemActor(new WaterBottle(), Survivor.getInMeters(MathUtils.random(0, 4000)), Survivor.getInMeters(MathUtils.random(0, 280))); break;
+            //case 5: item = new Wood(Survivor.getInMeters(MathUtils.random(0, 4000)), Survivor.getInMeters(MathUtils.random(0, 280))); break;
         }
         items.addActor((Actor)item);
     }
@@ -238,27 +150,27 @@ public class Battlegrounds extends GameScreen {
     @Override
     public void setItems() {
         for(int i = 0; i < 7; i++) {
-            items.addActor(new Medicine(Survivor.getInMeters(MathUtils.random(0, 4000)), Survivor.getInMeters(MathUtils.random(0, 280))));
+            items.addActor(new ItemActor(new SmallMedkit(), Survivor.getInMeters(MathUtils.random(0, 4000)), Survivor.getInMeters(MathUtils.random(0, 280))));
             items.getChildren().get(items.getChildren().size - 1).setName("Medicine number "+i);
         }
-        for(int i = 0; i < 9; i++) {
+        /*for(int i = 0; i < 9; i++) {
             items.addActor(new Wood(Survivor.getInMeters(MathUtils.random(0, 4000)), Survivor.getInMeters(MathUtils.random(0, 280))));
             items.getChildren().get(items.getChildren().size - 1).setName("Wood number "+i);
-        }
+        }*/
         for(int i = 0; i < 3; i++) {
-            items.addActor(new Tuna(Survivor.getInMeters(MathUtils.random(0, 4000)), Survivor.getInMeters(MathUtils.random(0, 280))));
+            items.addActor(new ItemActor(new TunaCan(), Survivor.getInMeters(MathUtils.random(0, 4000)), Survivor.getInMeters(MathUtils.random(0, 280))));
             items.getChildren().get(items.getChildren().size - 1).setName("Tuna number "+i);
         }
         for(int i = 0; i < 3; i++) {
-            items.addActor(new Water(Survivor.getInMeters(MathUtils.random(0, 4000)), Survivor.getInMeters(MathUtils.random(0, 280))));
+            items.addActor(new ItemActor(new WaterBottle(), Survivor.getInMeters(MathUtils.random(0, 4000)), Survivor.getInMeters(MathUtils.random(0, 280))));
             items.getChildren().get(items.getChildren().size - 1).setName("Water number "+i);
         }
-        for(int i = 0; i < 5; i++) {
+        /*for(int i = 0; i < 5; i++) {
             items.addActor(new BearTrap(Survivor.getInMeters(MathUtils.random(0, 4000)), Survivor.getInMeters(MathUtils.random(0, 280))));
             items.getChildren().get(items.getChildren().size - 1).setName("Bear Trap number "+i);
-        }
+        }*/
         for(int i = 0; i < 5; i++) {
-            items.addActor(new Ammo(Survivor.getInMeters(MathUtils.random(0, 4000)), Survivor.getInMeters(MathUtils.random(0, 280))));
+            items.addActor(new ItemActor(new AmmoCrate(), Survivor.getInMeters(MathUtils.random(0, 4000)), Survivor.getInMeters(MathUtils.random(0, 280))));
             //items.getChildren().get(items.getChildren().size - 1).setName("Bear Trap number "+i);
         }
     }

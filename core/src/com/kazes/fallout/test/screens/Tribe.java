@@ -16,6 +16,10 @@ import com.kazes.fallout.test.inventory.FastInventoryActor;
 import com.kazes.fallout.test.inventory.Inventory;
 import com.kazes.fallout.test.inventory.InventoryActor;
 import com.kazes.fallout.test.inventory.InventoryScreen;
+import com.kazes.fallout.test.items.ItemActor;
+import com.kazes.fallout.test.items.SmallMedkit;
+import com.kazes.fallout.test.items.TunaCan;
+import com.kazes.fallout.test.items.WaterBottle;
 import com.kyper.yarn.Library;
 import com.kyper.yarn.Value;
 
@@ -23,7 +27,7 @@ public class Tribe extends GameScreen {
 
     Mercenary mercenary;
     Group randomNPCs;
-    InventoryActor inventoryActor;
+
 
     public Tribe(Survivor game, float startingPosX) {
         super(game, "Tribe", startingPosX);
@@ -42,12 +46,7 @@ public class Tribe extends GameScreen {
         dialogueManager.addVar(new Var("%risk", 0));
         dialogueManager.addVar(new Var("%time", 0));
 
-        DragAndDrop dragAndDrop = new DragAndDrop();
-        inventoryActor = new InventoryActor(new Inventory(20), dragAndDrop, Assets.getAsset(Assets.UI_SKIN, Skin.class), screenStage);
-        screenStage.addActor(inventoryActor);
 
-        FastInventoryActor fastPull = new FastInventoryActor(new Inventory(5), dragAndDrop, Assets.getAsset(Assets.UI_SKIN, Skin.class), screenStage);
-        screenStage.addActor(fastPull);
 
     }
 
@@ -93,8 +92,7 @@ public class Tribe extends GameScreen {
     public void proccessInput() {
         super.proccessInput();
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.N))
-            inventoryActor.setVisible(!inventoryActor.isVisible());
+
     }
 
     @Override
@@ -162,7 +160,8 @@ public class Tribe extends GameScreen {
 
     @Override
     public void setItems() {
-
+        items.addActor(new ItemActor(new SmallMedkit(), 5, 5));
+        items.addActor(new ItemActor(new WaterBottle(), 7, 5));
     }
 
 }
