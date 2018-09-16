@@ -37,7 +37,7 @@ public class Tribe extends GameScreen {
 
     public Tribe(Survivor game, float startingPosX) {
         super(game, "Tribe", startingPosX);
-        weaponsAllowed = false;
+        weaponsAllowed = true;
         lastScreen = Screens.SideScroll;
         nextScreen = Screens.Battlegrounds;
 

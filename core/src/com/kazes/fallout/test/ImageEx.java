@@ -17,7 +17,7 @@ import com.kazes.fallout.test.physics.CollisionCategory;
  * @since 2018-09-15
  */
 public class ImageEx extends Image {
-    private boolean remove;
+    protected boolean remove;
     private Rectangle rectangle;
     World world;
     public Body body;

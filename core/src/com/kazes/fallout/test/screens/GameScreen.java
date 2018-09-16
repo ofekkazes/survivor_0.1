@@ -6,7 +6,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.*;
@@ -58,6 +60,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     static FastInventoryActor fastInventoryActor;
     static DragAndDrop dragAndDrop;
     boolean weaponsAllowed;
+    MagicAttack magic;
 
 
     Stage gameStage; //Game container
@@ -126,6 +129,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
                 }
                 player = new Player(temp, new Vector2(0, 6));
                 player.setZIndex(10000);
+
             }
 
             setGUI();
@@ -186,6 +190,8 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         if(player != null) {
             gameStage.addActor(player);
             player.initPhysics(world);
+            //magic = new MagicAttack(Assets.getAsset(Assets.Images.FIRE, Texture.class), Assets.getAsset(Assets.ParticleEffects.fire, ParticleEffect.class), player.getX(), player.getY());
+
         }
 
         for(Actor zombie : enemies.getChildren())
@@ -406,6 +412,10 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
                 //PAUSE SCREEN
                 //ROLL CREDITS
             }
+        }
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.L)) {
+            gameStage.addActor(new MagicAttack(Assets.getAsset(Assets.ParticleEffects.blood, ParticleEffect.class), player.getX(), player.getY()));
         }
     }
 

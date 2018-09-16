@@ -4,10 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ArrayMap;
@@ -49,6 +46,8 @@ public class Assets {
         public static final String WALL = "images/maps/wall.png";
         public static final String CRATE = "images/maps/crate.png";
         public static final String ITEMS = "images/maps/items.png";
+        public static final String FIRE = "particles/fire.png";
+        public static final String BLOOD = "particles/blood.png";
     }
     private static final String[] _Images = {
             Images.PIKACHU,
@@ -61,7 +60,8 @@ public class Assets {
             Images.MEDKIT, Images.BEARTRAP,
             Images.HOUSE1, Images.HOUSE2,
             Images.WALL, Images.CRATE,
-            Images.ITEMS
+            Images.ITEMS, Images.FIRE,
+            Images.BLOOD
     };
 
     public static class Atlases {
@@ -76,6 +76,15 @@ public class Assets {
             Images.PARALLAX_1, Images.PARALLAX_2,
             Images.PARALLAX_3, Images.PARALLAX_4,
             Images.PARALLAX_5, Images.PARALLAX_6
+    };
+
+    public static class ParticleEffects {
+        public static final String fire = "particles/fireball.pe";
+        public static final String blood = "particles/bloodParticle.pe";
+    }
+
+    public static final String[] _Effects = {
+        ParticleEffects.fire, ParticleEffects.blood
     };
 
     public static class Buttons {/*
@@ -156,6 +165,9 @@ public class Assets {
         for (String image: _Images) assetManager.load(image, Texture.class);
         for (String animation: _Animations) assetManager.load(animation, Texture.class);
         for (String atlas: _Atlases) assetManager.load(atlas, TextureAtlas.class);
+        for (String effect: _Effects) {
+            assetManager.load(effect, ParticleEffect.class);
+        }
 
         //for (String dialogues: _Dialogues) assetManager.load(dialogues, String.class);
 
