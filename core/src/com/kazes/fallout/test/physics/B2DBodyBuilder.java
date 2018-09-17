@@ -21,14 +21,12 @@ public class B2DBodyBuilder {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = type;
         bodyDef.position.set(xPos, yPos);
+        bodyDef.linearDamping = 0.5f;
         body = world.createBody(bodyDef);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
-        if(categoryBits == CollisionCategory.BOUNDARY)
-            fixtureDef.density = 100f;
-        else if(categoryBits == CollisionCategory.BULLET)
-            fixtureDef.density = 10f;
-        else fixtureDef.density = 1f;
+        fixtureDef.density = categoryBits == CollisionCategory.ENEMY ? 3f : 1f;
+
         fixtureDef.filter.maskBits = maskBits.cat();
         fixtureDef.filter.categoryBits = categoryBits.cat();
         Fixture fixture = body.createFixture(fixtureDef);
