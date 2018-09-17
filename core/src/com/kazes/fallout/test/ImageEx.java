@@ -1,5 +1,6 @@
 package com.kazes.fallout.test;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
@@ -24,6 +25,9 @@ public class ImageEx extends Image {
     float xOffset;
     float yOffset;
 
+    public int lateUpdateTicker = 0;
+    private int currentTick = 0;
+
     public ImageEx(Texture texture, float xPos, float yPos) {
         super(texture);
         this.setPosition(xPos, yPos);
@@ -46,7 +50,9 @@ public class ImageEx extends Image {
         this.rectangle = new Rectangle(this.getX(), this.getY(), this.getWidth(), this.getHeight());
     }
 
-
+    public void setLateUpdateTicker(int value) {
+        this.lateUpdateTicker = value;
+    }
 
 
     @Override
@@ -68,6 +74,15 @@ public class ImageEx extends Image {
         }
         this.rectangle.setX(this.getX());
         this.rectangle.setY(this.getY());
+
+        if(lateUpdateTicker != 0) {
+            if (++currentTick == lateUpdateTicker) {
+                currentTick = 0;
+                doLateUpdateTicker();
+            }
+        }
+
+
         if(remove) {
             if(body != null)
                 world.destroyBody(body);
@@ -100,4 +115,12 @@ public class ImageEx extends Image {
 
     public void setRemove() { this.remove = true; }
 
+    @Override
+    protected void positionChanged() {
+
+    }
+
+    protected void doLateUpdateTicker() {
+
+    }
 }
