@@ -12,10 +12,7 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.*;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
@@ -36,6 +33,7 @@ import com.kazes.fallout.test.items.ItemActor;
 import com.kazes.fallout.test.items.SmallMedkit;
 import com.kazes.fallout.test.physics.B2DBodyBuilder;
 import com.kazes.fallout.test.physics.CollisionCategory;
+import com.kazes.fallout.test.physics.ContactListener;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.color;
@@ -60,8 +58,6 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     static FastInventoryActor fastInventoryActor;
     static DragAndDrop dragAndDrop;
     boolean weaponsAllowed;
-    MagicAttack magic;
-
 
     Stage gameStage; //Game container
     static Stage screenStage; //Screen container
@@ -136,6 +132,8 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         }
 
         world = new World(Vector2.Zero, false);
+        world.setContactListener(new ContactListener());
+
         renderer = new Box2DDebugRenderer(true, true, true, true, true, true);
         rayHandler = new RayHandler(world);
 
@@ -433,11 +431,12 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
             for (Actor bullet : this.bullets.getChildren()) {
                 if (((Bullet)bullet).getRectangle().overlaps(currentEnemy.getRectangle())) {
 
-                    currentEnemy.subHealth(20);
-                    currentEnemy.clearActions();
-                    getHitAction(((Bullet) bullet).getBody(), currentEnemy.getBody(), currentEnemy);
+                    //currentEnemy.subHealth(20);
+                    //currentEnemy.clearActions();
+                    //getHitAction(((Bullet) bullet).getBody(), currentEnemy.getBody(), currentEnemy);
                     //currentEnemy.addAction(getHitAction(player.getX(), player.getY(), currentEnemy.getX(), currentEnemy.getY()));
-                    ((Bullet) bullet).setRemove();
+                    //currentEnemy.body.setLinearVelocity(getHitAction(((Bullet) bullet).getBody(), currentEnemy.getBody(), currentEnemy));
+                    //((Bullet) bullet).setRemove();
                     break;
                 }
             }
@@ -527,7 +526,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         return (number < 0) ? number * -1 : number;
     }
 
-    static ImageEx closestTo(Array<Actor> vectorsArray, ImageEx checkVector) {
+    public static ImageEx closestTo(Array<Actor> vectorsArray, ImageEx checkVector) {
         float shortestDist = 0;
         ImageEx closestActor = null;
         for(ImageEx point : (ImageEx[])vectorsArray.toArray(ImageEx.class)){
@@ -553,9 +552,9 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     private static Vector2 getHitAction(Body attacker, Body defender, Actor defenderActor) {
         Vector2 fromDirection = attacker.getPosition().sub(defender.getPosition());
         fromDirection.scl(8f);
-        defender.setLinearVelocity(fromDirection);
-        defender.setLinearDamping(8f);
-        defenderActor.clearActions();
+        //defender.setLinearVelocity(fromDirection);
+        defender.setLinearDamping(1f);
+        //defenderActor.clearActions();
         return fromDirection;
     }
 
@@ -563,6 +562,4 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         if(enemies.getChildren().size == 0)
             completed = true;
     }
-
-
 }
