@@ -18,7 +18,7 @@ public class WatchTower extends Group {
 
     public WatchTower(float xPos, float yPos, String name, World world) {
         ImageEx tower = new ImageEx(Assets.getAsset(Assets.Images.HOUSE1, Texture.class), xPos, yPos);
-        tower.setBody(world, B2DBodyBuilder.createBody(world, tower.getX(), tower.getY(), tower.getWidth(), tower.getHeight() / 2, BodyDef.BodyType.StaticBody, CollisionCategory.DECORATION, CollisionCategory.DECORATION_COLLIDER));
+        tower.setBody(world, B2DBodyBuilder.createBody(world, tower.getX(), tower.getY(), tower.getWidth(), tower.getHeight() / 2, BodyDef.BodyType.StaticBody, CollisionCategory.BOUNDARY, CollisionCategory.BOUNDARY_COLLIDER));
         tower.setOffset(0, tower.getHeight() / 2);
         ImageEx watcher = new ImageEx(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), xPos, yPos);
         watcher.translate(watcher.getWidth() / 2, tower.getHeight() / 2);
