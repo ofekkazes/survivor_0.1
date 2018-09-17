@@ -86,7 +86,7 @@ public class Player extends AnimationActor {
         if(cooldown <= 20)
             cooldown++;
 
-        body.setLinearVelocity(playerTranslation.x, playerTranslation.y);
+        body.applyForceToCenter(playerTranslation.x, playerTranslation.y, true);
         //this.translate(playerTranslation.x, playerTranslation.y);
     }
 
