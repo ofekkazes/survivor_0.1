@@ -36,11 +36,6 @@ public class Bullet extends ImageEx {
         body.setTransform(body.getWorldCenter(), MathUtils.degreesToRadians * direction.angle());
         setOrigin(0, 0);
         setRotation(MathUtils.radiansToDegrees * body.getAngle());
-        Filter f = new Filter();
-        f.categoryBits = 1;
-        f.groupIndex = 2;
-        f.maskBits = (short)0;
-        body.getFixtureList().get(0).setFilterData(f);
         body.setBullet(true);
     }
 
