@@ -33,6 +33,7 @@ public class Player extends AnimationActor {
     public Progress ammo;
     public float time;
     public Vector2 playerTranslation;
+    public boolean hit = false;
     //public int ammo;
 
     public Player(ObjectMap<String, Animation<TextureRegion>> t, Vector2 position) {
@@ -56,6 +57,7 @@ public class Player extends AnimationActor {
         this.world = world;
         body = B2DBodyBuilder.createBody(world, getX(), getY(), getWidth(), getHeight(), BodyDef.BodyType.DynamicBody, CollisionCategory.FRIENDLY, CollisionCategory.FRIENDLY_COLLIDER);
         body.setFixedRotation(true);
+        body.setUserData(this);
     }
 
     @Override
@@ -86,7 +88,9 @@ public class Player extends AnimationActor {
         if(cooldown <= 20)
             cooldown++;
 
-        body.applyForceToCenter(playerTranslation.x, playerTranslation.y, true);
+        if(!hit)
+            body.setLinearVelocity(playerTranslation.x, playerTranslation.y);
+        else hit = false;
         //this.translate(playerTranslation.x, playerTranslation.y);
     }
 

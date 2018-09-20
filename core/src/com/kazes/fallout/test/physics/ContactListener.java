@@ -1,9 +1,7 @@
 package com.kazes.fallout.test.physics;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.physics.bullet.collision.btCollisionObject;
 import com.kazes.fallout.test.Bullet;
 import com.kazes.fallout.test.ImageEx;
 import com.kazes.fallout.test.Player;
@@ -37,10 +35,9 @@ public class ContactListener implements com.badlogic.gdx.physics.box2d.ContactLi
         if(bulletBody != null && enemyBody != null) {
             Enemy enemy = (Enemy)enemyBody.getUserData();
             Bullet bullet = (Bullet)bulletBody.getUserData();
-            //enemyBody.setLinearVelocity(0,0);
-            enemyBody.applyForceToCenter(enemyBody.getPosition().cpy().sub(bulletBody.getPosition().cpy()), true);
+            enemy.wander = true;
+            enemyBody.setLinearVelocity(enemyBody.getPosition().cpy().sub(bulletBody.getPosition().cpy()));
             enemyBody.setLinearDamping(5f);
-            //enemyBody.applyLinearImpulse(enemyBody.getPosition().sub(bulletBody.getPosition()).scl(0.2f), enemyBody.getWorldCenter(), true);
             bullet.setRemove();
             enemy.subHealth(20);
         }
@@ -54,18 +51,15 @@ public class ContactListener implements com.badlogic.gdx.physics.box2d.ContactLi
             enemyBody = f1.getBody();
         }
         if(friendlyBody != null && enemyBody != null) {
-            Gdx.app.log("asd", "fds");
-            Enemy enemy = (Enemy)enemyBody.getUserData();
             ImageEx friendly = (ImageEx)friendlyBody.getUserData();
-            //enemyBody.setLinearVelocity(0,0);
-            friendlyBody.applyForceToCenter(friendlyBody.getPosition().cpy().sub(enemyBody.getPosition().cpy()).scl(8f), true);
-            //enemyBody.applyLinearImpulse(enemyBody.getPosition().sub(bulletBody.getPosition()).scl(0.2f), enemyBody.getWorldCenter(), true);
             if(friendly instanceof Player) {
                 ((Player)friendly).subHealth(.2f);
+                ((Player)friendly).hit = true;
             }
+            friendlyBody.setLinearVelocity(friendlyBody.getPosition().cpy().sub(enemyBody.getPosition().cpy()).scl(16f));
+            friendlyBody.setLinearDamping(5f);
+
         }
-
-
 
         /*else if(f1Category == CollisionCategory.ENEMY.cat()) {
 
@@ -88,8 +82,6 @@ public class ContactListener implements com.badlogic.gdx.physics.box2d.ContactLi
         else
             return;
 */
-        Body body1 = f1.getBody();
-        Body body2 = f2.getBody();
     }
 
     @Override
