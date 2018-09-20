@@ -21,8 +21,11 @@ public class B2DBodyBuilder {
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = type;
         bodyDef.position.set(xPos, yPos);
-        bodyDef.linearDamping = 0.5f;
+        bodyDef.linearDamping = 1f;
         body = world.createBody(bodyDef);
+        MassData massData = new MassData();
+        massData.mass = 70;
+        body.setMassData(massData);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.density = categoryBits == CollisionCategory.ENEMY ? 3f : 1f;
