@@ -68,7 +68,7 @@ public class Zombie extends Enemy {
                 xTranslate = (xTranslate > 0) ? Survivor.getInMeters(-15f) : Survivor.getInMeters(15f);
 
                 //this.body.setLinearVelocity(xTranslate, yTranslate);
-                this.body.applyForceToCenter(xTranslate * 10, yTranslate * 10, true);
+                this.body.setLinearVelocity(xTranslate, yTranslate);
             }
             else this.wander = true;
         }

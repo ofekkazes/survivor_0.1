@@ -60,10 +60,10 @@ public abstract class Enemy extends ImageEx {
         //hurt.setPos(getX() + getWidth() / 2, getY() + getHeight() / 2);
         if(body.getPosition().x == prevPos.x && body.getPosition().y == prevPos.y) {
             frameCount++;
-            if(frameCount > MathUtils.random(20, 40)) {
+            if(frameCount > MathUtils.random(10, 25)) {
                 //clearActions();
                 this.wander = false;
-                this.body.applyForceToCenter(MathUtils.random(-0.84f, 0.84f) * 250, MathUtils.random(-0.84f, 0.84f) * 250, true);
+                this.body.setLinearVelocity(MathUtils.random(-0.84f, 0.84f), MathUtils.random(-0.84f, 0.84f));
                 this.body.setLinearDamping(1f);
             }
         }
