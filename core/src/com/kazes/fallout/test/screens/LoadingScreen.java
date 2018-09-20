@@ -49,7 +49,7 @@ public class LoadingScreen extends AbstractScreen {
         if (switchScreen) {
             Assets.finishLoading();
 
-            game.setScreen(new Tribe(game, Survivor.getInMeters(0)));
+            game.setScreen(new Chapter1(game, Survivor.getInMeters(0)));
         }
     }
 
