@@ -116,6 +116,8 @@ public class Assets {
         public static final String EXAMPLE  = "dialogues/example.json";
         public static final String PROLOGUE  = "dialogues/prologue.json";
         public static final String MERCENARIES  = "dialogues/mercenaries.json";
+        public static final String CHAPTER1  = "dialogues/Chapter1.json";
+
     }
     private static final String[] _Dialogues = {
             Dialogues.SHIP, Dialogues.SALLY,

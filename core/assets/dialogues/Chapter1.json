@@ -1,0 +1,35 @@
+[
+	{
+		"title": "first_chapter_start",
+		"tags": "",
+		"body": "That guy is in some deep shit!\nI must help him",
+		"position": {
+			"x": 592,
+			"y": 181
+		},
+		"colorID": 0
+	},
+	
+	{
+		"title": "friend",
+		"tags": "",
+		"body": "Hey friend",
+		"position": {
+			"x": 592,
+			"y": 181
+		},
+		"colorID": 0
+	},
+	
+	{
+		"title": "help",
+		"tags": "",
+		"body": "You need so help?\nYes, my sister just ate her legs\nAnd I'm injured badly",
+		"position": {
+			"x": 592,
+			"y": 181
+		},
+		"colorID": 0
+	}
+	
+]
