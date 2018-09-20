@@ -29,11 +29,6 @@ public class SplashScreen extends GameScreen {
     }
 
     @Override
-    public void setPlayer(float startingPointX) {
-
-    }
-
-    @Override
     public void setNPCS() {
 
     }

@@ -52,6 +52,7 @@ public class SideScroll extends GameScreen {
     //Load the content
     private void create (final Survivor game) {
         nextScreen = Screens.Tribe;
+        weaponsAllowed = true;
 
         dialogueManager.dialogue.getLibrary().registerFunction("setSallyAction", 1, new Library.Function() {
             @Override
@@ -184,28 +185,13 @@ public class SideScroll extends GameScreen {
 
     @Override
     public void setMap() {
-        Array<Texture> parallaxTextures = new Array<Texture>();
-        for(int i = 0; i < 6;i++){
-            parallaxTextures.add(Assets.getAsset(Assets._Parallax1[i], Texture.class));
-            parallaxTextures.get(i).setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat);
 
-        }
-        parallaxBackground = new ParallaxBackground(parallaxTextures, gameStage.getCamera().viewportWidth, gameStage.getCamera().viewportHeight);
-        //parallaxBackground.setSize(Survivor.getInMeters(Gdx.graphics.getWidth() / 2),Survivor.getInMeters(Gdx.graphics.getHeight() / 2));
-
-        map = new ImageEx(game.assetManager.get(Assets.Images.MAP, Texture.class), 0, 0);
     }
 
     @Override
     public void setDecor() {
         decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE1, Texture.class), Survivor.getInMeters(500), Survivor.getInMeters(300), world, BodyDef.BodyType.StaticBody, CollisionCategory.BOUNDARY, CollisionCategory.BOUNDARY_COLLIDER));
         decor.addActor(new ImageEx(game.assetManager.get(Assets.Images.HOUSE2, Texture.class), Survivor.getInMeters(1000), Survivor.getInMeters(300), world, BodyDef.BodyType.StaticBody, CollisionCategory.BOUNDARY, CollisionCategory.BOUNDARY_COLLIDER));
-    }
-
-    @Override
-    public void setPlayer(float startingPointX) {
-        player.setX(startingPointX);
-        weaponsAllowed = true;
     }
 
     @Override

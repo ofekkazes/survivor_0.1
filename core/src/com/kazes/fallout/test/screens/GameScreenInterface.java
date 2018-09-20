@@ -14,9 +14,6 @@ public interface GameScreenInterface {
     //Decoration loading
     void setDecor();
 
-    //Player loading
-    void setPlayer(float startingPointX);
-
     //NPCS and their dialog loading
     void setNPCS();
 

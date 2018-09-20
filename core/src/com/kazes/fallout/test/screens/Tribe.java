@@ -134,11 +134,6 @@ public class Tribe extends GameScreen {
     }
 
     @Override
-    public void setPlayer(float startingPointX) {
-        player.setX(startingPointX);
-    }
-
-    @Override
     public void setNPCS() {
         followers.addActor(new Watcher(world, Survivor.getInMeters(700), 0, Survivor.getInMeters(700), Survivor.getInMeters(250), 5f));
         followers.addActor(new Watcher(world, Survivor.getInMeters(600), Survivor.getInMeters(250), Survivor.getInMeters(1400), Survivor.getInMeters(250), 10f));

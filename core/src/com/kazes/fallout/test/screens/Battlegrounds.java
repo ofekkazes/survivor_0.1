@@ -22,6 +22,7 @@ public class Battlegrounds extends GameScreen {
     Battlegrounds(Survivor game, float startingPosX) {
         super(game, "Battlegrounds", startingPosX);
         lastScreen = Screens.Tribe;
+        weaponsAllowed = true;
     }
 
     @Override
@@ -123,12 +124,6 @@ public class Battlegrounds extends GameScreen {
     @Override
     public void setDecor() {
 
-    }
-
-    @Override
-    public void setPlayer(float startingPointX) {
-        player.setX(startingPointX);
-        weaponsAllowed = true;
     }
 
     @Override
