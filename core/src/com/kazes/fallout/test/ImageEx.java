@@ -2,6 +2,7 @@ package com.kazes.fallout.test;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
@@ -24,6 +25,7 @@ public class ImageEx extends Image {
     public Body body;
     float xOffset;
     float yOffset;
+    private boolean xFlip = false;
 
     public int lateUpdateTicker = 0;
     private int currentTick = 0;
@@ -90,6 +92,11 @@ public class ImageEx extends Image {
         }
     }
 
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        //super.draw(batch, parentAlpha);
+        getDrawable().draw(batch, xFlip ? getX() + getWidth() : getX(), getY(), xFlip ? -getWidth() : getWidth(), getHeight());
+    }
 
     public void translate(float x, float y) {
         this.setPosition(this.getX() + x, this.getY() + y);
@@ -111,6 +118,14 @@ public class ImageEx extends Image {
         this.xOffset = x;
         this.yOffset = y;
         this.body.setTransform(getX() + xOffset, getY() + yOffset, 0f);
+    }
+
+    public void setXflip(boolean flip) {
+        this.xFlip = flip;
+    }
+
+    public boolean getXflip() {
+        return xFlip;
     }
 
     public void setRemove() { this.remove = true; }
