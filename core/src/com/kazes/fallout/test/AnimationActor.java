@@ -27,7 +27,7 @@ public class AnimationActor extends ImageEx {
         this.setPosition(xPos, yPos);
 
         this.animationsByNames = animations;
-        this.currentKey = animations.keys().toString();
+        this.currentKey = animations.keys().toArray().get(0);
         this.xFlip = false;
 
 /*
@@ -58,6 +58,10 @@ public class AnimationActor extends ImageEx {
 
         this.setDrawable(new TextureRegionDrawable(this.animationsByNames.get(keyName).getKeyFrame(0)));
         this.currentKey = keyName;
+    }
+
+    public String getCurrentKey() {
+        return currentKey;
     }
 
     @Override
