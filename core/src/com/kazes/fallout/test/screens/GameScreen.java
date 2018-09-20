@@ -247,6 +247,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     public void update(float delta) {
         super.update(delta);
         world.step(delta, 6, 2);
+        world.clearForces();
         player.playerTranslation.setZero();
 
         this.proccessInput();
@@ -351,6 +352,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         if(Gdx.input.isKeyPressed(Input.Keys.S))
             player.playerTranslation.y = -3;
 
+
         if(Gdx.input.isKeyJustPressed(Input.Keys.F))
             for(Actor item : items.getChildren()) {
                 ItemActor itemActor = (ItemActor)item;
@@ -421,25 +423,6 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     private void playerZombieInteraction() {
         for (int j = 0; j < enemies.getChildren().size; j++) {
             Zombie currentEnemy = (Zombie)enemies.getChildren().items[j];
-            //enemies.get(j).addAction(moveTo(player.getX(), player.getY(), (forcePositive(enemies.get(j).getX() - player.getX())) / 50, Interpolation.pow2In)); //add y to time calculation
-
-            if(player.getRectangle().overlaps(currentEnemy.getRectangle())) {
-                getHitAction(currentEnemy.getBody(), player.getBody(), player);
-                //player.addAction(getHitAction(currentEnemy.getX(), currentEnemy.getY(), player.getX(), player.getY()));
-                player.subHealth(0.01f);
-            }
-            for (Actor bullet : this.bullets.getChildren()) {
-                if (((Bullet)bullet).getRectangle().overlaps(currentEnemy.getRectangle())) {
-
-                    //currentEnemy.subHealth(20);
-                    //currentEnemy.clearActions();
-                    //getHitAction(((Bullet) bullet).getBody(), currentEnemy.getBody(), currentEnemy);
-                    //currentEnemy.addAction(getHitAction(player.getX(), player.getY(), currentEnemy.getX(), currentEnemy.getY()));
-                    //currentEnemy.body.setLinearVelocity(getHitAction(((Bullet) bullet).getBody(), currentEnemy.getBody(), currentEnemy));
-                    //((Bullet) bullet).setRemove();
-                    break;
-                }
-            }
 
             for(int i = 0; i < traps.getChildren().size; i++) {
                 if(((ImageEx)traps.getChildren().items[i]).getRectangle().overlaps(currentEnemy.getRectangle())) {
@@ -454,15 +437,6 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
                 Vector2 range = getRange(bonfire.getX(), bonfire.getY(), currentEnemy.getX(), currentEnemy.getY());
                 if((range.x < Survivor.getInMeters(200) && range.x > Survivor.getInMeters(-200)) && (range.y < Survivor.getInMeters(100) && range.y > Survivor.getInMeters(-100)))
                     currentEnemy.addAction(getHitAction(bonfire.getX(), bonfire.getY(), currentEnemy.getX(), currentEnemy.getY()));
-            }
-
-            if(currentEnemy.getY() + currentEnemy.getWidth() > map.getHeight() - Survivor.getInMeters(100)) {
-                currentEnemy.getBody().setTransform(currentEnemy.getX(), map.getHeight() - Survivor.getInMeters(100) - 2f, 0);
-                currentEnemy.getBody().setLinearVelocity(0,0);
-            }
-            if(currentEnemy.getY() < 0) {
-                currentEnemy.getBody().setTransform(currentEnemy.getX(), 1, 0);
-                currentEnemy.getBody().setLinearVelocity(0,0);
             }
         }
     }
