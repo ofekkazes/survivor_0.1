@@ -57,7 +57,6 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     static InventoryActor inventoryActor;
     static FastInventoryActor fastInventoryActor;
     static DragAndDrop dragAndDrop;
-    boolean weaponsAllowed;
 
     Stage gameStage; //Game container
     static Stage screenStage; //Screen container
@@ -79,6 +78,8 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     Group bonfires; //Fires the player sets
 
     boolean completed;
+    boolean allowInput = true;
+    boolean weaponsAllowed;
 
     World world;
     RayHandler rayHandler;
@@ -162,7 +163,6 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         setMap();
         setDecor();
         setItems();
-        setPlayer(startingPosX);
         setNPCS();
         setEnemies();
 
@@ -186,6 +186,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         B2DBodyBuilder.createBody(world, map.getWidth() + 2f, 0, 0.15f, map.getHeight() - 3, BodyDef.BodyType.StaticBody, CollisionCategory.BOUNDARY, CollisionCategory.BOUNDARY_COLLIDER);
 
         if(player != null) {
+            player.setX(startingPosX);
             gameStage.addActor(player);
             player.initPhysics(world);
             //magic = new MagicAttack(Assets.getAsset(Assets.Images.FIRE, Texture.class), Assets.getAsset(Assets.ParticleEffects.fire, ParticleEffect.class), player.getX(), player.getY());
@@ -328,94 +329,98 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
     @Override
     public void proccessInput() {
-        parallaxBackground.setSpeed(0);
-        player.changeAnimation(Assets.Animations.HERO + "_idle");
+        dialogueManager.input();
+        player.changeAnimation(player.getCurrentKey());
+        if(allowInput) {
+            parallaxBackground.setSpeed(0);
+            player.changeAnimation(Assets.Animations.HERO + "_idle");
 
-        if(Gdx.input.isKeyPressed(Input.Keys.A)) {
-            player.playerTranslation.x = -3;
-            if(((SideScrollingCamera)gameStage.getCamera()).getUpdateCamera())
-                parallaxBackground.setSpeed(-0.2f);
-            if(!player.isxFlip())
-                player.flip(true);
-            player.changeAnimation(Assets.Animations.HERO + "_walking");
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.D)) {
-            player.playerTranslation.x = 3;
-            if(((SideScrollingCamera)gameStage.getCamera()).getUpdateCamera())
-                parallaxBackground.setSpeed(0.2f);
-            if(player.isxFlip())
-                player.flip(true);
-            player.changeAnimation(Assets.Animations.HERO + "_walking");
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.W))
-            player.playerTranslation.y = 3;
-        if(Gdx.input.isKeyPressed(Input.Keys.S))
-            player.playerTranslation.y = -3;
-
-
-        if(Gdx.input.isKeyJustPressed(Input.Keys.F))
-            for(Actor item : items.getChildren()) {
-                ItemActor itemActor = (ItemActor)item;
-                if(itemActor.getRectangle().overlaps(player.getRectangle())) {
-                    if(!fastInventoryActor.getInventory().store(itemActor.getItem(), 1))
-                        inventoryActor.getInventory().store(itemActor.getItem(), 1);
-                }
-
+            if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+                player.playerTranslation.x = -3;
+                if (((SideScrollingCamera) gameStage.getCamera()).getUpdateCamera())
+                    parallaxBackground.setSpeed(-0.2f);
+                if (!player.isxFlip())
+                    player.flip(true);
+                player.changeAnimation(Assets.Animations.HERO + "_walking");
             }
-        for(int i = 0; i < InputHelper.fastInventoryKeys.length; i++) {
-            if (Gdx.input.isKeyJustPressed(InputHelper.fastInventoryKeys[i])) {
-                ImageButton button = ((ImageButton)fastInventoryActor.getCells().get(i).getActor());
-                InputEvent event1 = new InputEvent();
-                event1.setType(InputEvent.Type.touchDown);
-                button.fire(event1);
-
-                InputEvent event2 = new InputEvent();
-                event2.setType(InputEvent.Type.touchUp);
-                button.fire(event2);
+            if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+                player.playerTranslation.x = 3;
+                if (((SideScrollingCamera) gameStage.getCamera()).getUpdateCamera())
+                    parallaxBackground.setSpeed(0.2f);
+                if (player.isxFlip())
+                    player.flip(true);
+                player.changeAnimation(Assets.Animations.HERO + "_walking");
             }
-        }
+            if (Gdx.input.isKeyPressed(Input.Keys.W))
+                player.playerTranslation.y = 3;
+            if (Gdx.input.isKeyPressed(Input.Keys.S))
+                player.playerTranslation.y = -3;
 
-        if(weaponsAllowed && !inventoryActor.isVisible()) {
-            if(!player.isAmmoEmpty()) {
-                if (player.getWeapon() == Weapons.Pistol) {
-                    if (Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT)) {
-                        player.shoot();
-                        Vector2 mousePos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
-                        mousePos = gameStage.screenToStageCoordinates(mousePos);
-                        this.bullets.addActor(new Bullet(world, player.getOrigin().x, player.getOrigin().y, mousePos.cpy().sub(player.getOrigin()).nor()));
+
+            if (Gdx.input.isKeyJustPressed(Input.Keys.F))
+                for (Actor item : items.getChildren()) {
+                    ItemActor itemActor = (ItemActor) item;
+                    if (itemActor.getRectangle().overlaps(player.getRectangle())) {
+                        if (!fastInventoryActor.getInventory().store(itemActor.getItem(), 1))
+                            inventoryActor.getInventory().store(itemActor.getItem(), 1);
                     }
+
                 }
-                if (player.getWeapon() == Weapons.SMG) {
-                    if (Gdx.input.isTouched() || Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
-                        player.shoot();
-                        if (player.cooldown > 17) {
+            for (int i = 0; i < InputHelper.fastInventoryKeys.length; i++) {
+                if (Gdx.input.isKeyJustPressed(InputHelper.fastInventoryKeys[i])) {
+                    ImageButton button = ((ImageButton) fastInventoryActor.getCells().get(i).getActor());
+                    InputEvent event1 = new InputEvent();
+                    event1.setType(InputEvent.Type.touchDown);
+                    button.fire(event1);
+
+                    InputEvent event2 = new InputEvent();
+                    event2.setType(InputEvent.Type.touchUp);
+                    button.fire(event2);
+                }
+            }
+
+            if (weaponsAllowed && !inventoryActor.isVisible()) {
+                if (!player.isAmmoEmpty()) {
+                    if (player.getWeapon() == Weapons.Pistol) {
+                        if (Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT)) {
+                            player.shoot();
                             Vector2 mousePos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
                             mousePos = gameStage.screenToStageCoordinates(mousePos);
-                            this.bullets.addActor(new Bullet(world, player.getX(), player.getY(), mousePos.cpy().sub(player.getOrigin()).nor()));
-                            player.cooldown = 0;
+                            this.bullets.addActor(new Bullet(world, player.getOrigin().x, player.getOrigin().y, mousePos.cpy().sub(player.getOrigin()).nor()));
+                        }
+                    }
+                    if (player.getWeapon() == Weapons.SMG) {
+                        if (Gdx.input.isTouched() || Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
+                            player.shoot();
+                            if (player.cooldown > 17) {
+                                Vector2 mousePos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
+                                mousePos = gameStage.screenToStageCoordinates(mousePos);
+                                this.bullets.addActor(new Bullet(world, player.getX(), player.getY(), mousePos.cpy().sub(player.getOrigin()).nor()));
+                                player.cooldown = 0;
+                            }
                         }
                     }
                 }
             }
-        }
-        dialogueManager.input();
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.N))
-            inventoryActor.setVisible(!inventoryActor.isVisible());
-        if(Gdx.input.isKeyJustPressed(Input.Keys.C))
-            inventoryActor.getInventory().store(new SmallMedkit(), 2);
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
-            if(inventoryActor.isVisible())
-                inventoryActor.setVisible(false);
-            else {
-                //PAUSE SCREEN
-                //ROLL CREDITS
+            if (Gdx.input.isKeyJustPressed(Input.Keys.N))
+                inventoryActor.setVisible(!inventoryActor.isVisible());
+            if (Gdx.input.isKeyJustPressed(Input.Keys.C))
+                inventoryActor.getInventory().store(new SmallMedkit(), 2);
+
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+                if (inventoryActor.isVisible())
+                    inventoryActor.setVisible(false);
+                else {
+                    //PAUSE SCREEN
+                    //ROLL CREDITS
+                }
             }
-        }
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.L)) {
-            gameStage.addActor(new MagicAttack(Assets.getAsset(Assets.ParticleEffects.blood, ParticleEffect.class), player.getX(), player.getY()));
+            if (Gdx.input.isKeyJustPressed(Input.Keys.L)) {
+                gameStage.addActor(new MagicAttack(Assets.getAsset(Assets.ParticleEffects.blood, ParticleEffect.class), player.getX(), player.getY()));
+            }
         }
     }
 
