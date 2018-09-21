@@ -15,7 +15,6 @@ public class ChangeAnimation extends Action {
 
     @Override
     public boolean act(float delta) {
-        Gdx.app.log(actor.toString(), keyname);
         this.actor.changeAnimation(keyname);
 
         return true;
