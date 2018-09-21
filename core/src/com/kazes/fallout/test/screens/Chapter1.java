@@ -1,9 +1,9 @@
 package com.kazes.fallout.test.screens;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
@@ -13,6 +13,8 @@ import com.kazes.fallout.test.actions.*;
 public class Chapter1 extends GameScreen {
     Actor camFollow;
     CutsceneManager cutscene;
+    CamFollowActor currentFollow;
+    boolean batchTwo = false;
 
     Chapter1(Survivor game, float startingPosX) {
         super(game, "Chapter1", startingPosX);
@@ -20,17 +22,25 @@ public class Chapter1 extends GameScreen {
         nextScreen = Screens.Battlegrounds;
         dialogueManager.dialogue.loadFile(Assets.Dialogues.CHAPTER1, false, false, null);
 
+
+
         camFollow = new Actor();
         camFollow.setX(0);
         camFollow.setY(player.getY());
         gameStage.addActor(camFollow);
+        currentFollow = new CamFollowActor(camFollow);
+        gameStage.addActor(currentFollow);
         cutscene = new CutsceneManager();
         cutscene.add(camFollow, Actions.moveTo(npcs.getChildren().items[0].getX(), 3.5f, 5f, Interpolation.sine));
+        cutscene.add(npcs.getChildren().get(0), Actions.repeat(4, Actions.moveBy(-1f, 0, 1.5f, Interpolation.sine)));
         cutscene.add(camFollow, Actions.sequence(Actions.delay(4f), new ShowDialogue(dialogueManager, "first_chapter_start")));
-        cutscene.add(player, Actions.sequence(Actions.parallel(Actions.moveTo(npcs.getChildren().items[0].getX() - player.getWidth(), 4, 5f), new ChangeAnimation(Assets.Animations.HERO + "_walking")), new ChangeAnimation(Assets.Animations.HERO + "_idle")));
+        cutscene.add(player, Actions.sequence(Actions.parallel(Actions.moveTo(npcs.getChildren().items[0].getX() - 4 - player.getWidth(), 4, 5f), new ChangeAnimation(Assets.Animations.HERO + "_walking")), new ChangeAnimation(Assets.Animations.HERO + "_idle")));
         cutscene.add(player, new ShowDialogue(dialogueManager, "friend"));
         cutscene.add(npcs.getChildren().get(0), Actions.sequence(new CheckDialogAction(dialogueManager), new XFlipAction()));
         cutscene.add(npcs.getChildren().get(0), Actions.sequence(new ShowDialogue(dialogueManager, "help"), new CheckDialogAction(dialogueManager), Actions.delay(1f), new SaveAction()));
+        cutscene.add(player, Actions.sequence(new ShowDialogue(dialogueManager, "new_beginnings"), new CheckDialogAction(dialogueManager), Actions.delay(1f)));
+        cutscene.add(currentFollow, Actions.sequence(new FollowActorAction(player), new ChangeInputPrivilege(this, true)));
+
     }
 
     @Override
@@ -43,12 +53,14 @@ public class Chapter1 extends GameScreen {
             ActorAction action = cutscene.take();
             action.assignedActor.addAction(action.action);
         }
+        if(player.getX() > 60)
+            batch_two();
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
-        ((SideScrollingCamera)gameStage.getCamera()).followPos(new Vector2(camFollow.getX(), camFollow.getY()));
+        ((SideScrollingCamera)gameStage.getCamera()).followPos(new Vector2(currentFollow.getActor().getX(), currentFollow.getActor().getY()));
     }
 
     @Override
@@ -83,5 +95,18 @@ public class Chapter1 extends GameScreen {
     @Override
     public void setItems() {
 
+    }
+
+    private void batch_two() {
+        if(!batchTwo) {
+            batchTwo = true;
+            cutscene.add(player, new ChangeInputPrivilege(this, false));
+            cutscene.add(camFollow, Actions.moveTo(player.getX(), player.getY()));
+            cutscene.add(currentFollow, new FollowActorAction(camFollow));
+            cutscene.add(camFollow, Actions.moveBy(17, 0, 2f, Interpolation.sine));
+            cutscene.add(player, Actions.sequence(new ChangeAnimation(Assets.Animations.HERO + "_idle"), new ShowDialogue(dialogueManager, "problem")));
+            cutscene.add(player, Actions.sequence(new CheckDialogAction(dialogueManager)));
+            cutscene.add(currentFollow, Actions.sequence(new FollowActorAction(player), new ChangeInputPrivilege(this, true)));
+        }
     }
 }

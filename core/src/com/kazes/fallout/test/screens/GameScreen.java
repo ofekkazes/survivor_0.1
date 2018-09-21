@@ -541,4 +541,8 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         if(enemies.getChildren().size == 0)
             completed = true;
     }
+
+    public void setAllowInput(boolean input) {
+        this.allowInput = input;
+    }
 }

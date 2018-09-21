@@ -30,6 +30,28 @@
 			"y": 181
 		},
 		"colorID": 0
+	},
+
+	{
+		"title": "new_beginnings",
+		"tags": "",
+		"body": "Something must have done this to him\nI must go investigate",
+		"position": {
+			"x": 592,
+			"y": 181
+		},
+		"colorID": 0
+	},
+
+	{
+		"title": "problem",
+		"tags": "",
+		"body": "That is an issue..\nLets deal with it",
+		"position": {
+			"x": 592,
+			"y": 181
+		},
+		"colorID": 0
 	}
 	
 ]
