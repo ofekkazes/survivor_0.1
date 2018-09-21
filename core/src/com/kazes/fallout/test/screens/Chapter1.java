@@ -8,10 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
 import com.kazes.fallout.test.*;
-import com.kazes.fallout.test.actions.ChangeAnimation;
-import com.kazes.fallout.test.actions.CheckDialogAction;
-import com.kazes.fallout.test.actions.ShowDialogue;
-import com.kazes.fallout.test.actions.XFlipAction;
+import com.kazes.fallout.test.actions.*;
 
 public class Chapter1 extends GameScreen {
     Actor camFollow;
@@ -33,6 +30,7 @@ public class Chapter1 extends GameScreen {
         cutscene.add(player, Actions.sequence(Actions.parallel(Actions.moveTo(npcs.getChildren().items[0].getX() - player.getWidth(), 4, 5f), new ChangeAnimation(Assets.Animations.HERO + "_walking")), new ChangeAnimation(Assets.Animations.HERO + "_idle")));
         cutscene.add(player, new ShowDialogue(dialogueManager, "friend"));
         cutscene.add(npcs.getChildren().get(0), Actions.sequence(new CheckDialogAction(dialogueManager), new XFlipAction()));
+        cutscene.add(npcs.getChildren().get(0), Actions.sequence(new ShowDialogue(dialogueManager, "help"), new CheckDialogAction(dialogueManager), Actions.delay(1f), new SaveAction()));
     }
 
     @Override
@@ -74,7 +72,7 @@ public class Chapter1 extends GameScreen {
 
     @Override
     public void setNPCS() {
-        npcs.addActor(new NPC(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), "Essi", 50, 3, Weapons.NULL));
+        npcs.addActor(new InjuredNPC(world , 50, 3, Weapons.NULL));
     }
 
     @Override

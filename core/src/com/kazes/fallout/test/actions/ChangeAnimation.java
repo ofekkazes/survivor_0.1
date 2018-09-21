@@ -12,7 +12,6 @@ public class ChangeAnimation extends Action {
 
     @Override
     public boolean act(float delta) {
-        //this.actor.changeAnimation(keyname);
         if(getActor() instanceof AnimationActor) {
             ((AnimationActor)getActor()).changeAnimation(keyname);
             return true;
