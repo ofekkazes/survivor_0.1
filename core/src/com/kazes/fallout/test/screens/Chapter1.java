@@ -30,9 +30,9 @@ public class Chapter1 extends GameScreen {
         cutscene = new CutsceneManager();
         cutscene.add(camFollow, Actions.moveTo(npcs.getChildren().items[0].getX(), 3.5f, 5f, Interpolation.sine));
         cutscene.add(camFollow, Actions.sequence(Actions.delay(4f), new ShowDialogue(dialogueManager, "first_chapter_start")));
-        cutscene.add(player, Actions.sequence(Actions.parallel(Actions.moveTo(npcs.getChildren().items[0].getX() - player.getWidth(), 4, 5f), new ChangeAnimation(player, Assets.Animations.HERO + "_walking")), new ChangeAnimation(player, Assets.Animations.HERO + "_idle")));
+        cutscene.add(player, Actions.sequence(Actions.parallel(Actions.moveTo(npcs.getChildren().items[0].getX() - player.getWidth(), 4, 5f), new ChangeAnimation(Assets.Animations.HERO + "_walking")), new ChangeAnimation(Assets.Animations.HERO + "_idle")));
         cutscene.add(player, new ShowDialogue(dialogueManager, "friend"));
-        cutscene.add(npcs.getChildren().get(0), Actions.sequence(new CheckDialogAction(dialogueManager), new XFlipAction((ImageEx)npcs.getChildren().get(0))));
+        cutscene.add(npcs.getChildren().get(0), Actions.sequence(new CheckDialogAction(dialogueManager), new XFlipAction()));
     }
 
     @Override
