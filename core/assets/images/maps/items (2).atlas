@@ -1,0 +1,173 @@
+items.png
+size: 240, 240
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+akm
+  rotate: false
+  xy: 0, 0
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+axe
+  rotate: false
+  xy: 48, 0
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+backpack
+  rotate: false
+  xy: 96, 0
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+bandage
+  rotate: false
+  xy: 144, 0
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+baseball_bat
+  rotate: false
+  xy: 192, 0
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+bayonet
+  rotate: false
+  xy: 0, 48
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+cap
+  rotate: false
+  xy: 48, 48
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+flashbang
+  rotate: false
+  xy: 96, 48
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+fresh_foods
+  rotate: false
+  xy: 144, 48
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+grenade
+  rotate: false
+  xy: 192, 48
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+he_grenade
+  rotate: false
+  xy: 0, 96
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+hiking_boots
+  rotate: false
+  xy: 48, 96
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+jeans
+  rotate: false
+  xy: 96, 96
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+m4
+  rotate: false
+  xy: 144, 96
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+machete
+  rotate: false
+  xy: 192, 96
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+medkit
+  rotate: false
+  xy: 0, 144
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+mp5
+  rotate: false
+  xy: 48, 144
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+pistol
+  rotate: false
+  xy: 96, 144
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+running_shoes
+  rotate: false
+  xy: 144, 144
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+shotgun
+  rotate: false
+  xy: 192, 144
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+sneakers
+  rotate: false
+  xy: 0, 192
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+tshirt
+  rotate: false
+  xy: 48, 192
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+tuna_cans
+  rotate: false
+  xy: 96, 192
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+wind_coat
+  rotate: false
+  xy: 144, 192
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
