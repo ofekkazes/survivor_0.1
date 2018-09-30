@@ -27,12 +27,6 @@ public class Zombie extends Enemy {
 
     public Zombie(Texture img, float xPos, float yPos, World world) {
         super(img, xPos, yPos, world);
-        body.setFixedRotation(true);
-        interactingObjects = new Array<Actor>();
-        prevPos = new Vector2();
-        frameCount = 0;
-        init();
-        this.setLateUpdateTicker(Gdx.graphics.getFramesPerSecond());
     }
     @Override
     public void act(float delta) {

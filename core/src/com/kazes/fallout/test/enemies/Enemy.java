@@ -1,5 +1,6 @@
 package com.kazes.fallout.test.enemies;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
@@ -40,6 +41,7 @@ public abstract class Enemy extends ImageEx {
         prevPos = new Vector2();
         frameCount = 0;
         init();
+        this.setLateUpdateTicker(Gdx.graphics.getFramesPerSecond());
         //hurt = new MagicAttack(Assets.getAsset(Assets.ParticleEffects.blood, ParticleEffect.class), xPos, yPos);
     }
 
