@@ -52,7 +52,7 @@ public class DialogueManager {
         dialogWindow.setX(divider / 2);
         dialogWindow.setVisible(false);
         Label.LabelStyle labelStyle = new Label.LabelStyle();
-        labelStyle.font = Assets.getFont(Assets.Fonts.CHAKRA, Assets.FontSizes.NINETY);
+        labelStyle.font = Assets.getFont(Assets.Fonts.CHAKRA, Assets.FontSizes.HUNDRED);
         labelStyle.fontColor = Color.BLACK;
         dialogWindow.add(new Label("",  labelStyle));
     }
@@ -163,7 +163,6 @@ public class DialogueManager {
             //Gdx.app.log("Dialogue", line);
             if(line.compareTo(((Label)dialogWindow.getCells().get(0).getActor()).getText().toString()) != 0) {
                 ((Label) dialogWindow.getCells().get(0).getActor()).setText(line);
-                Gdx.app.log("asd", current_line.getText());
             }
         }
     }
