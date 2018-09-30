@@ -25,6 +25,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.kazes.fallout.test.*;
 import com.kazes.fallout.test.dialogues.DialogueManager;
+import com.kazes.fallout.test.enemies.Enemy;
 import com.kazes.fallout.test.enemies.Zombie;
 import com.kazes.fallout.test.inventory.FastInventoryActor;
 import com.kazes.fallout.test.inventory.Inventory;
@@ -439,7 +440,8 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     //Player, Enemy and Bullets collision check, plus the most sophisticated AI the world has ever seen for a zombie
     private void playerZombieInteraction() {
         for (int j = 0; j < enemies.getChildren().size; j++) {
-            Zombie currentEnemy = (Zombie)enemies.getChildren().items[j];
+
+            Enemy currentEnemy = (Enemy) enemies.getChildren().items[j];
 
             for(int i = 0; i < traps.getChildren().size; i++) {
                 if(((ImageEx)traps.getChildren().items[i]).getRectangle().overlaps(currentEnemy.getRectangle())) {
