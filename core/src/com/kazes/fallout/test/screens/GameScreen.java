@@ -214,6 +214,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
+                pause();
             }
         });
 
@@ -304,6 +305,14 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     }
 
     @Override
+    public void pause() {
+        super.pause();
+        Gdx.app.log(this.getName(), "Paused");
+        if(Gdx.input.isKeyPressed(Input.Keys.ANY_KEY))
+            resume();
+    }
+
+    @Override
     public void dispose() {
         super.dispose();
         gameStage.dispose();
@@ -333,14 +342,14 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
             player.changeAnimation(Assets.Animations.HERO + "_idle");
 
             if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-                player.playerTranslation.x = -3;
+                player.playerTranslation.x = -1 * player.walkSpeed;
                 if (((SideScrollingCamera) gameStage.getCamera()).getUpdateCamera())
                 if (!player.isxFlip())
                     player.flip(true);
                 player.changeAnimation(Assets.Animations.HERO + "_walking");
             }
             if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-                player.playerTranslation.x = 3;
+                player.playerTranslation.x = player.walkSpeed;
                 if (((SideScrollingCamera) gameStage.getCamera()).getUpdateCamera())
                 if (player.isxFlip())
                     player.flip(true);
@@ -351,6 +360,14 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
             if (Gdx.input.isKeyPressed(Input.Keys.S))
                 player.playerTranslation.y = -3;
 
+            if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
+                player.walkSpeed = 5f;
+                player.setWalkSpeed(true);
+            }
+            else {
+                player.walkSpeed = 3f;
+                player.setWalkSpeed(false);
+            }
 
             if (Gdx.input.isKeyJustPressed(Input.Keys.F))
                 for (Actor item : items.getChildren()) {
@@ -539,5 +556,9 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
     public void setAllowInput(boolean input) {
         this.allowInput = input;
+    }
+
+    public void setAllowWeapons(boolean input) {
+        this.weaponsAllowed = input;
     }
 }
