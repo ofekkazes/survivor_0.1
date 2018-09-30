@@ -3,25 +3,29 @@ package com.kazes.fallout.test.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
 import com.kazes.fallout.test.*;
 import com.kazes.fallout.test.actions.*;
+import com.kazes.fallout.test.enemies.Zombie;
+import com.kazes.fallout.test.items.AmmoCrate;
+import com.kazes.fallout.test.items.ItemActor;
 
 public class Chapter1 extends GameScreen {
     Actor camFollow;
     CutsceneManager cutscene;
     CamFollowActor currentFollow;
     boolean batchTwo = false;
+    boolean batchThree = false;
 
     Chapter1(Survivor game, float startingPosX) {
         super(game, "Chapter1", startingPosX);
         allowInput = false;
         nextScreen = Screens.Battlegrounds;
         dialogueManager.dialogue.loadFile(Assets.Dialogues.CHAPTER1, false, false, null);
-
 
 
         camFollow = new Actor();
@@ -53,8 +57,10 @@ public class Chapter1 extends GameScreen {
             ActorAction action = cutscene.take();
             action.assignedActor.addAction(action.action);
         }
-        if(player.getX() > 60)
+        if(player.getX() > 55)
             batch_two();
+        if(player.getX() > 80)
+            batch_three();
     }
 
     @Override
@@ -89,24 +95,39 @@ public class Chapter1 extends GameScreen {
 
     @Override
     public void setEnemies() {
-
+        for(int i = 0; i < 5; i++)
+            enemies.addActor(new Zombie(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), MathUtils.random(100, 115), MathUtils.random(5f), world));
     }
 
     @Override
     public void setItems() {
-
+        items.addActor(new ItemActor(new AmmoCrate(), 60, 6));
     }
 
     private void batch_two() {
         if(!batchTwo) {
             batchTwo = true;
             cutscene.add(player, new ChangeInputPrivilege(this, false));
+            cutscene.add(player, Actions.sequence(new ChangeAnimation(Assets.Animations.HERO + "_idle"), Actions.delay(1f), Actions.parallel(new ChangeAnimation(Assets.Animations.HERO + "_walking"), Actions.moveTo(items.getChildren().get(0).getX() - player.getWidth() / 2, items.getChildren().get(0).getY() - player.getHeight() / 2, 1f, Interpolation.sine)), new ChangeAnimation(Assets.Animations.HERO + "_idle")));
+            cutscene.add(player, new ShowDialogue(dialogueManager, "ammo"));
+            cutscene.add(player, Actions.sequence(new CheckDialogAction(dialogueManager)));
+            cutscene.add(player, Actions.sequence(new PickItem(fastInventoryActor, (ItemActor)items.getChildren().get(0), 2), new AddNotification("Ammo bag picked up")));
+            cutscene.add(player, new ChangeInputPrivilege(this, true));
+        }
+    }
+
+    private void batch_three() {
+        if(!batchThree) {
+            batchThree = true;
+            cutscene.add(player, new ChangeInputPrivilege(this, false));
+            cutscene.add(player, new ChangeAnimation(Assets.Animations.HERO + "_idle"));
             cutscene.add(camFollow, Actions.moveTo(player.getX(), player.getY()));
             cutscene.add(currentFollow, new FollowActorAction(camFollow));
             cutscene.add(camFollow, Actions.moveBy(17, 0, 2f, Interpolation.sine));
-            cutscene.add(player, Actions.sequence(new ChangeAnimation(Assets.Animations.HERO + "_idle"), new ShowDialogue(dialogueManager, "problem")));
+            cutscene.add(player, Actions.sequence(new ShowDialogue(dialogueManager, "problem")));
             cutscene.add(player, Actions.sequence(new CheckDialogAction(dialogueManager)));
             cutscene.add(currentFollow, Actions.sequence(new FollowActorAction(player), new ChangeInputPrivilege(this, true)));
+            cutscene.add(player, new ChangeWeaponPrivilege(this, true));
         }
     }
 }
