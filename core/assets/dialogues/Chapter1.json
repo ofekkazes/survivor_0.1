@@ -2,55 +2,35 @@
 	{
 		"title": "first_chapter_start",
 		"tags": "",
-		"body": "That guy is in some deep shit!\nI must help him",
-		"position": {
-			"x": 592,
-			"y": 181
-		},
+		"body": "That guy is in some deep shit!\r\nI must help him\r\n",
 		"colorID": 0
 	},
 	
 	{
 		"title": "friend",
 		"tags": "",
-		"body": "Hey friend",
-		"position": {
-			"x": 592,
-			"y": 181
-		},
+		"body": "Hey friend\r\n",
 		"colorID": 0
 	},
 	
 	{
 		"title": "help",
 		"tags": "",
-		"body": "You need so help?\nYes, my sister just ate her legs\nAnd I'm injured badly\nLook pal, come to my tribe\nMy doctors will nurse you",
-		"position": {
-			"x": 592,
-			"y": 181
-		},
+		"body": "You need so help?\r\nYes, my sister just ate her legs\r\nAnd I'm injured badly\r\nLook pal, come to my tribe\r\nMy doctors will nurse you\r\n",
 		"colorID": 0
 	},
 
 	{
 		"title": "new_beginnings",
 		"tags": "",
-		"body": "Something must have done this to him\nI must go investigate",
-		"position": {
-			"x": 592,
-			"y": 181
-		},
+		"body": "Something must have done this to him\r\nI must go investigate\r\n",
 		"colorID": 0
 	},
 
 	{
 		"title": "problem",
 		"tags": "",
-		"body": "That is an issue..\nLets deal with it",
-		"position": {
-			"x": 592,
-			"y": 181
-		},
+		"body": "That is an issue..\r\nLets deal with it\r\n",
 		"colorID": 0
 	}
 	
