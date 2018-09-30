@@ -344,16 +344,14 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
             if (Gdx.input.isKeyPressed(Input.Keys.A)) {
                 player.playerTranslation.x = -1 * player.walkSpeed;
-                if (((SideScrollingCamera) gameStage.getCamera()).getUpdateCamera())
                 if (!player.isxFlip())
-                    player.flip(true);
+                    player.flip();
                 player.changeAnimation(Assets.Animations.HERO + "_walking");
             }
             if (Gdx.input.isKeyPressed(Input.Keys.D)) {
                 player.playerTranslation.x = player.walkSpeed;
-                if (((SideScrollingCamera) gameStage.getCamera()).getUpdateCamera())
                 if (player.isxFlip())
-                    player.flip(true);
+                    player.flip();
                 player.changeAnimation(Assets.Animations.HERO + "_walking");
             }
             if (Gdx.input.isKeyPressed(Input.Keys.W))

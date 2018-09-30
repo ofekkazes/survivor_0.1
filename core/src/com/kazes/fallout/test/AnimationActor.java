@@ -78,7 +78,7 @@ public class AnimationActor extends ImageEx {
         batch.draw(tmp, xFlip ? getX() + getWidth() : getX(), (this.currentKey.contains("walking")) ? getY() + Survivor.getInMeters(3) : getY(), xFlip ? -getWidth() : getWidth(), getHeight());
     }
 
-    public void flip(boolean xFlip) {
+    public void flip() {
         this.xFlip = !isxFlip();
     }
 
