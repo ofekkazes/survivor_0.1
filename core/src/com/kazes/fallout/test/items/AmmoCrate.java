@@ -6,7 +6,7 @@ import com.kazes.fallout.test.inventory.Item;
 public class AmmoCrate extends Item {
 
     public AmmoCrate() {
-        super("crate", "Gives you 30 bullets");
+        super("backpack", "Gives you 30 bullets");
     }
 
     @Override

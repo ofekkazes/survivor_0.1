@@ -5,7 +5,7 @@ import com.kazes.fallout.test.inventory.Item;
 
 public class WaterBottle extends Item {
     public WaterBottle() {
-        super("water", "Used to cure thirst");
+        super("tuna_cans", "Used to cure thirst");
     }
 
     @Override

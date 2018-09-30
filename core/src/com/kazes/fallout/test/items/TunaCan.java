@@ -5,7 +5,7 @@ import com.kazes.fallout.test.inventory.Item;
 
 public class TunaCan extends Item {
     public TunaCan() {
-        super("tuna", "Used to cure hunger");
+        super("tuna_cans", "Used to cure hunger");
     }
 
     @Override

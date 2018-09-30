@@ -66,10 +66,12 @@ public class Assets {
 
     public static class Atlases {
         public static final String items = "images/maps/items.atlas";
+        public static final String items_new = "images/maps/items (2).atlas";
+        public static final String items_icons = "images/maps/items2.atlas";
     }
 
     private static final String[] _Atlases = {
-            Atlases.items
+            Atlases.items, Atlases.items_new, Atlases.items_icons
     };
 
     public static final String[] _Parallax1 = {

@@ -13,7 +13,7 @@ import com.kazes.fallout.test.inventory.Item;
  * @see Item
  */
 public class ItemActor extends ImageEx {
-    private static TextureAtlas icons = Assets.getAsset(Assets.Atlases.items, TextureAtlas.class);
+    private static TextureAtlas icons = Assets.getAsset(Assets.Atlases.items_icons, TextureAtlas.class);
 
     private Item pointer;
 
