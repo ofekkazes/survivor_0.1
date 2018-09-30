@@ -77,7 +77,7 @@ public class Prologue extends GameScreen {
             parallaxTextures.add(Assets.getAsset(Assets._Parallax1[i], Texture.class));
             parallaxTextures.get(i).setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat);
         }
-        parallaxBackground = new ParallaxBackground(parallaxTextures, gameStage.getCamera().viewportWidth, gameStage.getCamera().viewportHeight);
+        parallaxBackground = new ParallaxBackground(parallaxTextures, gameStage.getCamera());
         parallaxBackground.setSize(Gdx.graphics.getWidth() / 2,Gdx.graphics.getHeight() / 2);
         gameStage.addActor(parallaxBackground);
 
@@ -159,7 +159,6 @@ public class Prologue extends GameScreen {
     public void render(float delta) {
         super.render(delta);
         ((SideScrollingCamera)gameStage.getCamera()).followPos(new Vector2(cameraFollow.getX(), cameraFollow.getY()));
-        parallaxBackground.setXPos(gameStage.getCamera().position.x - gameStage.getCamera().viewportWidth / 2);
         renderDialogue();
         if(thirdMove) {
             if(complete) {

@@ -71,7 +71,7 @@ public class Battlegrounds extends GameScreen {
             parallaxTextures.get(i).setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat);
 
         }
-        parallaxBackground = new ParallaxBackground(parallaxTextures, gameStage.getCamera().viewportWidth, gameStage.getCamera().viewportHeight);
+        parallaxBackground = new ParallaxBackground(parallaxTextures, gameStage.getCamera());
         //parallaxBackground.setSize(Survivor.getInMeters(Gdx.graphics.getWidth() / 2),Survivor.getInMeters(Gdx.graphics.getHeight() / 2));
 
         map = new ImageEx(game.assetManager.get(Assets.Images.MAP, Texture.class), 0, 0);

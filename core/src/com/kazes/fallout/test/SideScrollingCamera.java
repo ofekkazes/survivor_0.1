@@ -2,6 +2,7 @@ package com.kazes.fallout.test;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -19,6 +20,11 @@ public class SideScrollingCamera extends OrthographicCamera {
     private float updateY;
 
     private boolean updateCamera;
+
+    Matrix4 parallaxView = new Matrix4();
+    Matrix4 parallaxCombined = new Matrix4();
+    Vector3 tmp = new Vector3();
+    Vector3 tmp2 = new Vector3();
 
     /*public SideScrollingCamera() {
         super();
@@ -73,6 +79,18 @@ public class SideScrollingCamera extends OrthographicCamera {
             position.y = playerPos.y + updateY;
             update();
         }*/
+    }
+
+    public Matrix4 calculateParallaxMatrix (float parallaxX, float parallaxY) {
+        update();
+        tmp.set(position);
+        tmp.x *= parallaxX;
+        tmp.y *= parallaxY;
+
+        parallaxView.setToLookAt(tmp, tmp2.set(tmp).add(direction), up);
+        parallaxCombined.set(projection);
+        Matrix4.mul(parallaxCombined.val, parallaxView.val);
+        return parallaxCombined;
     }
 
 

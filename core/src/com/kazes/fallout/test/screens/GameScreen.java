@@ -270,8 +270,6 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     public void render(float delta) {
         super.render(delta);
 
-        parallaxBackground.setXPos(gameStage.getCamera().position.x - gameStage.getCamera().viewportWidth / 2);
-
         gameStage.act(Gdx.graphics.getDeltaTime());
         gameStage.getViewport().apply();
         gameStage.draw();
@@ -332,13 +330,11 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         dialogueManager.input();
         player.changeAnimation(player.getCurrentKey());
         if(allowInput) {
-            parallaxBackground.setSpeed(0);
             player.changeAnimation(Assets.Animations.HERO + "_idle");
 
             if (Gdx.input.isKeyPressed(Input.Keys.A)) {
                 player.playerTranslation.x = -3;
                 if (((SideScrollingCamera) gameStage.getCamera()).getUpdateCamera())
-                    parallaxBackground.setSpeed(-0.2f);
                 if (!player.isxFlip())
                     player.flip(true);
                 player.changeAnimation(Assets.Animations.HERO + "_walking");
@@ -346,7 +342,6 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
             if (Gdx.input.isKeyPressed(Input.Keys.D)) {
                 player.playerTranslation.x = 3;
                 if (((SideScrollingCamera) gameStage.getCamera()).getUpdateCamera())
-                    parallaxBackground.setSpeed(0.2f);
                 if (player.isxFlip())
                     player.flip(true);
                 player.changeAnimation(Assets.Animations.HERO + "_walking");
