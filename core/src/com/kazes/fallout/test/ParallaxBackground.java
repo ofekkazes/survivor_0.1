@@ -21,8 +21,7 @@ public class ParallaxBackground extends Actor {
     SideScrollingCamera camera;
     private Array<Texture> layers;
 
-    float x,y,width,height,scaleX,scaleY;
-    boolean flipX,flipY;
+    private float x,y,width,height,scaleX,scaleY;
 
     public ParallaxBackground(Array<Texture> textures, Camera cam){
         layers = textures;
@@ -34,7 +33,6 @@ public class ParallaxBackground extends Actor {
         this.height = camera.viewportHeight / 2;
         y = camera.viewportHeight / 2;
         scaleX = scaleY = 1;
-        flipX = flipY = false;
         setVisible(true);
     }
 
