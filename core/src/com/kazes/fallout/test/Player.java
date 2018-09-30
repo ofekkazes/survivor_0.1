@@ -33,6 +33,7 @@ public class Player extends AnimationActor {
     public Progress ammo;
     public float time;
     public Vector2 playerTranslation;
+    public float walkSpeed;
     public boolean hit = false;
     //public int ammo;
 
@@ -51,6 +52,7 @@ public class Player extends AnimationActor {
         this.playerTranslation = new Vector2();
         this.ammo = new Progress(0, 100, 1, false);
         this.ammo.setValue(50);
+        this.walkSpeed = 3f;
     }
 
     public void initPhysics(World world) {
@@ -82,7 +84,9 @@ public class Player extends AnimationActor {
             Gdx.app.log("Progress", hunger + "");
         }
         if((time % 30) == 0) {
-            thirst.reduceValue(0.01f);
+            if(walkSpeed > 3)
+                thirst.reduceValue(0.03f);
+            else thirst.reduceValue(0.01f);
             Gdx.app.log("Thirst", thirst + "");
         }
         if(cooldown <= 20)

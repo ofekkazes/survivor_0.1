@@ -82,6 +82,14 @@ public class AnimationActor extends ImageEx {
         this.xFlip = !isxFlip();
     }
 
+    public void setWalkSpeed(boolean running) {
+        for (int i = 0; i < animationsByNames.size; i++) {
+            if (animationsByNames.keys().toArray().get(i).contains("walking")) {
+                animationsByNames.get(animationsByNames.keys().toArray().get(i)).setFrameDuration(running ? 1 / 15f : 1 / 10f);
+            }
+        }
+    }
+
     private static TextureRegion getFirstFrame(Texture spritesheet) {
         TextureRegion[][] tmp = TextureRegion.split(spritesheet,
                 spritesheet.getWidth() / 8,
