@@ -1,5 +1,6 @@
 package com.kazes.fallout.test.actions;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.kazes.fallout.test.dialogues.DialogueManager;
 
@@ -14,7 +15,10 @@ public class ShowDialogue extends Action {
 
     @Override
     public boolean act(float delta) {
-        dialogueManager.start(node);
-        return true;
+        if(dialogueManager.isCompleted()) {
+            dialogueManager.start(node);
+            return true;
+        }
+        return false;
     }
 }

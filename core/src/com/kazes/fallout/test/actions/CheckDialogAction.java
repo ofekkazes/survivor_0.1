@@ -11,6 +11,6 @@ public class CheckDialogAction extends Action {
     }
     @Override
     public boolean act(float delta) {
-        return dialogueManager.current_line == null;
+        return dialogueManager.isCompleted();
     }
 }

@@ -133,17 +133,24 @@ public class Assets {
         public static final int THIRTY = 30;
         public static final int FORTY = 40;
         public static final int FIFTY = 50;
+        public static final int SIXTY = 50;
+        public static final int SEVENTY = 50;
+        public static final int EIGHTY = 50;
+        public static final int NINETY = 50;
         public static final int HUNDRED = 100;
         public static final int TWO_HUNDRED = 200;
     }
-    private static final int[] _FontSizes = { FontSizes.TWENTY, FontSizes.TWENTY_FIVE, FontSizes.THIRTY, FontSizes.FORTY, FontSizes.FIFTY, FontSizes.HUNDRED, FontSizes.TWO_HUNDRED };
+    private static final int[] _FontSizes = { FontSizes.TWENTY, FontSizes.TWENTY_FIVE, FontSizes.THIRTY, FontSizes.FORTY,
+            FontSizes.FIFTY, FontSizes.SIXTY, FontSizes.SEVENTY, FontSizes.EIGHTY, FontSizes.NINETY, FontSizes.HUNDRED,
+            FontSizes.TWO_HUNDRED };
 
     public static class Fonts {
         public static final String DIN_ALT = "fonts/default";
+        public static final String CHAKRA = "fonts/chakra";
 
         public static final String DEFAULT = DIN_ALT;
     }
-    private static final String[] _Fonts = { Fonts.DIN_ALT };
+    private static final String[] _Fonts = { Fonts.DIN_ALT, Fonts.CHAKRA };
     private static final ArrayMap<String, ArrayMap<Integer, BitmapFont>> fontCache = new ArrayMap<String, ArrayMap<Integer, BitmapFont>>();
 
     public static class Animations {

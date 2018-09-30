@@ -2,6 +2,7 @@ package com.kazes.fallout.test.dialogues;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
@@ -44,13 +45,20 @@ public class DialogueManager {
         this.complete = true;
         this.variables = new Array<Var>();
 
+        float divider = Gdx.graphics.getWidth() / 2;
+
         dialogWindow = new WindowEx(Assets.getAsset(Assets.UI_SKIN, Skin.class));
-        dialogWindow.setSize(Gdx.graphics.getWidth(), 200);
+        dialogWindow.setSize(Gdx.graphics.getWidth() - divider, 150);
+        dialogWindow.setX(divider / 2);
         dialogWindow.setVisible(false);
-        dialogWindow.add(new Label("",  Assets.getAsset(Assets.UI_SKIN, Skin.class)));
+        Label.LabelStyle labelStyle = new Label.LabelStyle();
+        labelStyle.font = Assets.getFont(Assets.Fonts.CHAKRA, Assets.FontSizes.NINETY);
+        labelStyle.fontColor = Color.BLACK;
+        dialogWindow.add(new Label("",  labelStyle));
     }
 
     public void update() {
+
         // if we currently dont have any command available check if next result is a
         // command
         if (current_command == null && dialogue.isNextCommand()) {
@@ -153,8 +161,10 @@ public class DialogueManager {
                 }
             }
             //Gdx.app.log("Dialogue", line);
-
-            ((Label)dialogWindow.getCells().get(0).getActor()).setText(line);
+            if(line.compareTo(((Label)dialogWindow.getCells().get(0).getActor()).getText().toString()) != 0) {
+                ((Label) dialogWindow.getCells().get(0).getActor()).setText(line);
+                Gdx.app.log("asd", current_line.getText());
+            }
         }
     }
 
