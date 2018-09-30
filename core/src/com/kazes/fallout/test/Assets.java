@@ -138,11 +138,15 @@ public class Assets {
         public static final int EIGHTY = 50;
         public static final int NINETY = 50;
         public static final int HUNDRED = 100;
+        public static final int HUNDRED_TWENTY = 100;
+        public static final int HUNDRED_FIFTY = 150;
+        public static final int HUNDRED_SEVENTY = 170;
+
         public static final int TWO_HUNDRED = 200;
     }
     private static final int[] _FontSizes = { FontSizes.TWENTY, FontSizes.TWENTY_FIVE, FontSizes.THIRTY, FontSizes.FORTY,
             FontSizes.FIFTY, FontSizes.SIXTY, FontSizes.SEVENTY, FontSizes.EIGHTY, FontSizes.NINETY, FontSizes.HUNDRED,
-            FontSizes.TWO_HUNDRED };
+            FontSizes.HUNDRED_TWENTY, FontSizes.HUNDRED_FIFTY, FontSizes.HUNDRED_SEVENTY, FontSizes.TWO_HUNDRED };
 
     public static class Fonts {
         public static final String DIN_ALT = "fonts/default";
