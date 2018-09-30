@@ -185,7 +185,14 @@ public class SideScroll extends GameScreen {
 
     @Override
     public void setMap() {
+        Array<Texture> parallaxTextures = new Array<Texture>();
+        for(int i = 0; i < 6;i++){
+            parallaxTextures.add(Assets.getAsset(Assets._Parallax1[i], Texture.class));
+            parallaxTextures.get(i).setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat);
+        }
+        parallaxBackground = new ParallaxBackground(parallaxTextures, gameStage.getCamera());
 
+        map = new ImageEx(game.assetManager.get(Assets.Images.MAP, Texture.class), 0, 0);
     }
 
     @Override
