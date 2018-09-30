@@ -98,7 +98,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         stateTime = 0;
 
         //Changing the camera used by the game stage
-        SideScrollingCamera camera = new SideScrollingCamera(30, 20);
+        SideScrollingCamera camera = new SideScrollingCamera(30, 20, 0, Survivor.getInMeters(4065));
         StretchViewport viewp = new StretchViewport(30.6f, 17, camera);
 
         gameStage = new Stage(viewp);
