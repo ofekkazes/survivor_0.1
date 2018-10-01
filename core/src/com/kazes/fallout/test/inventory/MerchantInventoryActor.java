@@ -6,10 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.kazes.fallout.test.WindowEx;
 import com.kazes.fallout.test.items.AmmoCrate;
-import com.kazes.fallout.test.items.ItemActor;
 import com.kazes.fallout.test.items.SmallMedkit;
 import com.kazes.fallout.test.screens.GameScreen;
 

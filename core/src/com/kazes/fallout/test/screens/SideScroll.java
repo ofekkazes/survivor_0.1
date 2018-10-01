@@ -1,11 +1,13 @@
 package com.kazes.fallout.test.screens;
 
-import com.badlogic.gdx.*;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.kazes.fallout.test.*;
 import com.kazes.fallout.test.enemies.Zombie;
@@ -14,7 +16,7 @@ import com.kazes.fallout.test.physics.CollisionCategory;
 import com.kyper.yarn.Library;
 import com.kyper.yarn.Value;
 
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
 
 /**
  * Game logic testing screen

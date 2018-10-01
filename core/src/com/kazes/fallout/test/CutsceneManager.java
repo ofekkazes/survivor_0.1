@@ -3,9 +3,6 @@ package com.kazes.fallout.test;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-import java.util.Queue;
-import java.util.Stack;
-
 public class CutsceneManager {
     com.badlogic.gdx.utils.Queue<ActorAction> actions;
     Actor lastUsedActor;

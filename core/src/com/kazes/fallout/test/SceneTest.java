@@ -2,18 +2,15 @@ package com.kazes.fallout.test;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.ColorAction;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.ScaleToAction;
-import com.badlogic.gdx.scenes.scene2d.actions.ColorAction;
-import com.sun.prism.paint.Color;
-
-import java.util.Iterator;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 

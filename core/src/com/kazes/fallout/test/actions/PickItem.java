@@ -2,7 +2,6 @@ package com.kazes.fallout.test.actions;
 
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.kazes.fallout.test.inventory.FastInventoryActor;
-import com.kazes.fallout.test.inventory.InventoryActor;
 import com.kazes.fallout.test.items.ItemActor;
 
 public class PickItem extends Action {

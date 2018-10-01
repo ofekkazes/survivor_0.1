@@ -6,14 +6,20 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
-import com.badlogic.gdx.math.*;
-import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -32,13 +38,11 @@ import com.kazes.fallout.test.inventory.Inventory;
 import com.kazes.fallout.test.inventory.InventoryActor;
 import com.kazes.fallout.test.items.AmmoCrate;
 import com.kazes.fallout.test.items.ItemActor;
-import com.kazes.fallout.test.items.SmallMedkit;
 import com.kazes.fallout.test.physics.B2DBodyBuilder;
 import com.kazes.fallout.test.physics.CollisionCategory;
 import com.kazes.fallout.test.physics.ContactListener;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.color;
 
 /**
  * Most of the game's logic will be coded here.

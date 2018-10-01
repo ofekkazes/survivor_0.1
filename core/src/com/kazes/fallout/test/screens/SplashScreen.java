@@ -2,12 +2,13 @@ package com.kazes.fallout.test.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
-import com.kazes.fallout.test.*;
-import com.kazes.fallout.test.screens.GameScreen;
+import com.kazes.fallout.test.Assets;
+import com.kazes.fallout.test.ImageEx;
+import com.kazes.fallout.test.ParallaxBackground;
+import com.kazes.fallout.test.Survivor;
 /**
  * A screen showing the game's title
  * @author Ofek Kazes

@@ -3,17 +3,13 @@ package com.kazes.fallout.test.enemies;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
-import com.kazes.fallout.test.Assets;
 import com.kazes.fallout.test.ImageEx;
-import com.kazes.fallout.test.MagicAttack;
-import com.kazes.fallout.test.Survivor;
 import com.kazes.fallout.test.physics.CollisionCategory;
 import com.kazes.fallout.test.screens.GameScreen;
 

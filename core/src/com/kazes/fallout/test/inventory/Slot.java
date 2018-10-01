@@ -22,7 +22,6 @@
 package com.kazes.fallout.test.inventory;
 
 import com.badlogic.gdx.utils.Array;
-import com.kazes.fallout.test.screens.GameScreen;
 
 /**
  * @author Daniel Holderbaum

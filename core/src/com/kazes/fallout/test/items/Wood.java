@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
 import com.kazes.fallout.test.Assets;
 import com.kazes.fallout.test.ImageEx;
-import com.kazes.fallout.test.items.Carryable;
 @Deprecated
 public class Wood extends ImageEx implements Carryable {
     private String desc;

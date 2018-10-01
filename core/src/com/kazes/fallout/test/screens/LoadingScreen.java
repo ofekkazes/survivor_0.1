@@ -3,8 +3,6 @@ package com.kazes.fallout.test.screens;
 import com.badlogic.gdx.graphics.Color;
 import com.kazes.fallout.test.Assets;
 import com.kazes.fallout.test.Survivor;
-import com.kazes.fallout.test.screens.AbstractScreen;
-import com.kazes.fallout.test.screens.Tribe;
 
 /**
  * Basic loading screen, using to load all assets

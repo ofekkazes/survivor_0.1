@@ -23,8 +23,6 @@ import com.kyper.yarn.Dialogue;
 import com.kyper.yarn.UserData;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.color;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 
 /**
  * Legacy Prologue for the game

@@ -1,6 +1,5 @@
 package com.kazes.fallout.test.items;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 
 
