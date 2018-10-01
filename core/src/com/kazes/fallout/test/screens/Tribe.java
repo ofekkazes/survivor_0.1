@@ -33,6 +33,7 @@ public class Tribe extends GameScreen {
 
     Mercenary mercenary;
     Group randomNPCs;
+    Merchant jerry;
 
 
     public Tribe(Survivor game, float startingPosX) {
@@ -151,6 +152,9 @@ public class Tribe extends GameScreen {
                 randomNPCs.addActor(new ImageEx(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), MathUtils.random(Survivor.getInMeters(700), Survivor.getInMeters(1400)), MathUtils.random(1, Survivor.getInMeters(280))));
             }
         }
+
+        jerry = new Merchant(5, 6, screenStage);
+        decor.addActor(jerry);
     }
 
     @Override
