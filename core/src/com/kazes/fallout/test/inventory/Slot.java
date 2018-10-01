@@ -84,10 +84,10 @@ public class Slot {
 		if (this.amount >= amount) {
 			//this.amount -= amount;
 			for(int i = amount; i > 0; i--) {
-				if (getItem().useItem(GameScreen.player)) {
+				//if (getItem().useItem(GameScreen.player)) {
 					i--;
 					this.amount--;
-				}
+				//}
 			}
 			if (this.amount == 0) {
 				item = null;

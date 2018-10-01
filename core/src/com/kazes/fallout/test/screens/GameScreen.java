@@ -30,6 +30,7 @@ import com.kazes.fallout.test.enemies.Zombie;
 import com.kazes.fallout.test.inventory.FastInventoryActor;
 import com.kazes.fallout.test.inventory.Inventory;
 import com.kazes.fallout.test.inventory.InventoryActor;
+import com.kazes.fallout.test.items.AmmoCrate;
 import com.kazes.fallout.test.items.ItemActor;
 import com.kazes.fallout.test.items.SmallMedkit;
 import com.kazes.fallout.test.physics.B2DBodyBuilder;
@@ -420,7 +421,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
             if (Gdx.input.isKeyJustPressed(Input.Keys.N))
                 inventoryActor.setVisible(!inventoryActor.isVisible());
             if (Gdx.input.isKeyJustPressed(Input.Keys.C))
-                fastInventoryActor.getInventory().store(new SmallMedkit(), 1);
+                fastInventoryActor.getInventory().store(new AmmoCrate(), 1);
 
             if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
                 if (inventoryActor.isVisible())

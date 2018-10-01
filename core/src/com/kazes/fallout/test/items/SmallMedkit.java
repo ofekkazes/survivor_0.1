@@ -14,6 +14,6 @@ public class SmallMedkit extends Item {
             ((Player) usedOn).addHealth(.2f);
             return true;
         }
-        else return false;
+        return false;
     }
 }

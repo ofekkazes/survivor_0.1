@@ -33,8 +33,6 @@ public class MerchantInventoryActor extends WindowEx {
         int i = 0;
         for (final Slot slot : inventory.getSlots()) {
             SlotActor slotActor = new SlotActor(skin, slot, parent, false);
-            //dragAndDrop.addSource(new SlotSource(slotActor));
-            //dragAndDrop.addTarget(new SlotTarget(slotActor));
             add(slotActor);
             slotActor.addListener(new ClickListener() {
                 @Override
