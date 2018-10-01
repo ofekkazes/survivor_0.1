@@ -9,10 +9,12 @@ package com.kazes.fallout.test.inventory;
 public abstract class Item {
     public String region;
     public String description;
+    public float price;
 
     public Item(String textureRegion, String description) {
         this.region = textureRegion;
         this.description = description;
+        this.price = 0.05f;
     }
 
     public String getTextureRegion() {

@@ -98,7 +98,10 @@ public class Tribe extends GameScreen {
     public void proccessInput() {
         super.proccessInput();
 
-
+        if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+            if(jerry.getInventory().isVisible())
+                jerry.getInventory().setVisible(false);
+        }
     }
 
     @Override
@@ -153,7 +156,7 @@ public class Tribe extends GameScreen {
             }
         }
 
-        jerry = new Merchant(5, 6, screenStage);
+        jerry = new Merchant(5, 6, screenStage, fastInventoryActor.getInventory(), inventoryActor.getInventory());
         decor.addActor(jerry);
     }
 

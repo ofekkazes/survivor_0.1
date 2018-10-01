@@ -12,9 +12,9 @@ import com.kazes.fallout.test.inventory.MerchantInventoryActor;
 public class Merchant extends ImageEx {
     final MerchantInventoryActor inventory;
 
-    public Merchant(float xPos, float yPos, Stage parent) {
+    public Merchant(float xPos, float yPos, Stage parent, Inventory fastInventory, Inventory bag) {
         super(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), xPos, yPos);
-        this.inventory = new MerchantInventoryActor(new Inventory(15), InputHelper.dragAndDrop, Assets.getAsset(Assets.UI_SKIN, Skin.class), parent);
+        this.inventory = new MerchantInventoryActor(new Inventory(15), Assets.getAsset(Assets.UI_SKIN, Skin.class), parent, fastInventory, bag);
         parent.addActor(this.inventory);
         this.addListener(new ClickListener() {
             @Override
@@ -23,5 +23,9 @@ public class Merchant extends ImageEx {
                 inventory.show("buy");
             }
         });
+    }
+
+    public MerchantInventoryActor getInventory() {
+        return inventory;
     }
 }
