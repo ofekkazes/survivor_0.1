@@ -5,7 +5,7 @@ import com.kazes.fallout.test.inventory.Item;
 
 public class SmallMedkit extends Item {
     public SmallMedkit() {
-        super("medkit", "Heals 20 points");
+        super("bandage", "Heals 20 points");
     }
 
     @Override
