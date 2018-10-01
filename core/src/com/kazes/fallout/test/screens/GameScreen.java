@@ -50,6 +50,8 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     public static final int SCREEN_HEIGHT = Gdx.graphics.getHeight();
     public static final int VIRTUAL_HEIGHT = 400;
 
+    public static float bitcoin = 0;
+
     Screens nextScreen;
     Screens lastScreen;
     Boolean[] screenChange = {false};
@@ -108,8 +110,9 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         if(screenStage == null) {
             screenStage = new Stage(new ScreenViewport());
             if(inventoryActor == null && fastInventoryActor == null) {
-                inventoryActor = new InventoryActor(new Inventory(20), InputHelper.dragAndDrop, Assets.getAsset(Assets.UI_SKIN, Skin.class), screenStage);
-                fastInventoryActor = new FastInventoryActor(new Inventory(5), InputHelper.dragAndDrop, Assets.getAsset(Assets.UI_SKIN, Skin.class), screenStage);
+                DragAndDrop dragAndDrop = new DragAndDrop();
+                inventoryActor = new InventoryActor(new Inventory(20), dragAndDrop, Assets.getAsset(Assets.UI_SKIN, Skin.class), screenStage);
+                fastInventoryActor = new FastInventoryActor(new Inventory(5), dragAndDrop, Assets.getAsset(Assets.UI_SKIN, Skin.class), screenStage);
 
             }
             screenStage.addActor(inventoryActor);

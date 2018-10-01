@@ -6,6 +6,7 @@ import com.kazes.fallout.test.Bullet;
 import com.kazes.fallout.test.ImageEx;
 import com.kazes.fallout.test.Player;
 import com.kazes.fallout.test.enemies.Enemy;
+import com.kazes.fallout.test.screens.GameScreen;
 
 public class ContactListener implements com.badlogic.gdx.physics.box2d.ContactListener {
 
@@ -40,6 +41,7 @@ public class ContactListener implements com.badlogic.gdx.physics.box2d.ContactLi
             enemyBody.setLinearDamping(5f);
             bullet.setRemove();
             enemy.subHealth(20);
+            GameScreen.bitcoin += 0.0003f;
         }
         if(f1Category == CollisionCategory.FRIENDLY.cat() && f2Category == CollisionCategory.ENEMY.cat()) {
             friendlyBody = f1.getBody();
