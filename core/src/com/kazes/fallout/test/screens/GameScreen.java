@@ -108,9 +108,8 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         if(screenStage == null) {
             screenStage = new Stage(new ScreenViewport());
             if(inventoryActor == null && fastInventoryActor == null) {
-                DragAndDrop dragAndDrop = new DragAndDrop();
-                inventoryActor = new InventoryActor(new Inventory(20), dragAndDrop, Assets.getAsset(Assets.UI_SKIN, Skin.class), screenStage);
-                fastInventoryActor = new FastInventoryActor(new Inventory(5), dragAndDrop, Assets.getAsset(Assets.UI_SKIN, Skin.class), screenStage);
+                inventoryActor = new InventoryActor(new Inventory(20), InputHelper.dragAndDrop, Assets.getAsset(Assets.UI_SKIN, Skin.class), screenStage);
+                fastInventoryActor = new FastInventoryActor(new Inventory(5), InputHelper.dragAndDrop, Assets.getAsset(Assets.UI_SKIN, Skin.class), screenStage);
 
             }
             screenStage.addActor(inventoryActor);
