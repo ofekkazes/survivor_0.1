@@ -420,7 +420,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
             if (Gdx.input.isKeyJustPressed(Input.Keys.N))
                 inventoryActor.setVisible(!inventoryActor.isVisible());
             if (Gdx.input.isKeyJustPressed(Input.Keys.C))
-                inventoryActor.getInventory().store(new SmallMedkit(), 2);
+                fastInventoryActor.getInventory().store(new SmallMedkit(), 1);
 
             if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
                 if (inventoryActor.isVisible())
