@@ -568,4 +568,8 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     public void setAllowWeapons(boolean input) {
         this.weaponsAllowed = input;
     }
+
+    public Group getItems() {
+        return this.items;
+    }
 }
