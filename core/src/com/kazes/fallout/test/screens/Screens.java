@@ -9,6 +9,7 @@ import com.kazes.fallout.test.Survivor;
  * @since 2018-09-15
  */
 public enum Screens {
+
     Loading {
         public AbstractScreen getScreen(Survivor game, float startingPosX) {
             return new LoadingScreen(game);
@@ -16,27 +17,44 @@ public enum Screens {
     },
     SideScroll {
         public AbstractScreen getScreen(Survivor game, float startingPosX) {
-            return new SideScroll(game, startingPosX);
+            SideScroll screen = new SideScroll(game, startingPosX);
+            current = screen;
+            return screen;
         }
     },
     Prologue {
         public AbstractScreen getScreen(Survivor game, float startingPosX) {
-            return new Prologue(game);
+            Prologue screen = new Prologue(game);
+            current = screen;
+            return screen;
         }
     },
     Tribe {
         public AbstractScreen getScreen(Survivor game, float startingPosX) {
-            return new Tribe(game, startingPosX);
+            Tribe screen = new Tribe(game, startingPosX);
+            current = screen;
+            return screen;
         }
     },
     Battlegrounds {
         public AbstractScreen getScreen(Survivor game, float startingPosX) {
-            return new Battlegrounds(game, startingPosX);
+            Battlegrounds screen = new Battlegrounds(game, startingPosX);
+            current = screen;
+            return screen;
         }
     },
     Chapter1 {
         public AbstractScreen getScreen(Survivor game, float startingPosX) {
-            return new Chapter1(game, startingPosX);
+            Chapter1 screen = new Chapter1(game, startingPosX);
+            current = screen;
+            return screen;
+        }
+    },
+    Chapter2 {
+        public AbstractScreen getScreen(Survivor game, float startingPosX) {
+            Chapter2 screen = new Chapter2(game, startingPosX);
+            current = screen;
+            return screen;
         }
     },
     SplashScreen {
@@ -45,6 +63,11 @@ public enum Screens {
         }
     };
 
+    static AbstractScreen current;
+
     public abstract AbstractScreen getScreen(Survivor game, float startingPosX);
 
+    public static GameScreen getCurrent() {
+        return (GameScreen)current;
+    }
 }
