@@ -1,0 +1,53 @@
+[
+	{
+		"title": "second_chapter_start",
+		"tags": "",
+		"body": "I am gonna get out of danger!\nI don't see how you can manage it\nJust leave me here\nSave yourself..\nI will not leave you!\nNot if my life depend on it\nCome on\nDamn Undead\n[[stop]]",
+		"position": {
+			"x": 592,
+			"y": 181
+		},
+		"colorID": 0
+	},
+	
+	{
+		"title": "stop",
+		"tags": "",
+		"body": "",
+		"position": {
+			"x": 592,
+			"y": 181
+		},
+		"colorID": 0
+	},
+	
+	{
+		"title": "help_on_the_way",
+		"tags": "",
+		"body": "Who are you?\r\nDoes that matter now?\r\nHelp me hold them off\r\nI must get him to our hideout\r\nTo Mable\r\n[[stop]]",
+		"colorID": 0
+	},
+	
+	{
+		"title": "we_are_coming",
+		"tags": "",
+		"body": "Come in\r\nLocation acquired\r\nWe are 5 minutes from your location\r\nTry to hold them off for the meanwhile\n[[stop]]",
+		"colorID": 0
+	},
+
+	{
+		"title": "help_arrived",
+		"tags": "",
+		"body": "Soldiers, spread out, engage fire!\r\n[[stop]]",
+		"colorID": 0
+	},
+
+	{
+		"title": "who_are_you",
+		"tags": "",
+		"body": "General Keevan: Mable acknowledge your help\r\nWho are you?\r\nMace McKafry\r\nIf you ever arrive at Mable come to me\r\nWhere are you from anyway?\r\nNot far from here, Kerod\r\nAlright, see you\r\nFor now, accept this as payment for your help\r\n[[stop]]",
+		"colorID": 0
+	}
+	
+	
+]

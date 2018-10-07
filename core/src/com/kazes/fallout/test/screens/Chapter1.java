@@ -28,7 +28,7 @@ public class Chapter1 extends GameScreen {
         super(game, "Chapter1", startingPosX);
         allowInput = false;
         this.completed = false;
-        nextScreen = Screens.Tribe;
+        nextScreen = Screens.Chapter2;
         dialogueManager.dialogue.loadFile(Assets.Dialogues.CHAPTER1, false, false, null);
 
         camFollow = new Actor();
@@ -150,6 +150,7 @@ public class Chapter1 extends GameScreen {
             cutscene.add(player, new CheckDialogAction(dialogueManager));
             zombie = new FastZombie(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), 79, 0, world);
             zombie.addInteractingObject(player);
+            zombie.setHealth(250f);
             cutscene.add(enemies, new AddObject(zombie));
             cutscene.add(zombie, Actions.sequence(Actions.moveBy(3f, 1f, 2f, Interpolation.sine), Actions.delay(.5f),
                     Actions.moveBy(2f, -0.5f, 2f, Interpolation.sine), Actions.delay(0.5f),
