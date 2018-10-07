@@ -6,6 +6,7 @@ import com.kazes.fallout.test.dialogues.DialogueManager;
 public class ShowDialogue extends Action {
     DialogueManager dialogueManager;
     String node;
+    boolean jobDone = false;
 
     public ShowDialogue(DialogueManager manager, String node) {
         dialogueManager = manager;
@@ -14,10 +15,10 @@ public class ShowDialogue extends Action {
 
     @Override
     public boolean act(float delta) {
-        if(dialogueManager.isCompleted()) {
+        if(!jobDone) {
             dialogueManager.start(node);
-            return true;
+            jobDone = true;
         }
-        return false;
+        return true;
     }
 }

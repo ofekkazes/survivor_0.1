@@ -2,63 +2,74 @@
 	{
 		"title": "first_chapter_start",
 		"tags": "",
-		"body": "That guy is in some deep shit!\r\nI must help him\r\n",
+		"body": "That guy is in some deep shit!\r\nI must help him\r\n\n[[stop]]",
+		"colorID": 0
+	},
+	
+	{
+		"title": "stop",
+		"tags": "",
+		"body": "",
+		"position": {
+			"x": 592,
+			"y": 181
+		},
 		"colorID": 0
 	},
 	
 	{
 		"title": "friend",
 		"tags": "",
-		"body": "Hey friend\r\n",
+		"body": "Hey friend\r\n\n[[stop]]",
 		"colorID": 0
 	},
 	
 	{
 		"title": "help",
 		"tags": "",
-		"body": "You need so help?\r\nYes, my sister just ate her legs\r\nAnd I'm injured badly\r\nLook pal, come to my tribe\r\nMy doctors will nurse you\r\n",
+		"body": "You need so help?\r\nYes, my sister just ate her legs\r\nAnd I'm injured badly\r\nLook pal, come to my tribe\r\nMy doctors will nurse you\r\n\n[[stop]]",
 		"colorID": 0
 	},
 
 	{
 		"title": "new_beginnings",
 		"tags": "",
-		"body": "Something must have done this to him\r\nI must go investigate\r\n",
+		"body": "Something must have done this to him\r\nI must go investigate\r\n\n[[stop]]",
 		"colorID": 0
 	},
 
 	{
 		"title": "problem",
 		"tags": "",
-		"body": "That is an issue..\r\nLets deal with it\r\n",
+		"body": "That is an issue..\r\nLets deal with it\r\n\n[[stop]]",
 		"colorID": 0
 	},
 	
 	{
 		"title": "ammo",
 		"tags": "",
-		"body": "An ammo bag, lucky me\r\nI might find a use for it\r\n",
+		"body": "An ammo bag, lucky me\r\nI might find a use for it\r\n\n[[stop]]",
 		"colorID": 0
 	},
 	
 	{
 		"title": "gone",
 		"tags": "",
-		"body": "I think that is all for now\r\nStrange they got to these parts\r\nI got to do something\r\nbefore it's too late",
+		"body": "I think that is all for now\r\nStrange they got to these parts\r\nI got to do something\r\nbefore it's too late\n[[stop]]",
 		"colorID": 0
 	},
 	
 	{
 		"title": "from_the_frying_pan",
 		"tags": "",
-		"body": "What now for gods sake\r\nI better deal with that",
+		"body": "What now for gods sake\r\nI better deal with that\n[[stop]]",
 		"colorID": 0
 	},
 	
 	{
 		"title": "the_white_rider",
 		"tags": "",
-		"body": "He is done\r\nBut it is all confusing\r\nI must get to the bottom of this\r\nBefore who knows what will happen\r\n",
+		"body": "He is done\r\nBut it is all confusing\r\nI must get to the bottom of this\r\nBefore who knows what will happen\r\n\n[[stop]]",
 		"colorID": 0
 	}
 	
