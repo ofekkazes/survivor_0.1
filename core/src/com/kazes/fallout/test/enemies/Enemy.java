@@ -10,8 +10,11 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.kazes.fallout.test.ImageEx;
+import com.kazes.fallout.test.items.AmmoCrate;
+import com.kazes.fallout.test.items.ItemActor;
 import com.kazes.fallout.test.physics.CollisionCategory;
 import com.kazes.fallout.test.screens.GameScreen;
+import com.kazes.fallout.test.screens.Screens;
 
 /**
  * The father class for all enemies
@@ -82,8 +85,15 @@ public abstract class Enemy extends ImageEx {
         this.health -= points;
         //this.hurt.start();
 
-        if(this.health <= 0)
+        if(this.health <= 0) {
+            Screens.getCurrent().getItems().addActor(new ItemActor(new AmmoCrate(), getX(), getY()));
             this.setRemove();
+        }
+    }
+
+    public void setHealth(float points) {
+        this.health = points;
+
     }
 
     public Array<Actor> getInteractingObjects() {
