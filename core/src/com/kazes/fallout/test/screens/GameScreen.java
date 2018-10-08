@@ -259,15 +259,13 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         weaponsActor.setCurrentWeapon(Weapons.Pistol);
         weaponTable.add(weaponsActor);
         weaponTable.row();
-
-
+        weaponTable.add(temp2).row();
         weaponTable.add(player.ammo);
 
         playerStats.setWidth(Gdx.graphics.getWidth() / 4.07f);
         playerStats.setHeight(Gdx.graphics.getHeight() / 4.5f);
         playerStats.setPosition(Gdx.graphics.getWidth() - playerStats.getX(), Gdx.graphics.getHeight() - playerStats.getY());
         playerStats.setMovable(false);
-        playerStats.setDebug(true);
 
         playerStats.add(weaponTable).expand();
         playerStats.add(statsTable).expand();
@@ -279,6 +277,14 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         screenStage.addListener(new InputListener() {
             @Override
             public boolean scrolled(InputEvent event, float x, float y, int amount) {
+
+                player.weapon = Weapons.values()[getIndex(amount)];
+                weaponsActor.setCurrentWeapon(player.weapon);
+
+                return super.scrolled(event, x, y, amount);
+            }
+
+            public int getIndex(int amount) {
                 int newIndex;
                 amount = MathUtils.clamp(amount, -1, 1);
                 if(Weapons.values().length <= player.weapon.getValue() + amount) {
@@ -290,10 +296,31 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
                 if(player.weapon.getValue() + amount < 0) {
                     newIndex = Weapons.values().length -1;
                 }
-                player.weapon = Weapons.values()[newIndex];
-                weaponsActor.setCurrentWeapon(player.weapon);
+                if(!Weapons.values()[newIndex].isUnlocked()) {
+                    if(amount > 0) {
+                        newIndex = getNextAvailable(amount);
+                    }else {
+                        newIndex = getLastAvailable(amount);
+                    }
 
-                return super.scrolled(event, x, y, amount);
+                }
+                return newIndex;
+            }
+
+            int getNextAvailable(int amount) {
+                if(amount >= Weapons.values().length)
+                    return getNextAvailable(0);
+                if(Weapons.values()[amount].isUnlocked())
+                    return amount;
+                return getNextAvailable(amount+1);
+            }
+
+            int getLastAvailable(int amount) {
+                if(amount == -1)
+                    return getLastAvailable(Weapons.values().length - 1);
+                if(Weapons.values()[amount].isUnlocked())
+                    return amount;
+                return getLastAvailable(amount-1);
             }
         });
     }
