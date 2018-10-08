@@ -250,6 +250,11 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         statsTable.add(player.thirst);
 
         Table weaponTable = new Table();
+        Actor temp = new Actor();
+        temp.setHeight(25);
+        Actor temp2 = new Actor();
+        temp2.setHeight(15);
+        weaponTable.add(temp).row();
         weaponsActor = new WeaponsActor();
         weaponsActor.setCurrentWeapon(Weapons.Pistol);
         weaponTable.add(weaponsActor);
