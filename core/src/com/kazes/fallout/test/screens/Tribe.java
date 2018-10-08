@@ -32,7 +32,7 @@ public class Tribe extends GameScreen {
     public Tribe(Survivor game, float startingPosX) {
         super(game, "Tribe", startingPosX);
         weaponsAllowed = true;
-        lastScreen = Screens.SideScroll;
+        lastScreen = Screens.Meviah;
         nextScreen = Screens.Battlegrounds;
 
         dialogueManager.dialogue.getLibrary().registerFunction("sendToMission", 0, new Library.Function() {

@@ -22,6 +22,7 @@ public class Battlegrounds extends GameScreen {
     Battlegrounds(Survivor game, float startingPosX) {
         super(game, "Battlegrounds", startingPosX);
         lastScreen = Screens.Tribe;
+        nextScreen = Screens.Eryon;
         weaponsAllowed = true;
     }
 

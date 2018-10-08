@@ -57,6 +57,48 @@ public enum Screens {
             return screen;
         }
     },
+    Singleton {
+        public AbstractScreen getScreen(Survivor game, float startingPosX) {
+            SingletonRoad screen = new SingletonRoad(game, startingPosX);
+            current = screen;
+            return screen;
+        }
+    },
+    Meviah {
+        public AbstractScreen getScreen(Survivor game, float startingPosX) {
+            Meviah screen = new Meviah(game, startingPosX);
+            current = screen;
+            return screen;
+        }
+    },
+    Eryon {
+        public AbstractScreen getScreen(Survivor game, float startingPosX) {
+            Eryon screen = new Eryon(game, startingPosX);
+            current = screen;
+            return screen;
+        }
+    },
+    Basmati {
+        public AbstractScreen getScreen(Survivor game, float startingPosX) {
+            Basmati screen = new Basmati(game, startingPosX);
+            current = screen;
+            return screen;
+        }
+    },
+    Melin {
+        public AbstractScreen getScreen(Survivor game, float startingPosX) {
+            Melin screen = new Melin(game, startingPosX);
+            current = screen;
+            return screen;
+        }
+    },
+    Barikad {
+        public AbstractScreen getScreen(Survivor game, float startingPosX) {
+            Barikad screen = new Barikad(game, startingPosX);
+            current = screen;
+            return screen;
+        }
+    },
     SplashScreen {
         public AbstractScreen getScreen(Survivor game, float startingPosX) {
             return new SplashScreen(game);
