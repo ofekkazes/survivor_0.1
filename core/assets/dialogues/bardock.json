@@ -1,0 +1,41 @@
+[
+	{
+		"title": "bardock1",
+		"tags": "",
+		"body": "Bardock: This city, your city\nSo undeveloped..\nI can help you with that\nFirst, find your merchant\nLots of men that are traveling are getting injured\nFrom those you save, one will want to be a merchant\nFind that one[[stop]]",
+		"colorID": 0
+	},
+	
+	{
+		"title": "stop",
+		"tags": "",
+		"body": "",
+		"position": {
+			"x": 592,
+			"y": 181
+		},
+		"colorID": 0
+	},
+	
+	{
+		"title": "bardock2",
+		"tags": "",
+		"body": "Bardock: Next you will want some soldiers\n watching over those halls for zombies\nFind 4 soldiers[[stop]]",
+		"colorID": 0
+	},
+	
+	{
+		"title": "bardock3",
+		"tags": "",
+		"body": "Bardock: Help some more civilians\nEvery one you help will come to the city\nIncrease the population of the city to 50[[stop]]",
+		"colorID": 0
+	},
+	
+	{
+		"title": "bardock4",
+		"tags": "",
+		"body": "Bardock: You need medics\nThey can make medkits for you and your men\nEach medic will develop a medkit in 20 minutes time\nRecruting more medics will decrease the time for medications development[[stop]]",
+		"colorID": 0
+	},
+	
+]

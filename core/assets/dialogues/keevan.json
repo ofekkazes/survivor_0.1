@@ -1,0 +1,27 @@
+[
+	{
+		"title": "keevan1",
+		"tags": "",
+		"body": "General Keevan: Good to see you\nI need people like you\nYou have what it takes, if what I saw is true\nBack on Kerod\nGet me 20 zombie kills for now[[stop]]",
+		"colorID": 0
+	},
+	
+	{
+		"title": "stop",
+		"tags": "",
+		"body": "",
+		"position": {
+			"x": 592,
+			"y": 181
+		},
+		"colorID": 0
+	},
+	
+	{
+		"title": "keevan2",
+		"tags": "",
+		"body": "General Keevan: You still using that old thing?\nWidely outdated\nUnfortunately I have not a better weapon\nBut from those you kill, you can get an different weapon\nUpgrade your arsenal[[stop]]",
+		"colorID": 0
+	},
+	
+]
