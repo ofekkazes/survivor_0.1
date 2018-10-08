@@ -1,13 +1,20 @@
 package com.kazes.fallout.test.screens;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.MathUtils;
+import com.kazes.fallout.test.Assets;
 import com.kazes.fallout.test.SideScrollingCamera;
 import com.kazes.fallout.test.Survivor;
+import com.kazes.fallout.test.enemies.Enemy;
+import com.kazes.fallout.test.enemies.Zombie;
 
 public class SingletonRoad extends GameScreen {
     SingletonRoad(Survivor game, float startingPosX) {
         super(game, "Singleton Road", startingPosX);
         lastScreen = Screens.Chapter2;
         nextScreen = Screens.Meviah;
+
+        weaponsAllowed = true;
     }
 
     @Override
@@ -33,7 +40,10 @@ public class SingletonRoad extends GameScreen {
 
     @Override
     public void setEnemies() {
-
+        for(int i = 0; i < 25; i++) {
+            enemies.addActor(new Zombie(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), MathUtils.random(10, 100), MathUtils.random(6f), world));
+            ((Enemy)enemies.getChildren().get(enemies.getChildren().size - 1)).addInteractingObject(player);
+        }
     }
 
     @Override

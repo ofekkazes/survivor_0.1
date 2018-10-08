@@ -21,8 +21,8 @@ public class Battlegrounds extends GameScreen {
     Group injuredNPCS;
     Battlegrounds(Survivor game, float startingPosX) {
         super(game, "Battlegrounds", startingPosX);
-        lastScreen = Screens.Tribe;
-        nextScreen = Screens.Eryon;
+        lastScreen = Screens.Melin;
+        nextScreen = Screens.SideScroll;
         weaponsAllowed = true;
     }
 

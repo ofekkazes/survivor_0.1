@@ -33,7 +33,7 @@ public class Tribe extends GameScreen {
         super(game, "Tribe", startingPosX);
         weaponsAllowed = true;
         lastScreen = Screens.Meviah;
-        nextScreen = Screens.Battlegrounds;
+        nextScreen = Screens.Eryon;
 
         dialogueManager.dialogue.getLibrary().registerFunction("sendToMission", 0, new Library.Function() {
             @Override

@@ -6,6 +6,8 @@ import com.kazes.fallout.test.Survivor;
 public class Basmati extends GameScreen {
     Basmati(Survivor game, float startingPosX) {
         super(game, "Basmati", startingPosX);
+        lastScreen = Screens.Eryon;
+        nextScreen = Screens.Melin;
     }
 
     @Override

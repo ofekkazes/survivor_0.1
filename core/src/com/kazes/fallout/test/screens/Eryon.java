@@ -6,7 +6,7 @@ import com.kazes.fallout.test.Survivor;
 public class Eryon extends GameScreen {
     Eryon(Survivor game, float startingPosX) {
         super(game, "Eryon", startingPosX);
-        lastScreen = Screens.Battlegrounds;
+        lastScreen = Screens.Tribe;
         nextScreen = Screens.Basmati;
     }
 

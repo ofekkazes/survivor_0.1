@@ -13,10 +13,10 @@ import com.badlogic.gdx.utils.Array;
 import com.kazes.fallout.test.*;
 import com.kazes.fallout.test.actions.*;
 import com.kazes.fallout.test.enemies.Enemy;
-import com.kazes.fallout.test.enemies.FastZombie;
 import com.kazes.fallout.test.enemies.Zombie;
 import com.kazes.fallout.test.items.AmmoCrate;
 import com.kazes.fallout.test.items.ItemActor;
+import com.kazes.fallout.test.items.Weapons;
 
 public class Chapter2 extends GameScreen {
     Actor camFollow;
