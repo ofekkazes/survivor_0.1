@@ -16,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
  */
 class Progress extends ProgressBar {
     Progress(float min, float max, float stepSize, boolean vertical) {
-        super(min, max, stepSize, vertical, getStyleBar());
+        super(min, max, stepSize, vertical, Assets.getAsset(Assets.UI_SKIN, Skin.class));
     }
 
     public float reduceValue(float amount) {

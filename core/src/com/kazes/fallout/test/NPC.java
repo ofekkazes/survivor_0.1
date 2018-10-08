@@ -2,6 +2,7 @@ package com.kazes.fallout.test;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
+import com.kazes.fallout.test.items.Weapons;
 
 /**
  * NPC a player will be interacting
