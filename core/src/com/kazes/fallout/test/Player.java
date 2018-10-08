@@ -7,9 +7,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.ObjectMap;
+import com.kazes.fallout.test.items.Weapons;
 import com.kazes.fallout.test.physics.B2DBodyBuilder;
 import com.kazes.fallout.test.physics.CollisionCategory;
+import com.kazes.fallout.test.screens.GameScreen;
 
 
 //rabbit valve gauge
@@ -24,7 +27,6 @@ import com.kazes.fallout.test.physics.CollisionCategory;
  * @since 2018-09-15
  */
 public class Player extends AnimationActor {
-
     public Weapons weapon;
     public int cooldown;
     public Progress hunger;
@@ -66,14 +68,6 @@ public class Player extends AnimationActor {
     public void act(float delta) {
         super.act(delta);
 
-        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            if(weapon == Weapons.Pistol)
-                weapon = Weapons.SMG;
-            else if(weapon == Weapons.SMG)
-                weapon = Weapons.Pistol;
-            Gdx.app.log("Weapon", "changed to " + weapon);
-        }
-
         time += delta;
 
         if(time % 1 > 0.9f)
@@ -89,7 +83,7 @@ public class Player extends AnimationActor {
             else thirst.reduceValue(0.01f);
             Gdx.app.log("Thirst", thirst + "");
         }
-        if(cooldown <= 20)
+        if(cooldown <= 60)
             cooldown++;
 
         if(!hit)
