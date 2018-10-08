@@ -24,11 +24,13 @@ public class Bullet extends ImageEx {
     private static ShaderProgram shader = new ShaderProgram(Gdx.files.internal("shaders/shakyCam.vs"), Gdx.files.internal("shaders/shakyCam.fs"));
     private float speed;
     private float timeToLive;
+    private float power;
 
     public Bullet(World world, float xPos, float yPos, Vector2 direction    ) {
         super(createTexture(xPos, yPos), xPos, yPos);
         speed = 120;
         timeToLive = 3;
+        this.power = 20;
 
         CircleShape circle = new CircleShape();
         //circle.setAsBox(getWidth() / 2, getHeight() / 2, new Vector2(getWidth() / 2, getHeight() / 2), MathUtils.degreesToRadians * direction.angle());
@@ -39,7 +41,7 @@ public class Bullet extends ImageEx {
         body.setUserData(this);
         body.setTransform(body.getWorldCenter(), MathUtils.degreesToRadians * direction.angle());
         setOrigin(0, 0);
-        setRotation(MathUtils.radiansToDegrees * body.getAngle());
+        //setRotation(MathUtils.radiansToDegrees * body.getAngle());
         body.setBullet(true);
     }
 
@@ -52,8 +54,21 @@ public class Bullet extends ImageEx {
 
         body.setLinearVelocity(velX, velY);
 
-
         timeToLive -= delta;
+        if(timeToLive <= 0)
+            setRemove();
+    }
+
+    public void setTimeToLive(float timeToLive) {
+        this.timeToLive = timeToLive;
+    }
+
+    public void setPower(float power) {
+        this.power = power;
+    }
+
+    public float getPower() {
+        return power;
     }
 
     @Override

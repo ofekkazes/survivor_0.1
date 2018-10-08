@@ -36,10 +36,10 @@ public class ContactListener implements com.badlogic.gdx.physics.box2d.ContactLi
             Enemy enemy = (Enemy)enemyBody.getUserData();
             Bullet bullet = (Bullet)bulletBody.getUserData();
             enemy.wander = true;
-            enemyBody.setLinearVelocity(enemyBody.getPosition().cpy().sub(bulletBody.getPosition().cpy()));
-            enemyBody.setLinearDamping(5f);
             bullet.setRemove();
-            enemy.subHealth(20);
+            enemyBody.setLinearVelocity(enemyBody.getPosition().cpy().scl(bullet.getPower() / 20).sub(bulletBody.getPosition().cpy()));
+            enemyBody.setLinearDamping(bullet.getPower() / 4);
+            enemy.subHealth(bullet.getPower());
             GameScreen.bitcoin += 0.0003f;
         }
         if(f1Category == CollisionCategory.FRIENDLY.cat() && f2Category == CollisionCategory.ENEMY.cat()) {

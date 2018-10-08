@@ -17,10 +17,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -39,6 +36,8 @@ import com.kazes.fallout.test.inventory.Inventory;
 import com.kazes.fallout.test.inventory.InventoryActor;
 import com.kazes.fallout.test.items.AmmoCrate;
 import com.kazes.fallout.test.items.ItemActor;
+import com.kazes.fallout.test.items.Weapons;
+import com.kazes.fallout.test.items.WeaponsActor;
 import com.kazes.fallout.test.physics.B2DBodyBuilder;
 import com.kazes.fallout.test.physics.CollisionCategory;
 import com.kazes.fallout.test.physics.ContactListener;
@@ -66,6 +65,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     static InventoryActor inventoryActor;
     static FastInventoryActor fastInventoryActor;
     static DragAndDrop dragAndDrop;
+    public static WeaponsActor weaponsActor;
 
     Stage gameStage; //Game container
     static Stage screenStage; //Screen container
@@ -250,8 +250,12 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         statsTable.add(player.thirst);
 
         Table weaponTable = new Table();
-        weaponTable.add(new Label("Weapon", skin)).expand().fillY();
+        weaponsActor = new WeaponsActor();
+        weaponsActor.setCurrentWeapon(Weapons.Pistol);
+        weaponTable.add(weaponsActor);
         weaponTable.row();
+
+
         weaponTable.add(player.ammo);
 
         playerStats.setWidth(Gdx.graphics.getWidth() / 4.07f);
@@ -262,9 +266,31 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
         playerStats.add(weaponTable).expand();
         playerStats.add(statsTable).expand();
+        playerStats.pack();
 
         screenStage.addActor(menuButton);
         screenStage.addActor(playerStats);
+
+        screenStage.addListener(new InputListener() {
+            @Override
+            public boolean scrolled(InputEvent event, float x, float y, int amount) {
+                int newIndex;
+                amount = MathUtils.clamp(amount, -1, 1);
+                if(Weapons.values().length <= player.weapon.getValue() + amount) {
+                    newIndex = 0;
+                }
+                else {
+                    newIndex = player.weapon.getValue() + amount;
+                }
+                if(player.weapon.getValue() + amount < 0) {
+                    newIndex = Weapons.values().length -1;
+                }
+                player.weapon = Weapons.values()[newIndex];
+                weaponsActor.setCurrentWeapon(player.weapon);
+
+                return super.scrolled(event, x, y, amount);
+            }
+        });
     }
 
     //Update the logic every frame
@@ -416,7 +442,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
             if (weaponsAllowed && !inventoryActor.isVisible()) {
                 if (!player.isAmmoEmpty()) {
-                    if (player.getWeapon() == Weapons.Pistol) {
+                    if (weaponsActor.getCurrentWeapon() == Weapons.Pistol) {
                         if (Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT)) {
                             player.shoot();
                             Vector2 mousePos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
@@ -424,14 +450,44 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
                             this.bullets.addActor(new Bullet(world, player.getOrigin().x, player.getOrigin().y, mousePos.cpy().sub(player.getOrigin()).nor()));
                         }
                     }
-                    if (player.getWeapon() == Weapons.SMG) {
+                    if (weaponsActor.getCurrentWeapon() == Weapons.Knife) {
+                        if (Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT)) {
+                            if (player.cooldown > 38) {
+                                player.cooldown = 0;
+                                Vector2 mousePos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
+                                mousePos = gameStage.screenToStageCoordinates(mousePos);
+                                if(distance(mousePos.x, mousePos.y, player.getOrigin().x, player.getOrigin().y) < 4) {
+                                    bullets.addActor(new Bullet(world, mousePos.x, mousePos.y, Vector2.Zero));
+                                    ((Bullet)bullets.getChildren().get(bullets.getChildren().size - 1)).setTimeToLive(0);
+                                    ((Bullet)bullets.getChildren().get(bullets.getChildren().size - 1)).setPower(30);
+                                    bullets.getChildren().get(bullets.getChildren().size - 1).setVisible(false);
+                                }
+                            }
+                        }
+                    }
+                    if (weaponsActor.getCurrentWeapon() == Weapons.Sword) {
+                        if (Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT)) {
+                            if (player.cooldown > 58) {
+                                player.cooldown = 0;
+                                Vector2 mousePos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
+                                mousePos = gameStage.screenToStageCoordinates(mousePos);
+                                if(distance(mousePos.x, mousePos.y, player.getOrigin().x, player.getOrigin().y) < 4) {
+                                    bullets.addActor(new Bullet(world, mousePos.x, mousePos.y, Vector2.Zero));
+                                    ((Bullet)bullets.getChildren().get(bullets.getChildren().size - 1)).setTimeToLive(0);
+                                    ((Bullet)bullets.getChildren().get(bullets.getChildren().size - 1)).setPower(35);
+                                    bullets.getChildren().get(bullets.getChildren().size - 1).setVisible(false);
+                                }
+                            }
+                        }
+                    }
+                    if (weaponsActor.getCurrentWeapon() == Weapons.SMG) {
                         if (Gdx.input.isTouched() || Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
 
                             if (player.cooldown > 17) {
                                 player.shoot();
                                 Vector2 mousePos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
                                 mousePos = gameStage.screenToStageCoordinates(mousePos);
-                                this.bullets.addActor(new Bullet(world, player.getX(), player.getY(), mousePos.cpy().sub(player.getOrigin()).nor()));
+                                this.bullets.addActor(new Bullet(world, player.getOrigin().x, player.getOrigin().y, mousePos.cpy().sub(player.getOrigin()).nor()));
                                 player.cooldown = 0;
                             }
                         }
@@ -557,6 +613,10 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
     private static Vector2 getRange(float xOrigin, float yOrigin, float xTarget, float yTarget) {
         return new Vector2(xOrigin - xTarget, yOrigin - yTarget);
+    }
+
+    private static float distance(float x1, float y1, float x2, float y2) {
+        return (float)Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1));
     }
 
     //Create an hit action using the coordinates given
