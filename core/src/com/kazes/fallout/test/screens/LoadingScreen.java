@@ -47,7 +47,7 @@ public class LoadingScreen extends AbstractScreen {
         if (switchScreen) {
             Assets.finishLoading();
 
-            game.setScreen(Screens.Singleton.getScreen(game, 0));
+            game.setScreen(Screens.Chapter1.getScreen(game, 0));
         }
     }
 
