@@ -6,6 +6,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -85,7 +86,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     Group followers; //Npc's the player persuades to join him
     Group bonfires; //Fires the player sets
 
-    boolean completed;
+    boolean completed = true;
     boolean allowInput = true;
     boolean weaponsAllowed;
 
@@ -173,6 +174,20 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         setItems();
         setNPCS();
         setEnemies();
+
+        if(parallaxBackground == null) {
+            Array<Texture> parallaxTextures = new Array<Texture>();
+            for(int i = 0; i < 6;i++){
+                parallaxTextures.add(Assets.getAsset(Assets._Parallax1[i], Texture.class));
+                parallaxTextures.get(i).setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat);
+
+            }
+            parallaxBackground = new ParallaxBackground(parallaxTextures, gameStage.getCamera());
+
+        }
+        if(map == null) {
+            map = new ImageEx(game.assetManager.get(Assets.Images.MAP, Texture.class), 0, 0);
+        }
 
         //adding all the objects to the main stage
         gameStage.addActor(parallaxBackground);
@@ -310,6 +325,8 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
             Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.TWO_HUNDRED).draw(screenStage.getBatch(), notifications.get(i) + "\n", 0, Gdx.graphics.getHeight() - 200 -  i * Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.TWO_HUNDRED).getLineHeight());
         screenStage.getBatch().end();
 
+
+
     }
 
     @Override
@@ -409,8 +426,9 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
                     }
                     if (player.getWeapon() == Weapons.SMG) {
                         if (Gdx.input.isTouched() || Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
-                            player.shoot();
+
                             if (player.cooldown > 17) {
+                                player.shoot();
                                 Vector2 mousePos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
                                 mousePos = gameStage.screenToStageCoordinates(mousePos);
                                 this.bullets.addActor(new Bullet(world, player.getX(), player.getY(), mousePos.cpy().sub(player.getOrigin()).nor()));
