@@ -17,6 +17,12 @@ com.badlogic.gdx.graphics.Color: {
 		b: 0.70333326
 		a: 1
 	}
+	red: {
+		r: 1
+		g: 0.3
+		b: 0.3
+		a: 1
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 	button-c: {
@@ -113,7 +119,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 	}
 	progressbar-knob-horizontal-c: {
 		name: progressbar-knob-horizontal
-		color: color
+		color: red
 	}
 	progressbar-knob-vertical-c: {
 		name: progressbar-knob-vertical
