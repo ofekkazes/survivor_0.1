@@ -92,7 +92,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
     World world;
     RayHandler rayHandler;
-    Box2DDebugRenderer renderer;
+    //Box2DDebugRenderer renderer;
     private static float ambientAlpha = 0.5f;
     public static float time = 0.5f;
     private static boolean day = true;
@@ -144,7 +144,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         world = new World(Vector2.Zero, false);
         world.setContactListener(new ContactListener());
 
-        renderer = new Box2DDebugRenderer(true, true, true, true, true, true);
+        //renderer = new Box2DDebugRenderer(true, true, true, true, true, true);
         rayHandler = new RayHandler(world);
 
         rayHandler.setAmbientLight(0.1f, 0.1f, 0.1f, ambientAlpha);
@@ -371,7 +371,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         rayHandler.setAmbientLight(ambientAlpha);
         rayHandler.setCombinedMatrix((SideScrollingCamera)gameStage.getCamera());
         rayHandler.updateAndRender();
-        renderer.render(world, gameStage.getCamera().combined.cpy());
+//        renderer.render(world, gameStage.getCamera().combined.cpy());
 
         dialogueManager.render();
         screenStage.act(Gdx.graphics.getDeltaTime());
@@ -404,7 +404,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         world.dispose();
         shader.dispose();
         parallaxBackground.dispose();
-        renderer.dispose();
+        //renderer.dispose();
         dialogueManager.dialogue.unloadAll();
     }
 
@@ -578,22 +578,25 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
                 ((Bullet)this.bullets.getChildren().get(0)).setRemove();
             }
         }
+
         for(NPC follower : (NPC[])followers.getChildren().toArray(NPC.class)) {
             if(enemies.getChildren().size > 0) {
                 Vector2 closest = GameScreen.closestTo(enemies.getChildren(), follower).getOrigin().cpy().sub(follower.getOrigin()).nor();
-                switch (follower.getWeapon()) {
-                    case Pistol:
-                        if (follower.getCooldown() % 50 == 0) {
-                            this.bullets.addActor(new Bullet(world, follower.getX(), follower.getY(), closest));
-                            follower.resetCooldown();
-                        }
-                        break;
-                    case SMG:
-                        if (follower.getCooldown() % 30 == 0) {
-                            this.bullets.addActor(new Bullet(world, follower.getX(), follower.getY(), closest));
-                            follower.resetCooldown();
-                        }
-                        break;
+                if(closest.x < 10) {
+                    switch (follower.getWeapon()) {
+                        case Pistol:
+                            if (follower.getCooldown() % 50 == 0) {
+                                this.bullets.addActor(new Bullet(world, follower.getX(), follower.getY(), closest));
+                                follower.resetCooldown();
+                            }
+                            break;
+                        case SMG:
+                            if (follower.getCooldown() % 30 == 0) {
+                                this.bullets.addActor(new Bullet(world, follower.getX(), follower.getY(), closest));
+                                follower.resetCooldown();
+                            }
+                            break;
+                    }
                 }
             }
         }
