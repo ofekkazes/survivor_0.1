@@ -6,8 +6,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
 import com.kazes.fallout.test.*;
+import com.kazes.fallout.test.actions.AddMission;
+import com.kazes.fallout.test.actions.AddNotification;
+import com.kazes.fallout.test.actions.CheckMission;
 import com.kazes.fallout.test.enemies.Zombie;
 import com.kazes.fallout.test.items.*;
 
@@ -19,11 +23,18 @@ import com.kazes.fallout.test.items.*;
  */
 public class Battlegrounds extends GameScreen {
     Group injuredNPCS;
+    CutsceneManager cutscene;
+
     Battlegrounds(Survivor game, float startingPosX) {
         super(game, "Battlegrounds", startingPosX);
         lastScreen = Screens.Melin;
         nextScreen = Screens.SideScroll;
         weaponsAllowed = true;
+        MissionActor missionActor = new MissionActor(new Mission(Objective.KillCount, this));
+
+        cutscene = new CutsceneManager();
+        cutscene.add(gameStage.getRoot(), new AddMission(missionActor.getMission(), 3));
+        cutscene.add(gameStage.getRoot(), Actions.sequence(new CheckMission(missionActor), new AddNotification("mission done")));
     }
 
     @Override
@@ -33,6 +44,8 @@ public class Battlegrounds extends GameScreen {
             Gdx.app.log("Survivor", "Game over");
             Gdx.app.exit();
         }
+
+
         ((SideScrollingCamera)gameStage.getCamera()).followPos(player.getOrigin());
     }
 
@@ -45,6 +58,7 @@ public class Battlegrounds extends GameScreen {
                     ((InjuredNPC)injuredNPCS.getChildren().get(i)).save();
             }
         }
+
         /*if(Gdx.input.isKeyJustPressed(Input.Keys.K)) {
             Actor bagItem;
             for (int i = 0; i < player.bag.items.getCells().size; i++) {
@@ -82,6 +96,13 @@ public class Battlegrounds extends GameScreen {
     public void update(float delta) {
         super.update(delta);
 
+        if (!cutscene.isEmpty() &&
+                !cutscene.peekFirst().assignedActor.hasActions() &&
+                !cutscene.getLastUsedActor().hasActions()) {
+            ActorAction action = cutscene.take();
+            action.assignedActor.addAction(action.action);
+        }
+
         if (GameScreen.time < 0.25f) {
             for (int i = 0; i < 1 && this.stateTime % 7 == 0; i++) {
                 if (enemies.getChildren().size < 80) {
@@ -102,6 +123,7 @@ public class Battlegrounds extends GameScreen {
 
             }
         }
+
     }
 
     public void addItem() {

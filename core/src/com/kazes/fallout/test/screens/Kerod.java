@@ -10,9 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
 import com.kazes.fallout.test.*;
 import com.kazes.fallout.test.dialogues.Var;
-import com.kazes.fallout.test.items.ItemActor;
-import com.kazes.fallout.test.items.SmallMedkit;
-import com.kazes.fallout.test.items.WaterBottle;
+import com.kazes.fallout.test.items.*;
 import com.kyper.yarn.Library;
 import com.kyper.yarn.Value;
 
@@ -27,7 +25,6 @@ public class Kerod extends GameScreen {
     Mercenary mercenary;
     Group randomNPCs;
     Merchant jerry;
-
 
     public Kerod(Survivor game, float startingPosX) {
         super(game, "Kerod", startingPosX);
@@ -44,8 +41,6 @@ public class Kerod extends GameScreen {
         dialogueManager.dialogue.loadFile(Assets.Dialogues.MERCENARIES, false, false, null);
         dialogueManager.addVar(new Var("%risk", 0));
         dialogueManager.addVar(new Var("%time", 0));
-
-
 
     }
 
@@ -151,6 +146,7 @@ public class Kerod extends GameScreen {
 
         jerry = new Merchant(5, 6, screenStage, fastInventoryActor.getInventory(), inventoryActor.getInventory());
         decor.addActor(jerry);
+
     }
 
     @Override

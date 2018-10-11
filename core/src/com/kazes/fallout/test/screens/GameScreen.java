@@ -691,4 +691,20 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     public Group getItems() {
         return this.items;
     }
+
+    public Group getNpcs() {
+        return this.npcs;
+    }
+
+    public Group getEnemies() {
+        return enemies;
+    }
+
+    public static InventoryActor getInventoryActor() {
+        return inventoryActor;
+    }
+
+    public static FastInventoryActor getFastInventoryActor() {
+        return fastInventoryActor;
+    }
 }
