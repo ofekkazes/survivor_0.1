@@ -7,7 +7,7 @@ public class Basmati extends GameScreen {
     Basmati(Survivor game, float startingPosX) {
         super(game, "Basmati", startingPosX);
         lastScreen = Screens.Eryon;
-        nextScreen = Screens.Melin;
+        nextScreen = Screens.Barikad;
     }
 
     @Override

@@ -1,5 +1,8 @@
 package com.kazes.fallout.test.screens;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.kazes.fallout.test.Assets;
+import com.kazes.fallout.test.ImageEx;
 import com.kazes.fallout.test.SideScrollingCamera;
 import com.kazes.fallout.test.Survivor;
 
@@ -18,7 +21,7 @@ public class Barikad extends GameScreen {
 
     @Override
     public void setMap() {
-
+        map = new ImageEx(Assets.getAsset(Assets.Images.MAP_GREEN, Texture.class), 0, 0);
     }
 
     @Override

@@ -33,6 +33,7 @@ public class Assets {
         public static final String PARALLAX_5 = "images/maps/parallax/img5.png";
         public static final String PARALLAX_6 = "images/maps/parallax/img6.png";
         public static final String MAP = "images/maps/tempmap2.png";
+        public static final String MAP_GREEN = "images/maps/green_map.png";
         public static final String BONFIRE = "images/maps/bonfire.png";
         public static final String TREELOG = "images/maps/wood.png";
         public static final String TUNA = "images/maps/tuna.png";
@@ -54,9 +55,9 @@ public class Assets {
             Images.PARALLAX_1, Images.PARALLAX_2,
             Images.PARALLAX_3, Images.PARALLAX_4,
             Images.PARALLAX_5, Images.PARALLAX_6,
-            Images.MAP, Images.BONFIRE, Images.TREELOG,
-            Images.TUNA, Images.WATER, Images.SPLASH,
-            Images.MEDKIT, Images.BEARTRAP,
+            Images.MAP, Images.MAP_GREEN, Images.BONFIRE,
+            Images.TREELOG, Images.TUNA, Images.WATER,
+            Images.SPLASH, Images.MEDKIT, Images.BEARTRAP,
             Images.HOUSE1, Images.HOUSE2,
             Images.WALL, Images.CRATE,
             Images.ITEMS, Images.FIRE,

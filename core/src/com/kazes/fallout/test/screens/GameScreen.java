@@ -133,7 +133,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
                     }
 
                 }
-                player = new Player(temp, new Vector2(0, 6));
+                player = new Player(temp, new Vector2(0, 4.5f));
                 player.setZIndex(10000);
 
             }
@@ -188,6 +188,8 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         if(map == null) {
             map = new ImageEx(game.assetManager.get(Assets.Images.MAP, Texture.class), 0, 0);
         }
+        camera.updateBoundaries(camera.getLeftBoundary(), map.getWidth());
+        //Gdx.app.log("map", map.getWidth() + "");
 
         //adding all the objects to the main stage
         gameStage.addActor(parallaxBackground);
@@ -209,7 +211,11 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         B2DBodyBuilder.createBody(world, map.getWidth() + 2f, 0, 0.15f, map.getHeight() - 3, BodyDef.BodyType.StaticBody, CollisionCategory.BOUNDARY, CollisionCategory.BOUNDARY_COLLIDER);
 
         if(player != null) {
-            player.setX(startingPosX);
+            if(startingPosX == -1f) {
+                player.setX(map.getWidth() - 1.5f);
+            }else {
+                player.setX(startingPosX);
+            }
             gameStage.addActor(player);
             player.initPhysics(world);
             //magic = new MagicAttack(Assets.getAsset(Assets.Images.FIRE, Texture.class), Assets.getAsset(Assets.ParticleEffects.fire, ParticleEffect.class), player.getX(), player.getY());
@@ -613,7 +619,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
         if(player.getX() + player.getWidth() / 2 < 0 && lastScreen != null) {
             gameStage.addAction(sequence(Actions.fadeOut(.25f), new BoolAction(screenChange)));
-            if(screenChange[0]) game.setScreen(lastScreen.getScreen(game, map.getWidth() - 1.5f));
+            if(screenChange[0]) game.setScreen(lastScreen.getScreen(game, -1f));
         }
         checkCompleteLevel();
         if(player.getX() + player.getWidth() / 2 > map.getWidth() + 0.5f && nextScreen != null && this.completed) {
