@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Array;
 import com.kazes.fallout.test.ImageEx;
 import com.kazes.fallout.test.items.AmmoCrate;
 import com.kazes.fallout.test.items.ItemActor;
+import com.kazes.fallout.test.items.Items;
 import com.kazes.fallout.test.physics.CollisionCategory;
 import com.kazes.fallout.test.screens.GameScreen;
 import com.kazes.fallout.test.screens.Screens;
@@ -86,7 +87,7 @@ public abstract class Enemy extends ImageEx {
         //this.hurt.start();
 
         if(this.health <= 0) {
-            Screens.getCurrent().getItems().addActor(new ItemActor(new AmmoCrate(), getX(), getY()));
+            Screens.getCurrent().getItems().addActor(new ItemActor(Items.getRandom(), getX(), getY()));
             this.setRemove();
         }
     }
