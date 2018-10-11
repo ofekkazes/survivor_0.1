@@ -15,7 +15,6 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -34,10 +33,7 @@ import com.kazes.fallout.test.enemies.Zombie;
 import com.kazes.fallout.test.inventory.FastInventoryActor;
 import com.kazes.fallout.test.inventory.Inventory;
 import com.kazes.fallout.test.inventory.InventoryActor;
-import com.kazes.fallout.test.items.AmmoCrate;
-import com.kazes.fallout.test.items.ItemActor;
-import com.kazes.fallout.test.items.Weapons;
-import com.kazes.fallout.test.items.WeaponsActor;
+import com.kazes.fallout.test.items.*;
 import com.kazes.fallout.test.physics.B2DBodyBuilder;
 import com.kazes.fallout.test.physics.CollisionCategory;
 import com.kazes.fallout.test.physics.ContactListener;
@@ -66,6 +62,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     static FastInventoryActor fastInventoryActor;
     static DragAndDrop dragAndDrop;
     public static WeaponsActor weaponsActor;
+    static ObjectiveWindow objectiveWindow;
 
     Stage gameStage; //Game container
     static Stage screenStage; //Screen container
@@ -137,6 +134,9 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
                 player.setZIndex(10000);
 
             }
+
+            objectiveWindow = new ObjectiveWindow();
+            screenStage.addActor(objectiveWindow);
 
             setGUI();
         }
@@ -229,12 +229,20 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
         this.dialogueManager = new DialogueManager();
         screenStage.addActor(this.dialogueManager.getWindow());
+
+        objectiveWindow.addMission(new Mission(Objective.RetrieveItem, this), Items.AmmoCrate.getItem(), "Retrieve an ammo crate");
+        objectiveWindow.addMission(new Mission(Objective.RetrieveItem, this), Items.Boots.getItem(), "Retrieve a pair of boots");
+        objectiveWindow.addMission(new Mission(Objective.RetrieveItem, this), Items.Cap.getItem(), "Retrieve a cap");
+        objectiveWindow.addMission(new Mission(Objective.RetrieveItem, this), Items.LargeMedkit.getItem(), "Retrieve a large medkit");
+        objectiveWindow.addMission(new Mission(Objective.RetrieveItem, this), Items.Perfume.getItem(), "Retrieve a perfume");
+
     }
 
     private void setGUI() {
         Skin skin = Assets.getAsset(Assets.UI_SKIN, Skin.class);
         final TextButton menuButton = new TextButton("Menu", skin);
         final WindowEx playerStats = new WindowEx(skin);
+        final TextButton missionButton = new TextButton("Objectives", skin);
 
         menuButton.setWidth(Gdx.graphics.getWidth() / 14.666f);
         menuButton.setHeight(Gdx.graphics.getHeight() / 16.216f);
@@ -244,6 +252,16 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 pause();
+            }
+        });
+
+        missionButton.setHeight(Gdx.graphics.getHeight() / 16.216f);
+        missionButton.setPosition(menuButton.getX() + menuButton.getWidth() + Gdx.graphics.getWidth() / 42, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 12);
+        missionButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                objectiveWindow.setVisible(!objectiveWindow.isVisible());
             }
         });
 
@@ -278,6 +296,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         playerStats.pack();
 
         screenStage.addActor(menuButton);
+        screenStage.addActor(missionButton);
         screenStage.addActor(playerStats);
 
         screenStage.addListener(new InputListener() {

@@ -13,6 +13,7 @@ public class Mission {
     private Objective objective;
     private boolean isCompleted;
     private int ticker;
+    private String message;
 
 
     GameScreen screen;
@@ -58,7 +59,6 @@ public class Mission {
                         for (Actor enemy : screen.getEnemies().getChildren())
                             if (((Enemy) enemy).getHealth() == -1f)
                                 counter--;
-                            Gdx.app.log("Mission counter", counter + "");
                         if (counter <= 0)
                             isCompleted = true;
                         break;
@@ -82,7 +82,15 @@ public class Mission {
         }
     }
 
+    public void addMessage(String message) {
+        this.message = message;
+    }
+
     public boolean isCompleted() {
         return isCompleted;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }
