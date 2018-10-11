@@ -54,24 +54,25 @@ public class Chapter1 extends GameScreen {
     @Override
     public void update(float delta) {
         super.update(delta);
+        if(!Stories.isFinished(1)) {
+            if (!cutscene.isEmpty() &&
+                    !cutscene.peekFirst().assignedActor.hasActions() &&
+                    !cutscene.getLastUsedActor().hasActions()) {
+                ActorAction action = cutscene.take();
+                action.assignedActor.addAction(action.action);
+            }
+            if (player.getX() > 55)
+                batch_two();
+            if (player.getX() > 80)
+                batch_three();
 
-        if(!cutscene.isEmpty() &&
-                !cutscene.peekFirst().assignedActor.hasActions() &&
-                !cutscene.getLastUsedActor().hasActions()) {
-            ActorAction action = cutscene.take();
-            action.assignedActor.addAction(action.action);
-        }
-        if(player.getX() > 55)
-            batch_two();
-        if(player.getX() > 80)
-            batch_three();
+            if (this.enemies.getChildren().size == 0)
+                batch_four();
 
-        if(this.enemies.getChildren().size == 0)
-            batch_four();
-
-        if(batchFour) {
-            if(zombie.getHealth() < 1)
-                batch_five();
+            if (batchFour) {
+                if (zombie.getHealth() < 1)
+                    batch_five();
+            }
         }
     }
 
@@ -171,7 +172,7 @@ public class Chapter1 extends GameScreen {
             cutscene.add(player, new ShowDialogue(dialogueManager, "the_white_rider"));
             cutscene.add(player, Actions.sequence(new CheckDialogAction(dialogueManager), Actions.delay(1f), new ChangeAnimation(Assets.Animations.HERO + "_walking"),  Actions.moveTo(map.getWidth(), player.getY(), 4f, Interpolation.pow2)));
             cutscene.add(player, Actions.parallel(new ChangeInputPrivilege(this, true), new ChangeWeaponPrivilege(this, true)));
-
+            cutscene.add(player, new CompleteStory(1));
         }
     }
 }
