@@ -120,12 +120,12 @@ public class Assets {
         public static final String MERCENARIES  = "dialogues/mercenaries.json";
         public static final String CHAPTER1  = "dialogues/Chapter1.json";
         public static final String CHAPTER2  = "dialogues/Chapter2.json";
-
+        public static final String BARDOCK  = "dialogues/bardock.json";
     }
     private static final String[] _Dialogues = {
             Dialogues.SHIP, Dialogues.SALLY,
             Dialogues.EXAMPLE, Dialogues.PROLOGUE,
-            Dialogues.MERCENARIES
+            Dialogues.MERCENARIES, Dialogues.BARDOCK
     };
 
     public static class FontSizes {
