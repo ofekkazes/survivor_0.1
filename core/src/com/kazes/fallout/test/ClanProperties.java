@@ -14,7 +14,7 @@ public class ClanProperties {
     public static int Scientists = 0;
 
     public static int getNPCCount() {
-        return 50 + Warriors + Doctors + PayedMercenaries + Scientists + (Merchant ? 1 : 0);
+        return Warriors + Doctors + PayedMercenaries + Scientists + (Merchant ? 1 : 0);
     }
     public static int getValue(Jobs job) {
         switch (job) {
