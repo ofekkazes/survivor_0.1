@@ -72,6 +72,11 @@ public abstract class Enemy extends ImageEx {
         else
             frameCount = 0;
         prevPos.set(body.getPosition().x, body.getPosition().y);
+        if(health == 0) {
+            Screens.getCurrent().getItems().addActor(new ItemActor(Items.getRandom(), getX(), getY()));
+            setRemove();
+        }
+        if(health == -1f) health = 0;
     }
 
     @Override
@@ -87,8 +92,8 @@ public abstract class Enemy extends ImageEx {
         //this.hurt.start();
 
         if(this.health <= 0) {
-            Screens.getCurrent().getItems().addActor(new ItemActor(Items.getRandom(), getX(), getY()));
-            this.setRemove();
+
+            this.health = -1f;
         }
     }
 
