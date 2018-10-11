@@ -31,7 +31,7 @@ public enum Screens {
     },
     Tribe {
         public AbstractScreen getScreen(Survivor game, float startingPosX) {
-            Tribe screen = new Tribe(game, startingPosX);
+            Kerod screen = new Kerod(game, startingPosX);
             current = screen;
             return screen;
         }

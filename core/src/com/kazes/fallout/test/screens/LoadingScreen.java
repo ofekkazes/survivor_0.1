@@ -47,7 +47,7 @@ public class LoadingScreen extends AbstractScreen {
         if (switchScreen) {
             Assets.finishLoading();
 
-            game.setScreen(Screens.Basmati.getScreen(game, 0));
+            game.setScreen(Screens.Battlegrounds.getScreen(game, 0));
         }
     }
 

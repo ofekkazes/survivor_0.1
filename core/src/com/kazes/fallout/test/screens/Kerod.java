@@ -22,15 +22,15 @@ import com.kyper.yarn.Value;
  * @version 1.0
  * @since 2018-09-15
  */
-public class Tribe extends GameScreen {
+public class Kerod extends GameScreen {
 
     Mercenary mercenary;
     Group randomNPCs;
     Merchant jerry;
 
 
-    public Tribe(Survivor game, float startingPosX) {
-        super(game, "Tribe", startingPosX);
+    public Kerod(Survivor game, float startingPosX) {
+        super(game, "Kerod", startingPosX);
         weaponsAllowed = true;
         lastScreen = Screens.Meviah;
         nextScreen = Screens.Eryon;
