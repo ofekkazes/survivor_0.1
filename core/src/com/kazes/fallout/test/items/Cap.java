@@ -3,7 +3,7 @@ package com.kazes.fallout.test.items;
 import com.kazes.fallout.test.inventory.Item;
 
 public class Cap extends Item {
-    public Cap(String textureRegion, String description) {
+    public Cap() {
         super("cap", "Does absolutely nothing");
     }
 

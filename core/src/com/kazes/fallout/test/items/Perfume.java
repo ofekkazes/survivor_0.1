@@ -5,7 +5,7 @@ import com.kazes.fallout.test.inventory.Item;
 public class Perfume extends Item {
 
     public Perfume() {
-        super("perfume", "Zombies hate that smell and will get away");
+        super("flashbang", "Zombies hate that smell and will get away");
     }
 
     @Override
