@@ -59,4 +59,17 @@ public class SideScrollingCamera extends OrthographicCamera {
             update();
         }*/
     }
+
+    public void updateBoundaries(float leftBoundary, float rightBoundary) {
+        this.leftBoundary = leftBoundary;
+        this.rightBoundary = rightBoundary;
+    }
+
+    public float getLeftBoundary() {
+        return leftBoundary;
+    }
+
+    public float getRightBoundary() {
+        return rightBoundary;
+    }
 }
