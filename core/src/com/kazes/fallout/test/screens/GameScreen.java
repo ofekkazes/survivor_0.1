@@ -716,6 +716,30 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         return enemies;
     }
 
+    public Group getDecor() {
+        return decor;
+    }
+
+    public Stage getGameStage() {
+        return gameStage;
+    }
+
+    public ImageEx getMap() {
+        return map;
+    }
+
+    public World getPhysicsWorld() {
+        return world;
+    }
+
+    public DialogueManager getDialogueManager() {
+        return dialogueManager;
+    }
+
+    public static Stage getScreenStage() {
+        return screenStage;
+    }
+
     public static InventoryActor getInventoryActor() {
         return inventoryActor;
     }
