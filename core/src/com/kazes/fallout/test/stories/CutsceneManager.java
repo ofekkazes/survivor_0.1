@@ -1,7 +1,8 @@
-package com.kazes.fallout.test;
+package com.kazes.fallout.test.stories;
 
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.kazes.fallout.test.stories.ActorAction;
 
 public class CutsceneManager {
     com.badlogic.gdx.utils.Queue<ActorAction> actions;
