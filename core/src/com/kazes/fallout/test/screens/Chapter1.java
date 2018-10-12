@@ -14,6 +14,9 @@ import com.kazes.fallout.test.enemies.Zombie;
 import com.kazes.fallout.test.items.AmmoCrate;
 import com.kazes.fallout.test.items.ItemActor;
 import com.kazes.fallout.test.items.Weapons;
+import com.kazes.fallout.test.stories.ActorAction;
+import com.kazes.fallout.test.stories.CutsceneManager;
+import com.kazes.fallout.test.stories.Stories;
 
 public class Chapter1 extends GameScreen {
     Actor camFollow;
@@ -41,7 +44,7 @@ public class Chapter1 extends GameScreen {
         cutscene = new CutsceneManager();
         cutscene.add(camFollow, Actions.moveTo(npcs.getChildren().items[0].getX(), 3.5f, 5f, Interpolation.sine));
         cutscene.add(npcs.getChildren().get(0), Actions.repeat(4, Actions.moveBy(-1f, 0, 1.5f, Interpolation.sine)));
-        cutscene.add(camFollow, Actions.sequence(Actions.delay(4f), new ShowDialogue(dialogueManager, "first_chapter_start"), new CheckDialogAction(dialogueManager)));
+        cutscene.add(camFollow, Actions.sequence(Actions.delay(3f), new ShowDialogue(dialogueManager, "first_chapter_start"), new CheckDialogAction(dialogueManager)));
         cutscene.add(player, Actions.sequence(Actions.parallel(Actions.moveTo(npcs.getChildren().items[0].getX() - 4 - player.getWidth(), 4, 5f), new ChangeAnimation(Assets.Animations.HERO + "_walking")), new ChangeAnimation(Assets.Animations.HERO + "_idle")));
         cutscene.add(player, new ShowDialogue(dialogueManager, "friend"));
         cutscene.add(npcs.getChildren().get(0), Actions.sequence(new CheckDialogAction(dialogueManager), new XFlipAction()));

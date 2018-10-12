@@ -9,11 +9,13 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
 import com.kazes.fallout.test.*;
+import com.kazes.fallout.test.stories.ActorAction;
 import com.kazes.fallout.test.actions.AddMission;
 import com.kazes.fallout.test.actions.AddNotification;
 import com.kazes.fallout.test.actions.CheckMission;
 import com.kazes.fallout.test.enemies.Zombie;
 import com.kazes.fallout.test.items.*;
+import com.kazes.fallout.test.stories.CutsceneManager;
 
 /**
  * A game screen for 24/7 enemy spawning and items renewal
@@ -34,7 +36,7 @@ public class Battlegrounds extends GameScreen {
 
         cutscene = new CutsceneManager();
         cutscene.add(gameStage.getRoot(), new AddMission(missionActor.getMission(), 3));
-        cutscene.add(gameStage.getRoot(), Actions.sequence(new CheckMission(missionActor), new AddNotification("mission done")));
+        cutscene.add(gameStage.getRoot(), Actions.sequence(new CheckMission(missionActor.getMission()), new AddNotification("mission done")));
     }
 
     @Override
