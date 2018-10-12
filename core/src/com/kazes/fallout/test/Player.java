@@ -62,12 +62,12 @@ public class Player extends AnimationActor {
         body = B2DBodyBuilder.createBody(world, getX(), getY(), getWidth(), getHeight(), BodyDef.BodyType.DynamicBody, CollisionCategory.FRIENDLY, CollisionCategory.FRIENDLY_COLLIDER);
         body.setFixedRotation(true);
         body.setUserData(this);
+        body.getWorld().clearForces();
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
-
         time += delta;
 
         if(time % 1 > 0.9f)

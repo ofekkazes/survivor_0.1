@@ -208,16 +208,18 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         B2DBodyBuilder.createBody(world, map.getX(), map.getHeight() - 3, map.getWidth(), 10, BodyDef.BodyType.StaticBody, CollisionCategory.BOUNDARY, CollisionCategory.BOUNDARY_COLLIDER);
         B2DBodyBuilder.createBody(world, map.getX(), 0-9.99f, map.getWidth(), 10, BodyDef.BodyType.StaticBody, CollisionCategory.BOUNDARY, CollisionCategory.BOUNDARY_COLLIDER);
         B2DBodyBuilder.createBody(world, map.getX() - 2f, 0, 0.15f, map.getHeight() - 3, BodyDef.BodyType.StaticBody, CollisionCategory.BOUNDARY, CollisionCategory.BOUNDARY_COLLIDER);
-        B2DBodyBuilder.createBody(world, map.getWidth() + 2f, 0, 0.15f, map.getHeight() - 3, BodyDef.BodyType.StaticBody, CollisionCategory.BOUNDARY, CollisionCategory.BOUNDARY_COLLIDER);
+        B2DBodyBuilder.createBody(world, map.getWidth() + 2.5f, 0, 0.15f, map.getHeight() - 3, BodyDef.BodyType.StaticBody, CollisionCategory.BOUNDARY, CollisionCategory.BOUNDARY_COLLIDER);
 
         if(player != null) {
             if(startingPosX == -1f) {
-                player.setX(map.getWidth() - 1.5f);
+                player.setX(map.getWidth() - player.getWidth() - 2.5f);
             }else {
                 player.setX(startingPosX);
             }
-            gameStage.addActor(player);
+            player.clearActions();
+            player.clearListeners();
             player.initPhysics(world);
+            gameStage.addActor(player);
             //magic = new MagicAttack(Assets.getAsset(Assets.Images.FIRE, Texture.class), Assets.getAsset(Assets.ParticleEffects.fire, ParticleEffect.class), player.getX(), player.getY());
 
         }
@@ -229,12 +231,6 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
         this.dialogueManager = new DialogueManager();
         screenStage.addActor(this.dialogueManager.getWindow());
-
-        objectiveWindow.addMission(new Mission(Objective.RetrieveItem, this), Items.AmmoCrate.getItem(), "Retrieve an ammo crate");
-        objectiveWindow.addMission(new Mission(Objective.RetrieveItem, this), Items.Boots.getItem(), "Retrieve a pair of boots");
-        objectiveWindow.addMission(new Mission(Objective.RetrieveItem, this), Items.Cap.getItem(), "Retrieve a cap");
-        objectiveWindow.addMission(new Mission(Objective.RetrieveItem, this), Items.LargeMedkit.getItem(), "Retrieve a large medkit");
-        objectiveWindow.addMission(new Mission(Objective.RetrieveItem, this), Items.Perfume.getItem(), "Retrieve a perfume");
 
     }
 
@@ -641,7 +637,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
             if(screenChange[0]) game.setScreen(lastScreen.getScreen(game, -1f));
         }
         checkCompleteLevel();
-        if(player.getX() + player.getWidth() / 2 > map.getWidth() + 0.5f && nextScreen != null && this.completed) {
+        if(player.getX() + player.getWidth() / 2 > map.getWidth() + 0.8f && nextScreen != null && this.completed) {
             gameStage.addAction(sequence(Actions.fadeOut(.25f), new BoolAction(screenChange)));
             if(screenChange[0]) game.setScreen(nextScreen.getScreen(game, 0));
         }
@@ -684,6 +680,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         return parallel(moveBy(((toPosX - fromPosX > 0)? Survivor.getInMeters(50) : Survivor.getInMeters(-50)) * 2, (toPosY - fromPosY), .3f),
                 sequence(color(Color.RED), color(Color.WHITE, 1f)));
     }
+
     //Create an hit action using the coordinates given
     private static Vector2 getHitAction(Body attacker, Body defender, Actor defenderActor) {
         Vector2 fromDirection = attacker.getPosition().sub(defender.getPosition());
