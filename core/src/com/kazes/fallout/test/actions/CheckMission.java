@@ -7,16 +7,15 @@ import com.kazes.fallout.test.Mission;
 import com.kazes.fallout.test.MissionActor;
 
 public class CheckMission extends Action {
-    MissionActor mission;
+    Mission mission;
 
-    public CheckMission(MissionActor missionActor) {
+    public CheckMission(Mission missionActor) {
         this.mission = missionActor;
     }
 
     @Override
     public boolean act(float delta) {
         if(mission.isCompleted()) {
-            ((Group) getActor()).removeActor(mission);
             return true;
         }
         return false;

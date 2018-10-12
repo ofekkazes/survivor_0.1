@@ -4,17 +4,15 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.kazes.fallout.test.Mission;
 import com.kazes.fallout.test.MissionActor;
+import com.kazes.fallout.test.screens.GameScreen;
 
 public class AddMission extends Action {
-    Mission mission;
 
     public AddMission(Mission mission, Object object) {
-        this.mission = mission;
-        this.mission.addRequirment(object);
+        GameScreen.getObjectiveWindow().addMission(mission, object);
     }
     @Override
     public boolean act(float delta) {
-        ((Group)getActor()).addActor(new MissionActor(mission));
         return true;
     }
 }

@@ -726,4 +726,8 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     public static FastInventoryActor getFastInventoryActor() {
         return fastInventoryActor;
     }
+
+    public static ObjectiveWindow getObjectiveWindow() {
+        return objectiveWindow;
+    }
 }
