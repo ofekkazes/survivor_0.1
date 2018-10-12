@@ -17,7 +17,7 @@ import com.kazes.fallout.test.screens.GameScreen;
  * @version 1.0
  * @since 2018-09-15
  */
-public class InjuredNPC extends ImageEx {
+public class InjuredNPC extends NPC {
     private Dialog dialog; //each will have some things to say
     private float health;
     private Weapons weapon; //some will have weapon, others null
@@ -25,7 +25,7 @@ public class InjuredNPC extends ImageEx {
     //private Work type; //what his desires are (warrior, scientist, doctor)
 
     public InjuredNPC(World world, float xPos, float yPos, Weapons weapon) {
-        super(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), xPos, yPos);
+        super(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), "Injured", xPos, yPos, Weapons.NULL);
         this.world = world;
         this.body = B2DBodyBuilder.createBody(world, getX(), getY(), getWidth(), getHeight(), BodyDef.BodyType.StaticBody, CollisionCategory.FRIENDLY, CollisionCategory.FRIENDLY_COLLIDER);
         this.health = 50;
