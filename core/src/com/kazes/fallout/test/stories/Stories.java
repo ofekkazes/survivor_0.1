@@ -14,7 +14,7 @@ public class Stories {
     public static void init() {
         stories = new HashMap<Integer, Story>();
         stories.put(1, new Chapter1());
-        //stories.put(2, new Chapter2());
+        stories.put(2, new Chapter2());
         stories.put(3, new Chapter3());
         //stories.put(4, new Chapter4());
     }

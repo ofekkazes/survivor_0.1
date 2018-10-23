@@ -718,6 +718,10 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         return this.npcs;
     }
 
+    public Group getFollowers() {
+        return followers;
+    }
+
     public Group getEnemies() {
         return enemies;
     }

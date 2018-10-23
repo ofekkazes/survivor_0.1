@@ -1,5 +1,6 @@
 package com.kazes.fallout.test.actions;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -33,12 +34,15 @@ public class CoordinatedAction extends Action {
 
     @Override
     public boolean act(float delta) {
-        boolean flag = false;
+        boolean flag = true;
         for(int i = 0; i < objects.size; i++) {
-            if(!this.objects.get(i).hasActions() && !flag)
-                flag = true;
+            if(this.objects.get(i).hasActions()) {
+                Gdx.app.log("asd2", this.objects.get(i).getActions().get(0).toString());
+                flag = false;
+                break;
+            }
         }
-        return !flag;
+        return true;
     }
 
     private static Object cloneObject(Object obj){
