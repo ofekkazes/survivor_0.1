@@ -8,6 +8,7 @@ import com.kazes.fallout.test.inventory.Item;
 import com.kazes.fallout.test.inventory.Slot;
 import com.kazes.fallout.test.items.ItemActor;
 import com.kazes.fallout.test.screens.GameScreen;
+import com.kazes.fallout.test.screens.Screens;
 
 public class Mission {
     private Objective objective;
@@ -21,6 +22,12 @@ public class Mission {
     float counter;
     Item item;
     Jobs job;
+    String name;
+
+    public Mission(Objective objective, GameScreen gameScreen, String message) {
+        this(objective, gameScreen);
+        addMessage(message);
+    }
 
     public Mission(Objective objective, GameScreen gameScreen) {
         this.objective = objective;
@@ -66,6 +73,10 @@ public class Mission {
                         if (ClanProperties.getValue(job) > 0)
                             isCompleted = true;
                         break;
+                    case GoTo:
+                        if(Screens.getCurrent().getName().equals(name))
+                            isCompleted = true;
+                        break;
                 }
             }
         }
@@ -79,6 +90,7 @@ public class Mission {
             case RetrieveItem: item = (Item)object; break;
             case AddNPCCount: counter = (Integer)object; break;
             case AddNPCType: job = (Jobs)object; break;
+            case GoTo: name = (String)object; break;
         }
     }
 
