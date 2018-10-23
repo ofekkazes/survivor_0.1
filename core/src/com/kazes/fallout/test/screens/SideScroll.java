@@ -53,7 +53,7 @@ public class SideScroll extends GameScreen {
 
     //Load the content
     private void create (final Survivor game) {
-        nextScreen = Screens.Tribe;
+        nextScreen = Screens.Kerod;
         weaponsAllowed = true;
 
         dialogueManager.dialogue.getLibrary().registerFunction("setSallyAction", 1, new Library.Function() {

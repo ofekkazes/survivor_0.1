@@ -7,7 +7,7 @@ public class Meviah extends GameScreen {
     Meviah(Survivor game, float startingPosX) {
         super(game, "Meviah", startingPosX);
         lastScreen = Screens.Singleton;
-        nextScreen = Screens.Tribe;
+        nextScreen = Screens.Kerod;
     }
 
     @Override

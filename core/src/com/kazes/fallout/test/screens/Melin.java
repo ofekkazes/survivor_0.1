@@ -7,7 +7,7 @@ public class Melin extends GameScreen {
     Melin(Survivor game, float startingPosX) {
         super(game, "Melin", startingPosX);
         lastScreen = Screens.Barikad;
-        nextScreen = Screens.Battlegrounds;
+        nextScreen = Screens.Niar;
     }
 
 

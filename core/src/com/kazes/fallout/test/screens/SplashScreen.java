@@ -22,7 +22,7 @@ public class SplashScreen extends GameScreen {
         super(game, "Splash", 0);
         Label label = new Label("Fallout Survivor", Assets.getAsset(Assets.UI_SKIN, Skin.class));
         screenStage.addActor(label);
-        nextScreen = Screens.Tribe;
+        nextScreen = Screens.Kerod;
 
         timeout = 15 * Gdx.graphics.getFramesPerSecond();
     }
