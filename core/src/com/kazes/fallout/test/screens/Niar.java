@@ -5,23 +5,22 @@ import com.kazes.fallout.test.Survivor;
 import com.kazes.fallout.test.stories.Chapter3;
 import com.kazes.fallout.test.stories.Stories;
 
-public class Basmati extends GameScreen {
+public class Niar extends GameScreen {
     Chapter3 story;
-    Basmati(Survivor game, float startingPosX) {
-        super(game, "Basmati", startingPosX);
-        lastScreen = Screens.Eryon;
-        nextScreen = Screens.Barikad;
-
+    Niar(Survivor game, float startingPosX) {
+        super(game, "Niar", startingPosX);
+        lastScreen = Screens.Melin;
+        nextScreen = Screens.Battlegrounds;
         story = (Chapter3)Stories.getStory(3, this);
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
-        if(!story.isFinished()) {
-                story.updateAndRender();
+        if(story != null) {
+                story.update();
+                story.render();
         }
-
         ((SideScrollingCamera)gameStage.getCamera()).followPos(player.getOrigin());
     }
 

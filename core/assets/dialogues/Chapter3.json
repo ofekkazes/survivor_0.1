@@ -1,0 +1,53 @@
+[
+	{
+		"title": "third_chapter_start",
+		"tags": "",
+		"body": "The world has a disease, you aware of that of course\r\nUndead roaring about the world, slowly destroying everything\r\nBut they couldn't conquer us, yet\r\nThat is why The Mable Alliance came along\r\nMable, Kerod, Niar, all weak as a town by itself\r\nBut together we can defend it.\r\nNiar, once a great town, positive toward the alliance now looks the other way\r\nThey prefer to work alone and they think they can make it big without us all.\r\nGo there, try to work it out.\r\n[[stop]]",
+		"position": {
+			"x": 592,
+			"y": 181
+		},
+		"colorID": 0
+	},
+	
+	{
+		"title": "stop",
+		"tags": "",
+		"body": "",
+		"position": {
+			"x": 592,
+			"y": 181
+		},
+		"colorID": 0
+	},
+	
+	{
+		"title": "arbitrage",
+		"tags": "",
+		"body": "Player: Keevan sent me\r\nMayor: For what cause?\r\nHe told me you want out of the alliance\r\nIt is true, that alliance won't last long\r\nIt will be better to break it up\r\nEach town to itself\r\nPerfecly balanced.\r\nYou, however seems like a fine man\r\nI have a job for you, if it suits you\r\nAt Kerod, your town, go to the merchant and take from him an axe and bring it to me\r\n[[stop]]",
+		"colorID": 0
+	},
+	
+	{
+		"title": "axe_em",
+		"tags": "",
+		"body": "Hey mace\r\nGreat to see you\r\nWhat news you bring for me?\r\nThe mayor of Niar asked me to supply him with an axe from you\r\nAh I know what he's after\r\nHere[[stop]]",
+		"colorID": 0
+	},
+
+	{
+		"title": "axe_em2",
+		"tags": "",
+		"body": "Tell him I said hello\r\nWill do\r\nSee you Mace.\r\n[[stop]]",
+		"colorID": 0
+	},
+
+	{
+		"title": "package_delivered",
+		"tags": "",
+		"body": "Mace, Great to see you\r\nI have your axe\r\nGreat\r\nListen\r\nThe Mable Alliance is not a good one\r\nBut I want to form another\r\nNot one ruled by Keevan\r\nAnd I see a bright future\r\nThe Niar Society\r\nJoin me and we will survive the upcoming war\r\nWhat war?\r\nMy lookouts say hoards of undead\r\nWith a clear direction towards us\r\nAnd their not too far, but will arrive eventually\r\nI cannot join you for that\r\nI must protect Mable\r\nI understand\r\nPerhaps another time then\r\nSee you later Mace.\r\n[[stop]]",
+		"colorID": 0
+	}
+	
+	
+]

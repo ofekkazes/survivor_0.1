@@ -120,6 +120,8 @@ public class Assets {
         public static final String MERCENARIES  = "dialogues/mercenaries.json";
         public static final String CHAPTER1  = "dialogues/Chapter1.json";
         public static final String CHAPTER2  = "dialogues/Chapter2.json";
+        public static final String CHAPTER3  = "dialogues/Chapter3.json";
+        public static final String CHAPTER4  = "dialogues/Chapter4.json";
         public static final String BARDOCK  = "dialogues/bardock.json";
     }
     private static final String[] _Dialogues = {

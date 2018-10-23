@@ -29,7 +29,7 @@ public class Battlegrounds extends GameScreen {
 
     Battlegrounds(Survivor game, float startingPosX) {
         super(game, "Battlegrounds", startingPosX);
-        lastScreen = Screens.Melin;
+        lastScreen = Screens.Niar;
         nextScreen = Screens.SideScroll;
         weaponsAllowed = true;
         MissionActor missionActor = new MissionActor(new Mission(Objective.KillCount, this));

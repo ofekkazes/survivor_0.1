@@ -3,6 +3,7 @@ package com.kazes.fallout.test.screens;
 import com.badlogic.gdx.graphics.Color;
 import com.kazes.fallout.test.Assets;
 import com.kazes.fallout.test.Survivor;
+import com.kazes.fallout.test.stories.Stories;
 
 /**
  * Basic loading screen, using to load all assets
@@ -46,7 +47,7 @@ public class LoadingScreen extends AbstractScreen {
         }
         if (switchScreen) {
             Assets.finishLoading();
-
+            Stories.init();
             game.setScreen(Screens.Eryon.getScreen(game, 0));
         }
     }

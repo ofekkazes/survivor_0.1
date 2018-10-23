@@ -1,0 +1,53 @@
+[
+	{
+		"title": "fourth_chapter_start",
+		"tags": "",
+		"body": "Mace, You got news?\r\nNiar won't cooperate\r\nThey prefer it alone\r\nThen we are all doomed\r\nBut there is another way to get Niar with us again\r\nIf we overthrow Mayor we might have a chance\r\nWhat?!\r\nThat is the only way\r\nNo I won't agree to these nonsense\r\nThere must be another way\r\nDo you have any idea?\r\nYou must resolve your differences\r\nI can't see it happening\r\nFor now however we have a problem\r\nWhat do you mean?\r\nMayor told me of a war coming to us\r\nOf hoards of undead\r\nHe told you when\r\nNo\r\nI will send scouts.\r\nThank you.\r\nHelp if you can with the undead in this region and take that\r\n[[stop]]",
+		"position": {
+			"x": 592,
+			"y": 181
+		},
+		"colorID": 0
+	},
+	
+	{
+		"title": "stop",
+		"tags": "",
+		"body": "",
+		"position": {
+			"x": 592,
+			"y": 181
+		},
+		"colorID": 0
+	},
+	
+	{
+		"title": "maga",
+		"tags": "",
+		"body": "The undead are not far off\r\nWe must get Mayor on our side\r\nBut how?\r\nHe may lost his faith on me but not on you\r\nConnect with him\r\n[[stop]]",
+		"colorID": 0
+	},
+	
+	{
+		"title": "not_happening",
+		"tags": "",
+		"body": "Mace, I'm sorry, you have not heard the full story\r\nMe and Keevan have some history\r\nHe betrayed me\r\n1 year ago he sent mercenaries to infiltrate the town and kill me\r\nMy troops found out about the mercenaries and delayed their plans\r\nIn the next two days were 5 assassination attemps\r\nWith no succession\r\nAnd at the last night we got them\r\nThey told us Keevan was the one responsible\r\nHe denied in order to reserve the alliance\r\nBut I never believed him.\r\nNot on that day and not since.\r\n",
+		"colorID": 0
+	},
+
+	{
+		"title": "axe_em2",
+		"tags": "",
+		"body": "Tell him I said hello\r\nWill do\r\nSee you Mace.[[stop]]",
+		"colorID": 0
+	},
+
+	{
+		"title": "package_delivered",
+		"tags": "",
+		"body": "Mace, Great to see you\r\nI have your axe\r\nGreat\r\nListen\r\nThe Mable Alliance is not a good one\r\nBut I want to form another\r\nNot one ruled by Keevan\r\nAnd I see a bright future\r\nThe Niar Society\r\nJoin me and we will survive the upcoming war\r\nWhat war?\r\nMy lookouts say hoards of undead\r\nWith a clear direction towards us\r\nAnd their not too far, but will arrive eventually\r\nI cannot join you for that\r\nI must protect Mable\r\nI understand\r\nPerhaps another time then\r\nSee you later Mace.[[stop]]",
+		"colorID": 0
+	}
+	
+	
+]
