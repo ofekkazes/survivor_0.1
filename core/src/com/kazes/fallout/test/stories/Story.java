@@ -10,9 +10,15 @@ import com.kazes.fallout.test.enemies.Enemy;
 import com.kazes.fallout.test.items.ItemActor;
 import com.kazes.fallout.test.screens.GameScreen;
 
-public abstract class Story implements Disposable {
+interface StoryProperties {
+    void setup();
+    void update();
+    void render();
+}
+
+public abstract class Story implements Disposable, StoryProperties {
     int chapter;
-    boolean disposed;
+    boolean finished;
     CutsceneManager cutscene;
     GameScreen gameScreen;
     Actor camFollow;
@@ -23,15 +29,16 @@ public abstract class Story implements Disposable {
     Array<ImageEx> storyDecoration;
     Array<ItemActor> storyItems;
 
-    public Story(GameScreen gameScreen, int chapterNum) {
-        if(Stories.isFinished(chapterNum)) {
-            disposed = true;
-            return;
-        }
-        this.gameScreen = gameScreen;
+    boolean[] parts;
+    private boolean[] isPartAdded;
+    String dialogueFile;
+
+    public Story(int chapterNum) {
+
         this.chapter = chapterNum;
         Gdx.app.log("chapter",this.chapter + "");
-        Gdx.app.log("Complete?", Stories.isFinished(chapter) + "");
+
+        cutscene = new CutsceneManager();
 
         currentFollow = new CamFollowActor(GameScreen.player);
         camFollow = new Actor();
@@ -42,24 +49,51 @@ public abstract class Story implements Disposable {
         storyItems = new Array<ItemActor>();
     }
 
+    public void updateScreen(GameScreen gameScreen) {
+        this.gameScreen = gameScreen;
+    }
+
     public void update() {
-        if(!this.disposed) {
-            if (!Stories.isFinished(chapter)) {
                 if (!cutscene.isEmpty() &&
                         !cutscene.peekFirst().assignedActor.hasActions() &&
                         !cutscene.getLastUsedActor().hasActions()) {
                     ActorAction action = cutscene.take();
                     action.assignedActor.addAction(action.action);
-                }
-            } else
-                this.dispose();
+
         }
     }
 
     public void render() {
-        if(!disposed)
+        if(currentFollow.getActor() != null)
             ((SideScrollingCamera)gameScreen.getGameStage().getCamera()).followPos(new Vector2(currentFollow.getActor().getX(), currentFollow.getActor().getY()));
+    }
 
+    public void updateAndRender() {
+        update();
+        render();
+    }
+
+    public void updatePart(int part) {
+        if(parts != null && parts.length > part - 1)
+            parts[part - 1] = true;
+    }
+
+    public boolean addPartToStory(int part) {
+        if(parts != null && parts.length > part - 1 && !parts[part - 1]) {
+            if(part != 1 && !parts[part - 2])
+                return false;
+            if (isPartAdded == null)
+                isPartAdded = new boolean[parts.length];
+            if (!isPartAdded[part - 1]) {
+                isPartAdded[part - 1] = true;
+                return true;
+            } else return false;
+        }
+        return false;
+    }
+
+    public boolean checkPart(int part) {
+        return (parts != null && parts.length > part - 1 && parts[part - 1]);
     }
 
     public void addNPC(NPC npc) {
@@ -100,8 +134,6 @@ public abstract class Story implements Disposable {
             gameScreen.getItems().removeActor(item);
             storyItems.removeValue(item, false);
         }
-
-        disposed = true;
     }
 
 
@@ -109,7 +141,7 @@ public abstract class Story implements Disposable {
         return chapter;
     }
 
-    public boolean isDisposed() {
-        return disposed;
+    public boolean isFinished() {
+        return finished;
     }
 }
