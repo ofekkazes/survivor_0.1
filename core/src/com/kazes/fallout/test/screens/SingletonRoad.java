@@ -11,8 +11,8 @@ import com.kazes.fallout.test.enemies.Zombie;
 public class SingletonRoad extends GameScreen {
     SingletonRoad(Survivor game, float startingPosX) {
         super(game, "Singleton Road", startingPosX);
-        lastScreen = Screens.Chapter2;
-        nextScreen = Screens.Meviah;
+        lastScreen = Screens.Basmati;
+        nextScreen = Screens.Niar;
 
         weaponsAllowed = true;
     }

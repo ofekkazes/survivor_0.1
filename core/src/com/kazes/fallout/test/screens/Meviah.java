@@ -6,8 +6,7 @@ import com.kazes.fallout.test.Survivor;
 public class Meviah extends GameScreen {
     Meviah(Survivor game, float startingPosX) {
         super(game, "Meviah", startingPosX);
-        lastScreen = Screens.Singleton;
-        nextScreen = Screens.Kerod;
+        nextScreen = Screens.Barikad;
     }
 
     @Override

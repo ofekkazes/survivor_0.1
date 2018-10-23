@@ -9,8 +9,8 @@ public class Basmati extends GameScreen {
     Chapter3 story;
     Basmati(Survivor game, float startingPosX) {
         super(game, "Basmati", startingPosX);
-        lastScreen = Screens.Eryon;
-        nextScreen = Screens.Barikad;
+        lastScreen = Screens.Kerod;
+        nextScreen = Screens.Singleton;
 
         story = (Chapter3)Stories.getStory(3, this);
     }

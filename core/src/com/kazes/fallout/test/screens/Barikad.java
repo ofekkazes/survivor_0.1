@@ -9,8 +9,8 @@ import com.kazes.fallout.test.Survivor;
 public class Barikad extends GameScreen {
     Barikad(Survivor game, float startingPosX) {
         super(game, "Barikad", startingPosX);
-        lastScreen = Screens.Basmati;
-        nextScreen = Screens.Melin;
+        lastScreen = Screens.Meviah;
+        nextScreen = Screens.Eryon;
     }
 
     @Override

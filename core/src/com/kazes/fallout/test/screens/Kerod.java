@@ -35,8 +35,8 @@ public class Kerod extends GameScreen {
     public Kerod(Survivor game, float startingPosX) {
         super(game, "Kerod", startingPosX);
         weaponsAllowed = true;
-        lastScreen = Screens.Meviah;
-        nextScreen = Screens.Eryon;
+        lastScreen = Screens.Melin;
+        nextScreen = Screens.Basmati;
 
         dialogueManager.dialogue.getLibrary().registerFunction("sendToMission", 0, new Library.Function() {
             @Override

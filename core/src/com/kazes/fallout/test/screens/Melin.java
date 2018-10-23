@@ -6,8 +6,8 @@ import com.kazes.fallout.test.Survivor;
 public class Melin extends GameScreen {
     Melin(Survivor game, float startingPosX) {
         super(game, "Melin", startingPosX);
-        lastScreen = Screens.Barikad;
-        nextScreen = Screens.Niar;
+        lastScreen = Screens.Eryon;
+        nextScreen = Screens.Kerod;
     }
 
 

@@ -10,8 +10,8 @@ public class Eryon extends GameScreen {
     Chapter1 story;
     Eryon(Survivor game, float startingPosX) {
         super(game, "Eryon", startingPosX);
-        lastScreen = Screens.Kerod;
-        nextScreen = Screens.Basmati;
+        lastScreen = Screens.Barikad;
+        nextScreen = Screens.Melin;
 
         story = (Chapter1)Stories.getStory(1, this);
     }

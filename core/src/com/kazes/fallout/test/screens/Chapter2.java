@@ -42,7 +42,7 @@ public class Chapter2 extends GameScreen {
         super(game, "Chapter2", 0);
         allowInput = false;
         this.completed = false;
-        nextScreen = Screens.Tribe;
+        nextScreen = Screens.Kerod;
         dialogueManager.dialogue.loadFile(Assets.Dialogues.CHAPTER2, false, false, null);
         player.setX(0);
         camFollow = new Actor();
