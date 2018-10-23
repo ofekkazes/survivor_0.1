@@ -99,6 +99,13 @@ public enum Screens {
             return screen;
         }
     },
+    Niar {
+        public AbstractScreen getScreen(Survivor game, float startingPosX) {
+            Niar screen = new Niar(game, startingPosX);
+            current = screen;
+            return screen;
+        }
+    },
     SplashScreen {
         public AbstractScreen getScreen(Survivor game, float startingPosX) {
             return new SplashScreen(game);

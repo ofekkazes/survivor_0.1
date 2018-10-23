@@ -10,10 +10,10 @@ public class Eryon extends GameScreen {
     Chapter1 story;
     Eryon(Survivor game, float startingPosX) {
         super(game, "Eryon", startingPosX);
-        lastScreen = Screens.Tribe;
+        lastScreen = Screens.Kerod;
         nextScreen = Screens.Basmati;
 
-        story = new Chapter1(this);
+        story = (Chapter1)Stories.getStory(1, this);
     }
 
     @Override
@@ -21,9 +21,7 @@ public class Eryon extends GameScreen {
         super.update(delta);
 
         if(story != null) {
-            if(story.isDisposed())
-                story = null;
-            else story.update();
+            story.update();
 
         }
     }
