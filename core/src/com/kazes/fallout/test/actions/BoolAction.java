@@ -1,4 +1,4 @@
-package com.kazes.fallout.test;
+package com.kazes.fallout.test.actions;
 
 import com.badlogic.gdx.scenes.scene2d.Action;
 
