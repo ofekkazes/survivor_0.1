@@ -5,5 +5,6 @@ public enum Objective {
     KillCount,
     AddNPCCount,
     AddNPCType,
-    Timed;
+    Timed,
+    GoTo;
 }

@@ -27,6 +27,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.kazes.fallout.test.*;
+import com.kazes.fallout.test.actions.BoolAction;
 import com.kazes.fallout.test.dialogues.DialogueManager;
 import com.kazes.fallout.test.enemies.Enemy;
 import com.kazes.fallout.test.enemies.Zombie;
@@ -50,6 +51,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     public static final int SCREEN_WIDTH = Gdx.graphics.getWidth();
     public static final int SCREEN_HEIGHT = Gdx.graphics.getHeight();
     public static final int VIRTUAL_HEIGHT = 400;
+    private String screenName;
 
     public static float bitcoin = 0;
 
@@ -101,13 +103,14 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     GameScreen(Survivor game, String name, float startingPosX) {
         super(game);
         stateTime = 0;
+        screenName = name;
 
         //Changing the camera used by the game stage
         SideScrollingCamera camera = new SideScrollingCamera(30, 20, 0, Survivor.getInMeters(4065));
         StretchViewport viewp = new StretchViewport(30.6f, 17, camera);
 
         gameStage = new Stage(viewp);
-        gameStage.getBatch().enableBlending();
+        //gameStage.getBatch().enableBlending();
         gameStage.addAction(sequence(Actions.alpha(0), Actions.delay(.2f), Actions.fadeIn(.25f)));
 
         if(screenStage == null) {
@@ -737,6 +740,10 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
     public DialogueManager getDialogueManager() {
         return dialogueManager;
+    }
+
+    public String getName() {
+        return this.screenName;
     }
 
     public static Stage getScreenStage() {

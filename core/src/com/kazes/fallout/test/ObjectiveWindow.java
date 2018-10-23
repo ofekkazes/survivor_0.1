@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Array;
+import com.kazes.fallout.test.inventory.Item;
 
 public class ObjectiveWindow extends WindowEx {
 
@@ -22,6 +23,7 @@ public class ObjectiveWindow extends WindowEx {
         missionsArray = new Array<Mission>();
 
         ScrollPane scrollPane = new ScrollPane(missions);
+        scrollPane.setFadeScrollBars(true);
         this.add(scrollPane);
     }
 
