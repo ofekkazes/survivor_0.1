@@ -634,7 +634,10 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
         if(player.getX() + player.getWidth() / 2 < 0 && lastScreen != null) {
             gameStage.addAction(sequence(Actions.fadeOut(.25f), new BoolAction(screenChange)));
-            if(screenChange[0]) game.setScreen(lastScreen.getScreen(game, -1f));
+            if(screenChange[0]) {
+                game.setScreen(lastScreen.getScreen(game, -1f));
+                return;
+            }
         }
         checkCompleteLevel();
         if(player.getX() + player.getWidth() / 2 > map.getWidth() + 0.8f && nextScreen != null && this.completed) {

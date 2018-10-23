@@ -63,6 +63,7 @@ public class Player extends AnimationActor {
         body.setFixedRotation(true);
         body.setUserData(this);
         body.getWorld().clearForces();
+        body.setTransform(getX(), getY(), 0);
     }
 
     @Override
