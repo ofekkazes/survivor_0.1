@@ -54,7 +54,10 @@ public class DialogueManager {
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = Assets.getFont(Assets.Fonts.CHAKRA, Assets.FontSizes.HUNDRED);
         labelStyle.fontColor = Color.BLACK;
-        dialogWindow.add(new Label("",  labelStyle));
+        Label label = new Label("",  labelStyle);
+        label.setWrap(true);
+        label.setWidth(dialogWindow.getWidth() - dialogWindow.getWidth() / 5);
+        dialogWindow.add(label).width(dialogWindow.getWidth() - dialogWindow.getWidth() / 5);
     }
 
     public void update() {
@@ -162,7 +165,8 @@ public class DialogueManager {
             }
             //Gdx.app.log("Dialogue", line);
             if(line.compareTo(((Label)dialogWindow.getCells().get(0).getActor()).getText().toString()) != 0) {
-                ((Label) dialogWindow.getCells().get(0).getActor()).setText(line);
+                Label label = ((Label) dialogWindow.getCells().get(0).getActor());
+                label.setText(line);
             }
         }
     }
