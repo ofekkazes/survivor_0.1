@@ -53,7 +53,7 @@ public class Inventory {
 		int amount = 0;
 
 		for (Slot slot : slots) {
-			if (slot.getItem().getClass().equals(item.getClass())) {
+			if (slot.getItem() != null && slot.getItem().getClass().equals(item.getClass())) {
 				amount += slot.getAmount();
 			}
 		}
