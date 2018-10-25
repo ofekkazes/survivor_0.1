@@ -1,5 +1,8 @@
 package com.kazes.fallout.test.physics;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.kazes.fallout.test.Bullet;
 import com.kazes.fallout.test.ImageEx;
@@ -37,7 +40,11 @@ public class ContactListener implements com.badlogic.gdx.physics.box2d.ContactLi
             Bullet bullet = (Bullet)bulletBody.getUserData();
             enemy.wander = true;
             bullet.setRemove();
-            enemyBody.setLinearVelocity(enemyBody.getPosition().cpy().scl(bullet.getPower() / 20).sub(bulletBody.getPosition().cpy()));
+            if(bulletBody.getAngle() == 0) {
+                Vector2 dst = bulletBody.getPosition().cpy().sub(GameScreen.player.getBody().getPosition().cpy());
+                enemyBody.setLinearVelocity(dst);
+            }
+            else enemyBody.setLinearVelocity(enemyBody.getPosition().cpy().scl(bullet.getPower() / 20).sub(bulletBody.getPosition().cpy()));
             enemyBody.setLinearDamping(bullet.getPower() / 4);
             enemy.subHealth(bullet.getPower());
             GameScreen.bitcoin += 0.0003f;
