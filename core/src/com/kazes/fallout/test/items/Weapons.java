@@ -12,7 +12,7 @@ public enum Weapons {
     Sword(2, "machete", true),
     Pistol(3, "pistol", true),
     SMG(4, "mp5", true),
-    AKM(5, "akm", false),
+    AKM(5, "akm", true),
     AXE(6, "axe", false),
     BAT(7, "baseball_bat", false),
     M4(8, "m4", false),
