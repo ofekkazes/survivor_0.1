@@ -1,0 +1,60 @@
+[
+	{
+		"title": "fifth_chapter_start",
+		"tags": "",
+		"body": "First Mace I have something for you(gives a new weapon)\r\n[[stop]]",
+		"position": {
+			"x": 592,
+			"y": 181
+		},
+		"colorID": 0
+	},
+	
+	{
+		"title": "stop",
+		"tags": "",
+		"body": "",
+		"position": {
+			"x": 592,
+			"y": 181
+		},
+		"colorID": 0
+	},
+	
+	{
+		"title": "weapon_check",
+		"tags": "",
+		"body": "Go to the battlegrounds\r\nBring me the heads of 50 undead\r\n[[stop]]",
+		"colorID": 0
+	},
+	
+	{
+		"title": "a_messenger",
+		"tags": "",
+		"body": "What do you think of the weapon?\r\nMayor!\r\nI bring an urgent message from Mable!\r\nContinue\r\nThe town is under attack\r\nKeevan seeks your help\r\nI will not come\r\nLet him rot.\r\nA: you can't leave him!\r\nSet aside your differences\r\nB:After everything he done, I will not\r\nYou will not leave all those men to die!\r\nWar is coming, you said that yourself\r\nWe need every men alive\r\nKeevan too forgives for his acts\r\nFind your heart!\r\n...\r\nAlright\r\nI will come and you will come with me\r\nAlright\r\n[[stop]]",
+		"colorID": 0
+	},
+
+	{
+		"title": "sunrise_showing",
+		"tags": "",
+		"body": "Mace thank god!\r\nKeevan: We've come for you\r\nHelp us with this monster\r\nNo one could(boss fight)[[stop]]",
+		"colorID": 0
+	},
+
+	{
+		"title": "danger_gone",
+		"tags": "",
+		"body": "Thank you\r\nWhat was that?\r\nWe should upgrade our arsenal for things like that\r\nNow we must get to business\r\n[[stop]]",
+		"colorID": 0
+	},
+	
+	{
+		"title": "peace_treaty",
+		"tags": "",
+		"body": "Mayor:I'm willing to forgive you\r\nNot because I want but because I need\r\nThe people of this region have done no harm\r\nKeevan: I agree\r\nWar is looming\r\nIt won't help any of us if we are divided\r\nOnly together we can stop the undead\r\n[[stop]]",
+		"colorID": 0
+	}
+	
+	
+]

@@ -31,21 +31,21 @@
 	{
 		"title": "not_happening",
 		"tags": "",
-		"body": "Mace, I'm sorry, you have not heard the full story\r\nMe and Keevan have some history\r\nHe betrayed me\r\n1 year ago he sent mercenaries to infiltrate the town and kill me\r\nMy troops found out about the mercenaries and delayed their plans\r\nIn the next two days were 5 assassination attemps\r\nWith no succession\r\nAnd at the last night we got them\r\nThey told us Keevan was the one responsible\r\nHe denied in order to reserve the alliance\r\nBut I never believed him.\r\nNot on that day and not since.\r\n",
+		"body": "Mace, I'm sorry, you have not heard the full story\r\nMe and Keevan have some history\r\nHe betrayed me\r\n1 year ago he sent mercenaries to infiltrate the town and kill me\r\nMy troops found out about the mercenaries and delayed their plans\r\nIn the next two days were 3 assassination attemps\r\nWith no succession\r\nAnd at the last night we got them\r\nThey told us Keevan was the one responsible\r\nHe denied the truth to reserve the alliance\r\nBut I never believed him.\r\nNot on that day and not since.\r\nMace, we need you\r\nWhat do you say?\r\n[[I will join you|join_mayor]][[Keevan has the right mind|join_keevan]]\r\n",
 		"colorID": 0
 	},
 
 	{
-		"title": "axe_em2",
+		"title": "join_mayor",
 		"tags": "",
-		"body": "Tell him I said hello\r\nWill do\r\nSee you Mace.[[stop]]",
+		"body": "Great\r\nThis is the beginning of great times\r\nCome by tomorrow\r\nWe have work to do\r\n[[stop]]",
 		"colorID": 0
 	},
 
 	{
-		"title": "package_delivered",
+		"title": "join_keevan",
 		"tags": "",
-		"body": "Mace, Great to see you\r\nI have your axe\r\nGreat\r\nListen\r\nThe Mable Alliance is not a good one\r\nBut I want to form another\r\nNot one ruled by Keevan\r\nAnd I see a bright future\r\nThe Niar Society\r\nJoin me and we will survive the upcoming war\r\nWhat war?\r\nMy lookouts say hoards of undead\r\nWith a clear direction towards us\r\nAnd their not too far, but will arrive eventually\r\nI cannot join you for that\r\nI must protect Mable\r\nI understand\r\nPerhaps another time then\r\nSee you later Mace.[[stop]]",
+		"body": "Disappointing\r\nYou fail to see the truth\r\nDid he sent you here to spy on me?\r\nGo tell him everything bad you found on me\r\n[[stop]]",
 		"colorID": 0
 	}
 	

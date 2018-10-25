@@ -1,0 +1,45 @@
+[
+	{
+		"title": "bedside",
+		"tags": "",
+		"body": "You are the hero of this story\r\nYou don't need sleep\r\n[[stop]]",
+		"position": {
+			"x": 592,
+			"y": 181
+		},
+		"colorID": 0
+	},
+	
+	{
+		"title": "stop",
+		"tags": "",
+		"body": "",
+		"position": {
+			"x": 592,
+			"y": 181
+		},
+		"colorID": 0
+	},
+	
+	{
+		"title": "streetlight",
+		"tags": "",
+		"body": "You stare at the street light\r\nThe street light stares back\r\n[[stop]]",
+		"position": {
+			"x": 387,
+			"y": 487
+		},
+		"colorID": 0
+	},
+	{
+		"title": "streetlight",
+		"tags": "",
+		"body": "You stare at the street light\r\nThe street light stares back\r\n[[stop]]",
+		"position": {
+			"x": 387,
+			"y": 487
+		},
+		"colorID": 0
+	},
+	
+]

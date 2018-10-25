@@ -1,0 +1,40 @@
+[
+	{
+		"title": "fifth_chapter_start",
+		"tags": "",
+		"body": "Some strange undead roar in Meviah\r\nMy soldiers could not take care of it\r\nCan you have a look at it?(boss fight)\r\n[[stop]]",
+		"position": {
+			"x": 592,
+			"y": 181
+		},
+		"colorID": 0
+	},
+	
+	{
+		"title": "stop",
+		"tags": "",
+		"body": "",
+		"position": {
+			"x": 592,
+			"y": 181
+		},
+		"colorID": 0
+	},
+	
+	{
+		"title": "boss_killed",
+		"tags": "",
+		"body": "What was that thing?\r\nI don't know but the undead are getting stronger\r\nThat is bad\r\nWe must go for Mayor\r\nWe need his help\r\n[[stop]]",
+		"colorID": 0
+	},
+	
+	{
+		"title": "many_meetings(mayor_and_keevan_meet)",
+		"tags": "",
+		"body": "",
+		"colorID": 0
+	},
+
+	
+	
+]
