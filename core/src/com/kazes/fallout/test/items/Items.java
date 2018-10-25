@@ -3,6 +3,12 @@ package com.kazes.fallout.test.items;
 import com.badlogic.gdx.math.MathUtils;
 import com.kazes.fallout.test.inventory.Item;
 
+/**
+ * An enum defining all items
+ * note: if you add a story item, add in the last slot and decrease from the total length in the random function,
+ * if you add a normal item, add it before any story item.
+ * @author Ofek Kazes
+ */
 public enum Items {
     AmmoCrate(0) {
         @Override
@@ -63,6 +69,12 @@ public enum Items {
         public Item getItem() {
             return new WaterBottle();
         }
+    },
+    Axe_Story(10) {
+        @Override
+        public Item getItem() {
+            return new Axe_Story();
+        }
     };
 
     private final int value;
@@ -73,6 +85,6 @@ public enum Items {
     public abstract Item getItem();
 
     public static Item getRandom() {
-        return Items.values()[MathUtils.random(Items.values().length - 1)].getItem();
+        return Items.values()[MathUtils.random(Items.values().length - 2)].getItem();
     }
 }
