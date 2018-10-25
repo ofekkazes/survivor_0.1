@@ -436,6 +436,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
+        ((SideScrollingCamera)gameStage.getCamera()).setFirstRun(true);
         ((OrthographicCamera)gameStage.getCamera()).setToOrtho(false, VIRTUAL_HEIGHT * width / (float)height, VIRTUAL_HEIGHT);
         ((OrthographicCamera)gameStage.getCamera()).position.set(player.getX(), Survivor.getInMeters(height/2f), 0);
         gameStage.getCamera().update();
