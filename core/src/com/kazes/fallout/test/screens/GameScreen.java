@@ -499,11 +499,15 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
             if (weaponsAllowed && !inventoryActor.isVisible()) {
                 if (!player.isAmmoEmpty()) {
                     if (weaponsActor.getCurrentWeapon() == Weapons.Pistol) {
-                        if (Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT)) {
-                            player.shoot();
-                            Vector2 mousePos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
-                            mousePos = gameStage.screenToStageCoordinates(mousePos);
-                            this.bullets.addActor(new Bullet(world, player.getOrigin().x, player.getOrigin().y, mousePos.cpy().sub(player.getOrigin()).nor()));
+
+                            if (Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.CONTROL_LEFT)) {
+                                if(player.cooldown > 25) {
+                                    player.cooldown = 0;
+                                    player.shoot();
+                                    Vector2 mousePos = new Vector2(Gdx.input.getX(), Gdx.input.getY());
+                                    mousePos = gameStage.screenToStageCoordinates(mousePos);
+                                    this.bullets.addActor(new Bullet(world, player.getOrigin().x, player.getOrigin().y, mousePos.cpy().sub(player.getOrigin()).nor()));
+                            }
                         }
                     }
                     if (weaponsActor.getCurrentWeapon() == Weapons.Knife) {
