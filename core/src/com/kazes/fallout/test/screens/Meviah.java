@@ -12,7 +12,6 @@ public class Meviah extends GameScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-        ((SideScrollingCamera)gameStage.getCamera()).followPos(player.getOrigin());
     }
 
     @Override

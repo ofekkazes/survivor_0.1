@@ -46,9 +46,6 @@ public class Battlegrounds extends GameScreen {
             Gdx.app.log("Survivor", "Game over");
             Gdx.app.exit();
         }
-
-
-        ((SideScrollingCamera)gameStage.getCamera()).followPos(player.getOrigin());
     }
 
     @Override

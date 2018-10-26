@@ -28,10 +28,6 @@ public class Kerod extends GameScreen {
     Mercenary mercenary;
     Group randomNPCs;
     Merchant jerry;
-
-    Chapter3 story;
-    boolean flag;
-
     public Kerod(Survivor game, float startingPosX) {
         super(game, "Kerod", startingPosX);
         weaponsAllowed = true;
@@ -47,7 +43,6 @@ public class Kerod extends GameScreen {
         dialogueManager.dialogue.loadFile(Assets.Dialogues.MERCENARIES, false, false, null);
         dialogueManager.addVar(new Var("%risk", 0));
         dialogueManager.addVar(new Var("%time", 0));
-        story = (Chapter3) Stories.getStory(3, this);
     }
 
     @Override
@@ -96,26 +91,11 @@ public class Kerod extends GameScreen {
             if(jerry.getInventory().isVisible())
                 jerry.getInventory().setVisible(false);
         }
-
-        if(Gdx.input.isKeyJustPressed(Input.Keys.F)) {
-            if(player.getRectangle().overlaps(jerry.getRectangle())) {
-                flag = true;
-            }
-        }
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
-        if(flag) {
-            if(story != null) {
-                    story.update();
-                    story.render();
-
-            }
-        }
-        ((SideScrollingCamera)gameStage.getCamera()).followPos(player.getOrigin());
-
     }
 
     @Override

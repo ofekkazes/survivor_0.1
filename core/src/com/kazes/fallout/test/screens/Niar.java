@@ -6,22 +6,15 @@ import com.kazes.fallout.test.stories.Chapter3;
 import com.kazes.fallout.test.stories.Stories;
 
 public class Niar extends GameScreen {
-    Chapter3 story;
     Niar(Survivor game, float startingPosX) {
         super(game, "Niar", startingPosX);
-        lastScreen = Screens.Melin;
+        lastScreen = Screens.Singleton;
         nextScreen = Screens.Battlegrounds;
-        story = (Chapter3)Stories.getStory(3, this);
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
-        if(story != null) {
-                story.update();
-                story.render();
-        }
-        ((SideScrollingCamera)gameStage.getCamera()).followPos(player.getOrigin());
     }
 
     @Override
