@@ -38,6 +38,8 @@ import com.kazes.fallout.test.items.*;
 import com.kazes.fallout.test.physics.B2DBodyBuilder;
 import com.kazes.fallout.test.physics.CollisionCategory;
 import com.kazes.fallout.test.physics.ContactListener;
+import com.kazes.fallout.test.stories.Stories;
+import com.kazes.fallout.test.stories.Story;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
@@ -65,6 +67,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     static DragAndDrop dragAndDrop;
     public static WeaponsActor weaponsActor;
     static ObjectiveWindow objectiveWindow;
+    static Label location;
 
     Stage gameStage; //Game container
     static Stage screenStage; //Screen container
@@ -97,6 +100,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     private static boolean day = true;
 
     DialogueManager dialogueManager;
+    Story story;
 
     public static Array<String> notifications = new Array<String>();
 
@@ -104,6 +108,8 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         super(game);
         stateTime = 0;
         screenName = name;
+        if(location != null)
+            location.setText("Location: " + screenName);
 
         //Changing the camera used by the game stage
         SideScrollingCamera camera = new SideScrollingCamera(30, 20, 0, Survivor.getInMeters(4065));
@@ -235,6 +241,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         this.dialogueManager = new DialogueManager();
         screenStage.addActor(this.dialogueManager.getWindow());
 
+        story = Stories.getStory(Stories.getCurrentChapter(), this);
     }
 
     private void setGUI() {
@@ -270,7 +277,9 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         statsTable.add(new Label("Hunger", skin)).left().row();
         statsTable.add(player.hunger).row();
         statsTable.add(new Label("Thirst", skin)).left().row();
-        statsTable.add(player.thirst);
+        statsTable.add(player.thirst).row();
+        location = new Label("Location: " + screenName, skin);
+        statsTable.add(location).left().row();
 
         Table weaponTable = new Table();
         Actor temp = new Actor();
@@ -407,8 +416,10 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
             Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.TWO_HUNDRED).draw(screenStage.getBatch(), notifications.get(i) + "\n", 0, Gdx.graphics.getHeight() - 200 -  i * Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.TWO_HUNDRED).getLineHeight());
         screenStage.getBatch().end();
 
-
-
+        if(story != null && !story.isFinished()) {
+            story.updateAndRender();
+        }
+        else ((SideScrollingCamera)gameStage.getCamera()).followPos(new Vector2(player.getX(), player.getY()));
     }
 
     @Override
@@ -437,7 +448,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     public void resize(int width, int height) {
         super.resize(width, height);
         ((SideScrollingCamera)gameStage.getCamera()).setFirstRun(true);
-        ((OrthographicCamera)gameStage.getCamera()).setToOrtho(false, VIRTUAL_HEIGHT * width / (float)height, VIRTUAL_HEIGHT);
+        //((OrthographicCamera)gameStage.getCamera()).setToOrtho(false, VIRTUAL_HEIGHT * width / (float)height, VIRTUAL_HEIGHT);
         ((OrthographicCamera)gameStage.getCamera()).position.set(player.getX(), Survivor.getInMeters(height/2f), 0);
         gameStage.getCamera().update();
     }

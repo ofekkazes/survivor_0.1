@@ -16,7 +16,10 @@ public class Stories {
         stories.put(1, new Chapter1());
         stories.put(2, new Chapter2());
         stories.put(3, new Chapter3());
-        //stories.put(4, new Chapter4());
+        setFinished(1);
+        setFinished(2);
+        setFinished(3);
+        stories.put(4, new Chapter4());
     }
 
     public static Story getStory(int chapter, GameScreen gameScreen) {
@@ -27,17 +30,29 @@ public class Stories {
             stories.get(chapter).setup();
         }
         else stories.get(chapter).updateScreen(gameScreen);
+        stories.get(chapter).addFunctions();
         stories.get(chapter).gameScreen.getDialogueManager().dialogue.loadFile(stories.get(chapter).dialogueFile, false, false, null);
         return stories.get(chapter);
     }
 
     public static boolean isFinished(int chapter) {
-        return stories.get(chapter).isFinished();
+        if(stories.containsKey(chapter))
+            return stories.get(chapter).isFinished();
+        return true;
     }
 
     public static void setFinished(int chapter) {
         stories.get(chapter).finished = true;
         stories.get(chapter).dispose();
+    }
+
+    public static int getCurrentChapter() {
+        for (int i = 1; i <= stories.size(); i++) {
+            if(!isFinished(i))
+                return i;
+        }
+
+        return -1;
     }
 
 }

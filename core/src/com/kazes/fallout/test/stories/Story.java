@@ -49,6 +49,10 @@ public abstract class Story implements Disposable, StoryProperties {
         storyItems = new Array<ItemActor>();
     }
 
+    public void addFunctions() {
+        
+    }
+
     public void updateScreen(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
     }
@@ -66,6 +70,7 @@ public abstract class Story implements Disposable, StoryProperties {
     public void render() {
         if(currentFollow.getActor() != null)
             ((SideScrollingCamera)gameScreen.getGameStage().getCamera()).followPos(new Vector2(currentFollow.getActor().getX(), currentFollow.getActor().getY()));
+        else ((SideScrollingCamera)gameScreen.getGameStage().getCamera()).followPos(GameScreen.player.getOrigin());
     }
 
     public void updateAndRender() {

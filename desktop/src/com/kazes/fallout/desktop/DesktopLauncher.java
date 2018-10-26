@@ -12,6 +12,7 @@ public class DesktopLauncher {
 		config.height = 600;
 		config.samples = 3;
 		config.backgroundFPS = 60;
+		//config.fullscreen = true;
 
 		//config.depth = 5;
 		new LwjglApplication(new Survivor(), config);
