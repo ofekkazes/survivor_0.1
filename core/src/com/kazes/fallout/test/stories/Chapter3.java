@@ -69,7 +69,7 @@ public class Chapter3 extends Story{
 
     }
 
-    public void part1() {
+    private void part1() {
         NPC keevan = new NPC(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), "keevan", 10, 3.9f, Weapons.NULL);
         keevan.setXflip(true);
         addNPC(keevan);
@@ -81,7 +81,7 @@ public class Chapter3 extends Story{
 
     }
 
-    public void part2() {
+    private void part2() {
         NPC mayor = new NPC(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), "mayor", 15, 6f, Weapons.NULL);
         mayor.setXflip(true);
         addNPC(mayor);
@@ -93,7 +93,7 @@ public class Chapter3 extends Story{
         cutscene.add(GameScreen.player, new CompletePart(this, 2));
     }
 
-    public void part3() {
+    private void part3() {
         cutscene.add(GameScreen.player, Actions.parallel(new ChangeInputPrivilege(gameScreen, false), new ChangeWeaponPrivilege(gameScreen, false)));
         cutscene.add(GameScreen.player, new ShowDialogue(gameScreen.getDialogueManager(), "axe_em"));
         cutscene.add(GameScreen.player, Actions.sequence(new CheckDialogAction(gameScreen.getDialogueManager()), new PickItem(GameScreen.getFastInventoryActor(), new ItemActor(Items.Sneakers.getItem(), -1, -1), 1), new ShowDialogue(gameScreen.getDialogueManager(), "axe_em2")));
@@ -101,7 +101,7 @@ public class Chapter3 extends Story{
         cutscene.add(GameScreen.player, new CompletePart(this, 3));
     }
 
-    public void part4() {
+    private void part4() {
         NPC mayor = new NPC(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), "mayor", 15, 6f, Weapons.NULL);
         mayor.setXflip(true);
         addNPC(mayor);

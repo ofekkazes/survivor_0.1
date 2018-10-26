@@ -135,7 +135,7 @@ public class Chapter2 extends Story {
 
     }
 
-    void part_one() {
+    private void part_one() {
         camFollow.setX(0);
         camFollow.setY(GameScreen.player.getY());
         gameScreen.getGameStage().addActor(camFollow);
@@ -149,7 +149,7 @@ public class Chapter2 extends Story {
         cutscene.add(GameScreen.player, new CompletePart(this, 1));
     }
 
-    void part_two() {
+    private void part_two() {
         cutscene.add(GameScreen.player, Actions.parallel(new ChangeWeaponPrivilege(gameScreen, false), new ChangeInputPrivilege(gameScreen, false)));
         cutscene.add(GameScreen.player, Actions.sequence(new ChangeAnimation(Assets.Animations.HERO + "_idle"), Actions.delay(0.5f), new ChangeAnimation(Assets.Animations.HERO + "_walking"),  Actions.moveTo(storyNpcs.get(0).getX() - 3, storyNpcs.get(0).getY(), 1.5f, Interpolation.pow2), new ChangeAnimation(Assets.Animations.HERO + "_idle")));
         cutscene.add(GameScreen.player, new ShowDialogue(gameScreen.getDialogueManager(), "help_on_the_way"));
@@ -162,7 +162,7 @@ public class Chapter2 extends Story {
         cutscene.add(GameScreen.player, new CompletePart(this, 2));
     }
 
-    void part_three() {
+    private void part_three() {
         cutscene.add(GameScreen.player, Actions.parallel(new ChangeWeaponPrivilege(gameScreen, false), new ChangeInputPrivilege(gameScreen, false)));
         cutscene.add(GameScreen.player, new ChangeAnimation(Assets.Animations.HERO + "_idle"));
         cutscene.add(GameScreen.player, new ShowDialogue(gameScreen.getDialogueManager(), "we_are_coming"));
@@ -175,7 +175,7 @@ public class Chapter2 extends Story {
 
     }
 
-    void part_four() {
+    private void part_four() {
         general.setVisible(true);
         soldier1.setVisible(true);
         soldier2.setVisible(true);
@@ -196,7 +196,7 @@ public class Chapter2 extends Story {
 
     }
 
-    void part_five() {
+    private void part_five() {
         cutscene.add(GameScreen.player, new ShowDialogue(gameScreen.getDialogueManager(), "who_are_you"));
         cutscene.add(GameScreen.player, Actions.parallel(new CheckDialogAction(gameScreen.getDialogueManager())));
         cutscene.add(general, Actions.visible(false));

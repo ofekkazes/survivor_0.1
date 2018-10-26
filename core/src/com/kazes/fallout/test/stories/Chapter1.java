@@ -74,7 +74,7 @@ public class Chapter1 extends Story {
 
     }
 
-    void part_one() {
+    private void part_one() {
         camFollow.setX(0);
         camFollow.setY(GameScreen.player.getY());
         gameScreen.getGameStage().addActor(camFollow);
@@ -93,7 +93,7 @@ public class Chapter1 extends Story {
         cutscene.add(GameScreen.player, new CompletePart(this, 1));
     }
 
-    void part_two() {
+    private void part_two() {
             cutscene.add(GameScreen.player, new ChangeInputPrivilege(gameScreen, false));
             cutscene.add(GameScreen.player, Actions.sequence(new ChangeAnimation(Assets.Animations.HERO + "_idle"), Actions.delay(1.5f), Actions.parallel(new ChangeAnimation(Assets.Animations.HERO + "_walking"), Actions.moveTo(storyItems.get(0).getX() - GameScreen.player.getWidth() / 2, storyItems.get(0).getY() - GameScreen.player.getHeight() / 2, 1f, Interpolation.sine)), new ChangeAnimation(Assets.Animations.HERO + "_idle")));
             cutscene.add(GameScreen.player, new ShowDialogue(gameScreen.getDialogueManager(), "ammo"));
@@ -103,7 +103,7 @@ public class Chapter1 extends Story {
             cutscene.add(GameScreen.player, new CompletePart(this, 2));
     }
 
-    void part_three() {
+    private void part_three() {
             cutscene.add(GameScreen.player, new ChangeInputPrivilege(gameScreen, false));
             cutscene.add(GameScreen.player, new ChangeAnimation(Assets.Animations.HERO + "_idle"));
             cutscene.add(camFollow, Actions.moveTo(GameScreen.player.getX(), GameScreen.player.getY()));
@@ -117,7 +117,7 @@ public class Chapter1 extends Story {
 
     }
 
-    void part_four() {
+    private void part_four() {
             cutscene.add(GameScreen.player, Actions.parallel(new ChangeInputPrivilege(gameScreen, false), new ChangeWeaponPrivilege(gameScreen, false)));
             cutscene.add(GameScreen.player, new ShowDialogue(gameScreen.getDialogueManager(), "gone"));
             cutscene.add(GameScreen.player, new CheckDialogAction(gameScreen.getDialogueManager()));
@@ -136,7 +136,7 @@ public class Chapter1 extends Story {
 
     }
 
-    void part_five() {
+    private void part_five() {
             cutscene.add(GameScreen.player, Actions.parallel(new ChangeInputPrivilege(gameScreen, false), new ChangeWeaponPrivilege(gameScreen, false)));
             cutscene.add(GameScreen.player, new ShowDialogue(gameScreen.getDialogueManager(), "the_white_rider"));
             cutscene.add(GameScreen.player, Actions.sequence(new CheckDialogAction(gameScreen.getDialogueManager()), Actions.delay(1f), new ChangeAnimation(Assets.Animations.HERO + "_walking"),  Actions.parallel(Actions.moveTo(gameScreen.getMap().getWidth(), GameScreen.player.getY(), 4f, Interpolation.pow2), new CompleteStory(1))));
