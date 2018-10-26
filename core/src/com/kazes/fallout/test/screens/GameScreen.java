@@ -252,7 +252,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
         menuButton.setWidth(Gdx.graphics.getWidth() / 14.666f);
         menuButton.setHeight(Gdx.graphics.getHeight() / 16.216f);
-        menuButton.setPosition(Gdx.graphics.getWidth() / 42, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 12);
+        menuButton.setPosition(Gdx.graphics.getWidth() / 42, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10);
         menuButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -262,7 +262,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         });
 
         missionButton.setHeight(Gdx.graphics.getHeight() / 16.216f);
-        missionButton.setPosition(menuButton.getX() + menuButton.getWidth() + Gdx.graphics.getWidth() / 42, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 12);
+        missionButton.setPosition(menuButton.getX() + menuButton.getWidth() + Gdx.graphics.getWidth() / 42, Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 10);
         missionButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -278,8 +278,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         statsTable.add(player.hunger).row();
         statsTable.add(new Label("Thirst", skin)).left().row();
         statsTable.add(player.thirst).row();
-        location = new Label("Location: " + screenName, skin);
-        statsTable.add(location).left().row();
+
 
         Table weaponTable = new Table();
         Actor temp = new Actor();
@@ -300,7 +299,11 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         playerStats.setMovable(false);
 
         playerStats.add(weaponTable).expand();
+        playerStats.add(new Actor()).width(10);
         playerStats.add(statsTable).expand();
+        playerStats.row();
+        location = new Label("Location: " + screenName, skin);
+        playerStats.add(location).colspan(3).center();
         playerStats.pack();
 
         screenStage.addActor(menuButton);
