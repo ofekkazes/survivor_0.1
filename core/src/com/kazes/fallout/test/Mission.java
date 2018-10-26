@@ -16,24 +16,22 @@ public class Mission {
     private int ticker;
     private String message;
 
-
-    GameScreen screen;
     float timer;
     float counter;
     Item item;
     Jobs job;
     String name;
 
-    public Mission(Objective objective, GameScreen gameScreen, String message) {
-        this(objective, gameScreen);
+    public Mission(Objective objective, String message) {
+        this(objective);
         addMessage(message);
     }
 
-    public Mission(Objective objective, GameScreen gameScreen) {
+    public Mission(Objective objective) {
         this.objective = objective;
         isCompleted = false;
         ticker = 60;
-        this.screen = gameScreen;
+        //this.screen = gameScreen;
     }
 
     public void update() {
@@ -63,9 +61,11 @@ public class Mission {
                             }
                         break;
                     case KillCount:
-                        for (Actor enemy : screen.getEnemies().getChildren())
-                            if (((Enemy) enemy).getHealth() == -1f)
+                        for (Actor enemy : Screens.getCurrent().getEnemies().getChildren()) {
+                            if (((Enemy) enemy).remove || ((Enemy) enemy).getHealth() == 0)
                                 counter--;
+
+                        }
                         if (counter <= 0)
                             isCompleted = true;
                         break;

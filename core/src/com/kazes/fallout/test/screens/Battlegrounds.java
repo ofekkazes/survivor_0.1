@@ -25,18 +25,12 @@ import com.kazes.fallout.test.stories.CutsceneManager;
  */
 public class Battlegrounds extends GameScreen {
     Group injuredNPCS;
-    CutsceneManager cutscene;
 
     Battlegrounds(Survivor game, float startingPosX) {
         super(game, "Battlegrounds", startingPosX);
         lastScreen = Screens.Niar;
         //nextScreen = Screens.SideScroll;
         weaponsAllowed = true;
-        MissionActor missionActor = new MissionActor(new Mission(Objective.KillCount, this));
-
-        cutscene = new CutsceneManager();
-        cutscene.add(gameStage.getRoot(), new AddMission(missionActor.getMission(), 3));
-        cutscene.add(gameStage.getRoot(), Actions.sequence(new CheckMission(missionActor.getMission()), new AddNotification("mission done")));
     }
 
     @Override
@@ -94,13 +88,6 @@ public class Battlegrounds extends GameScreen {
     @Override
     public void update(float delta) {
         super.update(delta);
-
-        if (!cutscene.isEmpty() &&
-                !cutscene.peekFirst().assignedActor.hasActions() &&
-                !cutscene.getLastUsedActor().hasActions()) {
-            ActorAction action = cutscene.take();
-            action.assignedActor.addAction(action.action);
-        }
 
         if (GameScreen.time < 0.25f) {
             for (int i = 0; i < 1 && this.stateTime % 7 == 0; i++) {

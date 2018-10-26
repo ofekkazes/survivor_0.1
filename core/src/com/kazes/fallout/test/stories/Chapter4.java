@@ -30,10 +30,10 @@ public class Chapter4 extends Story {
         dialogueFile = Assets.Dialogues.CHAPTER4;
         parts = new boolean[] {true, true, false};
 
-        killMission = new Mission(Objective.KillCount, gameScreen, "Kill 50 undead");
+        killMission = new Mission(Objective.KillCount, "Kill 50 undead");
         killMission.addRequirment(10);
 
-        gotoMayor = new Mission(Objective.GoTo, gameScreen, "Go to see Mayor");
+        gotoMayor = new Mission(Objective.GoTo, "Go to see Mayor");
         gotoMayor.addRequirment("Niar");
     }
 

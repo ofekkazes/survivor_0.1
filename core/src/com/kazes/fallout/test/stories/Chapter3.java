@@ -29,13 +29,13 @@ public class Chapter3 extends Story{
         dialogueFile = Assets.Dialogues.CHAPTER3;
         parts = new boolean [4];
 
-        niar = new Mission(Objective.GoTo, gameScreen, "Go to Niar");
+        niar = new Mission(Objective.GoTo, "Go to Niar");
         niar.addRequirment("Niar");
 
-        niar2 = new Mission(Objective.GoTo, gameScreen, "Return to Niar");
+        niar2 = new Mission(Objective.GoTo, "Return to Niar");
         niar2.addRequirment("Niar");
 
-        merchant = new Mission(Objective.RetrieveItem, gameScreen, "Get an Axe from the merchant");
+        merchant = new Mission(Objective.RetrieveItem, "Get an Axe from the merchant");
         merchant.addRequirment(Items.Sneakers.getItem());
 
     }
