@@ -35,8 +35,7 @@ public class ParallaxBackground extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        batch.setColor(getColor().r, getColor().g, getColor().b, getColor().a * parentAlpha);
-
+        batch.setColor(getColor().r * parentAlpha, getColor().g * parentAlpha, getColor().b * parentAlpha, getColor().a * parentAlpha);
         if(camera != null) {
             for ( int i = 0; i < layers.size; i++) {
                 batch.draw(layers.get(i), camera.position.x - camera.viewportWidth / 2, y, 0, 0, width, height,scaleX,scaleY,0,(int)(i * (camera.viewportWidth / layers.size + camera.position.x)),0,layers.get(i).getWidth(),layers.get(i).getHeight(),false,false);
