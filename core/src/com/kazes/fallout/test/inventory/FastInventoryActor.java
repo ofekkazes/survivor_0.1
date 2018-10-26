@@ -34,8 +34,8 @@ public class FastInventoryActor extends WindowEx {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     if(slot.getItem() != null) {
-                        slot.getItem().useItem(GameScreen.player);
-                        slot.take(1);
+                        if(slot.getItem().useItem(GameScreen.player))
+                            slot.take(1);
                     }
                 }
             });

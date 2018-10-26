@@ -21,6 +21,7 @@
  */
 package com.kazes.fallout.test.inventory;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -76,7 +77,7 @@ public class SlotSource extends Source {
 		Slot payloadSlot = (Slot) payload.getObject();
 		if (target != null) {
 			Slot targetSlot = ((SlotActor) target.getActor()).getSlot();
-			if (targetSlot.getItem() == null || targetSlot.getItem().getClass().equals(payloadSlot.getItem().getClass())) {
+			if (targetSlot.getItem() == null || targetSlot.getItem().getClass().getName().compareTo(payloadSlot.getItem().getClass().getName()) == 0) {
 				targetSlot.add(payloadSlot.getItem(), payloadSlot.getAmount());
 			} else {
 				Item targetType = targetSlot.getItem();

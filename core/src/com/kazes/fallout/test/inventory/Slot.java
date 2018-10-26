@@ -21,6 +21,7 @@
  */
 package com.kazes.fallout.test.inventory;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 
 /**
@@ -81,13 +82,7 @@ public class Slot {
 
 	public boolean take(int amount) {
 		if (this.amount >= amount) {
-			//this.amount -= amount;
-			for(int i = amount; i > 0; i--) {
-				//if (getItem().useItem(GameScreen.player)) {
-					i--;
-					this.amount--;
-				//}
-			}
+			this.amount -= amount;
 			if (this.amount == 0) {
 				item = null;
 			}

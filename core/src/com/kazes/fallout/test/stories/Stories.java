@@ -16,10 +16,11 @@ public class Stories {
         stories.put(1, new Chapter1());
         stories.put(2, new Chapter2());
         stories.put(3, new Chapter3());
+        stories.put(4, new Chapter4());
         setFinished(1);
         setFinished(2);
         setFinished(3);
-        stories.put(4, new Chapter4());
+        setFinished(4);
     }
 
     public static Story getStory(int chapter, GameScreen gameScreen) {

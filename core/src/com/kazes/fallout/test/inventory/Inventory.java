@@ -23,6 +23,7 @@ package com.kazes.fallout.test.inventory;
 
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
+import com.kazes.fallout.test.items.Items;
 
 /**
  * @author Daniel Holderbaum
@@ -38,9 +39,9 @@ public class Inventory {
 		}
 
 		// create some random items
-		/*for (Slot slot : slots) {
-			slot.add(new SmallMedkit(), 2);
-		}*/
+		for (Slot slot : slots) {
+			slot.add(Items.getRandom(), 2);
+		}
 
 		// create a few random empty slots
 		for (int i = 0; i < 3; i++) {
