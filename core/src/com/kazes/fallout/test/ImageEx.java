@@ -1,5 +1,6 @@
 package com.kazes.fallout.test;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -20,7 +21,7 @@ import com.kazes.fallout.test.physics.CollisionCategory;
  * @since 2018-09-15
  */
 public class ImageEx extends Image {
-    protected boolean remove;
+    public boolean remove;
     private Rectangle rectangle;
     World world;
     public Body body;

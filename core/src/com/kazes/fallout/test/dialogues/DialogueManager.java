@@ -52,7 +52,7 @@ public class DialogueManager {
         dialogWindow.setX(divider / 2);
         dialogWindow.setVisible(false);
         Label.LabelStyle labelStyle = new Label.LabelStyle();
-        labelStyle.font = Assets.getFont(Assets.Fonts.CHAKRA, Assets.FontSizes.HUNDRED);
+        labelStyle.font = Assets.getFont(Assets.Fonts.CHAKRA, Assets.FontSizes.NINETY);
         labelStyle.fontColor = Color.BLACK;
         Label label = new Label("",  labelStyle);
         label.setWrap(true);

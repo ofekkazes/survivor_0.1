@@ -136,10 +136,10 @@ public class Assets {
         public static final int THIRTY = 30;
         public static final int FORTY = 40;
         public static final int FIFTY = 50;
-        public static final int SIXTY = 50;
-        public static final int SEVENTY = 50;
-        public static final int EIGHTY = 50;
-        public static final int NINETY = 50;
+        public static final int SIXTY = 60;
+        public static final int SEVENTY = 70;
+        public static final int EIGHTY = 80;
+        public static final int NINETY = 90;
         public static final int HUNDRED = 100;
         public static final int HUNDRED_TWENTY = 100;
         public static final int HUNDRED_FIFTY = 150;

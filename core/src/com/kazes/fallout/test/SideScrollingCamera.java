@@ -44,7 +44,7 @@ public class SideScrollingCamera extends OrthographicCamera {
             if (playerPos.x > rightBoundary - viewportWidth / 2) {
                 position.x = MathUtils.lerp(position.x, rightBoundary - viewportWidth / 2, 1f);
             }
-        }Gdx.app.log("ca", position.x + "");
+        }
 
         if(playerPos.x >= leftBoundary + viewportWidth / 2 && playerPos.x <= rightBoundary - viewportWidth / 2)
             position.x = MathUtils.lerp(position.x, playerPos.x, 0.09f);
