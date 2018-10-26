@@ -14,6 +14,7 @@ import com.kazes.fallout.test.items.AmmoCrate;
 import com.kazes.fallout.test.items.ItemActor;
 import com.kazes.fallout.test.items.Weapons;
 import com.kazes.fallout.test.screens.GameScreen;
+import com.kazes.fallout.test.screens.Screens;
 
 public class Chapter1 extends Story {
 
@@ -26,14 +27,10 @@ public class Chapter1 extends Story {
     @Override
     public void setup() {
         dialogueFile = Assets.Dialogues.CHAPTER1;
-        addItem(new ItemActor(new AmmoCrate(), 60, 6));
-        addNPC(new InjuredNPC(gameScreen.getPhysicsWorld() , 50, 3, Weapons.NULL));
-        for(int i = 0; i < 5; i++)
-            addEnemy(new Zombie(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), MathUtils.random(100, 115), MathUtils.random(5f), gameScreen.getPhysicsWorld()));
 
         parts = new boolean[5];
 
-        addPartToStory(1);
+
     }
 
     @Override
@@ -53,18 +50,20 @@ public class Chapter1 extends Story {
     @Override
     public void update() {
         super.update();
+        if(Screens.getCurrent().getName() == "Eryon") {
+            addPartToStory(1);
+            if (GameScreen.player.getX() > 55)
+                this.addPartToStory(2);
+            if (GameScreen.player.getX() > 80)
+                this.addPartToStory(3);
 
-        if (GameScreen.player.getX() > 55)
-            this.addPartToStory(2);
-        if (GameScreen.player.getX() > 80)
-            this.addPartToStory(3);
+            if (this.gameScreen.getEnemies().getChildren().size == 0)
+                this.addPartToStory(4);
 
-        if (this.gameScreen.getEnemies().getChildren().size == 0)
-            this.addPartToStory(4);
-
-        if (checkPart(4)) {
-            if (zombie.getHealth() < 1)
-                this.addPartToStory(5);
+            if (checkPart(4)) {
+                if (zombie.getHealth() < 1)
+                    this.addPartToStory(5);
+            }
         }
     }
 
@@ -75,6 +74,11 @@ public class Chapter1 extends Story {
     }
 
     private void part_one() {
+        addItem(new ItemActor(new AmmoCrate(), 60, 6));
+        addNPC(new InjuredNPC(gameScreen.getPhysicsWorld() , 50, 3, Weapons.NULL));
+        for(int i = 0; i < 5; i++)
+            addEnemy(new Zombie(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), MathUtils.random(100, 115), MathUtils.random(5f), gameScreen.getPhysicsWorld()));
+
         camFollow.setX(0);
         camFollow.setY(GameScreen.player.getY());
         gameScreen.getGameStage().addActor(camFollow);

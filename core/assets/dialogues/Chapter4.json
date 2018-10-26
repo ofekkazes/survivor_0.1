@@ -31,21 +31,21 @@
 	{
 		"title": "not_happening",
 		"tags": "",
-		"body": "Mace, I'm sorry, you have not heard the full story\r\nMe and Keevan have some history\r\nHe betrayed me\r\n1 year ago he sent mercenaries to infiltrate the town and kill me\r\nMy troops found out about the mercenaries and delayed their plans\r\nIn the next two days were 3 assassination attemps\r\nWith no succession\r\nAnd at the last night we got them\r\nThey told us Keevan was the one responsible\r\nHe denied the truth to reserve the alliance\r\nBut I never believed him.\r\nNot on that day and not since.\r\nMace, we need you\r\nWhat do you say?\r\n[[I will join you|join_mayor]][[Keevan has the right mind|join_keevan]]\r\n",
+		"body": "Mace, I'm sorry, you have not heard the full story\r\nMe and Keevan have some history\r\nHe betrayed me\r\n1 year ago he sent mercenaries to infiltrate the town and kill me\r\nMy troops found out about the mercenaries and delayed their plans\r\nIn the next two days were 3 assassination attemps\r\nWith no succession\r\nAnd at the last night we got them\r\nThey told us Keevan was the one responsible\r\nHe denied the truth to reserve the alliance\r\nBut I never believed him.\r\nNot on that day and not since.\r\nMace, we need you\r\nWhat do you say?\r\n[[I will join you|join_mayor]][[Keevan has the right mind|join_keevan]]",
 		"colorID": 0
 	},
 
 	{
 		"title": "join_mayor",
 		"tags": "",
-		"body": "Great\r\nThis is the beginning of great times\r\nCome by tomorrow\r\nWe have work to do\r\n[[stop]]",
+		"body": "<<setAlly(true)>>Great\r\nThis is the beginning of great times\r\nCome by tomorrow\r\nWe have work to do\r\n[[stop]]",
 		"colorID": 0
 	},
 
 	{
 		"title": "join_keevan",
 		"tags": "",
-		"body": "Disappointing\r\nYou fail to see the truth\r\nDid he sent you here to spy on me?\r\nGo tell him everything bad you found on me\r\n[[stop]]",
+		"body": "<<setAlly(false)>>Disappointing\r\nYou fail to see the truth\r\nDid he sent you here to spy on me?\r\nGo tell him everything bad you found on me\r\n[[stop]]",
 		"colorID": 0
 	}
 	

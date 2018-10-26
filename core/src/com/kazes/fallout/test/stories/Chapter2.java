@@ -20,6 +20,7 @@ import com.kazes.fallout.test.items.AmmoCrate;
 import com.kazes.fallout.test.items.ItemActor;
 import com.kazes.fallout.test.items.Weapons;
 import com.kazes.fallout.test.screens.GameScreen;
+import com.kazes.fallout.test.screens.Screens;
 
 public class Chapter2 extends Story {
 
@@ -94,37 +95,39 @@ public class Chapter2 extends Story {
     @Override
     public void update() {
         super.update();
-        for(int i = 0; i < storyEnemies.size; i++) {
-            if(storyEnemies.get(i).getHealth() < 1) {
-                storyEnemies.removeIndex(i);
-                break;
+        if(Screens.getCurrent().getName() == "Melin") {
+            for (int i = 0; i < storyEnemies.size; i++) {
+                if (storyEnemies.get(i).getHealth() < 1) {
+                    storyEnemies.removeIndex(i);
+                    break;
+                }
             }
-        }
 
-        if(GameScreen.player.getX() > 47)
-            addPartToStory(2);
-        Gdx.app.log("asd", checkPart(4) + "");
-        if(cutscene.actions.size != 0)
-            Gdx.app.log("asd0", this.cutscene.actions.first().action.toString());
-            if(storyEnemies.size == 0) {
+            if (GameScreen.player.getX() > 47)
+                addPartToStory(2);
+            Gdx.app.log("asd", checkPart(4) + "");
+            if (cutscene.actions.size != 0)
+                Gdx.app.log("asd0", this.cutscene.actions.first().action.toString());
+            if (storyEnemies.size == 0) {
                 addPartToStory(3);
             }
 
-        if(checkPart(3) && !checkPart(4)) {
-            timeLabel.setText("Time left: " + MathUtils.floor(timeout-- / Gdx.graphics.getFramesPerSecond()));
-            if(storyEnemies.size < 25) {
-                addEnemy(new Zombie(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), MathUtils.random(gameScreen.getMap().getWidth() - 2, gameScreen.getMap().getWidth()-0.0001f), MathUtils.random(0, 8), gameScreen.getPhysicsWorld()));
-                storyEnemies.get(storyEnemies.size - 1).setHealth(99);
-                storyEnemies.get(storyEnemies.size - 1).addInteractingObject(GameScreen.player);
+            if (checkPart(3) && !checkPart(4)) {
+                timeLabel.setText("Time left: " + MathUtils.floor(timeout-- / Gdx.graphics.getFramesPerSecond()));
+                if (storyEnemies.size < 25) {
+                    addEnemy(new Zombie(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), MathUtils.random(gameScreen.getMap().getWidth() - 2, gameScreen.getMap().getWidth() - 0.0001f), MathUtils.random(0, 8), gameScreen.getPhysicsWorld()));
+                    storyEnemies.get(storyEnemies.size - 1).setHealth(99);
+                    storyEnemies.get(storyEnemies.size - 1).addInteractingObject(GameScreen.player);
+                }
+                if (timeout < 0) {
+                    GameScreen.getScreenStage().getActors().removeValue(timeLabel, false);
+                    addPartToStory(4);
+                }
             }
-            if(timeout < 0) {
-                GameScreen.getScreenStage().getActors().removeValue(timeLabel, false);
-                addPartToStory(4);
-            }
-        }
-        if(checkPart(4) && !checkPart(5)) {
-            if(storyEnemies.size == 0) {
-                addPartToStory(5);
+            if (checkPart(4) && !checkPart(5)) {
+                if (storyEnemies.size == 0) {
+                    addPartToStory(5);
+                }
             }
         }
     }
@@ -204,7 +207,7 @@ public class Chapter2 extends Story {
         cutscene.add(soldier2, Actions.visible(false));
         cutscene.add(soldier3, Actions.visible(false));
         cutscene.add(GameScreen.player, Actions.parallel(new ChangeInputPrivilege(gameScreen, true), new ChangeWeaponPrivilege(gameScreen, true)));
-
+        cutscene.add(GameScreen.player, new CompleteStory(2));
         cutscene.add(GameScreen.player, new CompletePart(this, 5));
     }
 }

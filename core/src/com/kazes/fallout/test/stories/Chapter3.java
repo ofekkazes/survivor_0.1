@@ -1,13 +1,13 @@
 package com.kazes.fallout.test.stories;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.kazes.fallout.test.Assets;
-import com.kazes.fallout.test.Mission;
-import com.kazes.fallout.test.NPC;
-import com.kazes.fallout.test.Objective;
+import com.kazes.fallout.test.*;
 import com.kazes.fallout.test.actions.*;
 import com.kazes.fallout.test.items.ItemActor;
 import com.kazes.fallout.test.items.Items;
@@ -27,7 +27,7 @@ public class Chapter3 extends Story{
     @Override
     public void setup() {
         dialogueFile = Assets.Dialogues.CHAPTER3;
-        parts = new boolean[4];
+        parts = new boolean [4];
 
         niar = new Mission(Objective.GoTo, gameScreen, "Go to Niar");
         niar.addRequirment("Niar");
@@ -57,15 +57,25 @@ public class Chapter3 extends Story{
     public void update() {
         super.update();
 
-        if(Screens.getCurrent().getName() == "Basmati") {
+        if(Screens.getCurrent().getName() == "Barikad") {
+            addPartToStory(1);
+        }
+        if(Screens.getCurrent().getName() == "Niar") {
             if(checkPart(3) && GameScreen.getFastInventoryActor().getInventory().checkInventory(Items.Sneakers.getItem()) != 0)
                 addPartToStory(4);
-            else addPartToStory(1);
+            else addPartToStory(2);
         }
-        if(Screens.getCurrent().getName() == "Niar")
-            addPartToStory(2);
-        if(Screens.getCurrent().getName() == "Kerod")
-            addPartToStory(3);
+        if(Screens.getCurrent().getName() == "Kerod" && !checkPart(3)) {
+            if(Gdx.input.isKeyJustPressed(Input.Keys.F)) {
+                for(Actor decor : gameScreen.getDecor().getChildren()) {
+                    if(decor instanceof Merchant) {
+                        if(GameScreen.player.getRectangle().overlaps(((ImageEx)decor).getRectangle())) {
+                            addPartToStory(3);
+                        }
+                    }
+                }
+            }
+        }
 
     }
 
