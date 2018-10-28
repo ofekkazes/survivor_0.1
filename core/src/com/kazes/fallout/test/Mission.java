@@ -3,6 +3,7 @@ package com.kazes.fallout.test;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.kazes.fallout.test.enemies.Boss;
 import com.kazes.fallout.test.enemies.Enemy;
 import com.kazes.fallout.test.inventory.Item;
 import com.kazes.fallout.test.inventory.Slot;
@@ -35,7 +36,7 @@ public class Mission {
     }
 
     public void update() {
-        if(ticker == 0 || objective == Objective.KillCount) {
+        if(ticker == 0 || objective == Objective.KillCount || objective == Objective.KillBoss) {
             ticker = 60;
             if (!isCompleted) {
                 switch (objective) {
@@ -77,6 +78,17 @@ public class Mission {
                         if(Screens.getCurrent().getName().equals(name))
                             isCompleted = true;
                         break;
+                    case KillBoss:
+                        for (Actor enemy: Screens.getCurrent().getEnemies().getChildren()) {
+                            if(enemy instanceof Boss) {
+                                if (enemy.getName().equals(name)) {
+                                    if (((Boss) enemy).remove || ((Enemy) enemy).getHealth() == 0) {
+                                        isCompleted = true;
+                                    }
+                                }
+                            }
+                        }
+                        break;
                 }
             }
         }
@@ -91,6 +103,7 @@ public class Mission {
             case AddNPCCount: counter = (Integer)object; break;
             case AddNPCType: job = (Jobs)object; break;
             case GoTo: name = (String)object; break;
+            case KillBoss: name = (String)object; break;
         }
     }
 
