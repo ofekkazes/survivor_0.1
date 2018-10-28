@@ -1,0 +1,53 @@
+[
+	{
+		"title": "sixth_chapter_start",
+		"tags": "",
+		"body": "What happened here? I don't know, lets find out\r\nThis place is a mess\r\nWatch out!\r\n[[stop]]",
+		"position": {
+			"x": 592,
+			"y": 181
+		},
+		"colorID": 0
+	},
+	
+	{
+		"title": "stop",
+		"tags": "",
+		"body": "",
+		"position": {
+			"x": 592,
+			"y": 181
+		},
+		"colorID": 0
+	},
+	
+	{
+		"title": "pikachu_shaped_pencil",
+		"tags": "",
+		"body": "Shit man!\r\nIt looks as if a war broke here\r\nLook there!\r\nThey are fighting undead\r\nWe must help them\r\n[[stop]]",
+		"colorID": 0
+	},
+	
+	{
+		"title": "ron_tm",
+		"tags": "",
+		"body": "Why are you here?\r\nWe came to discuss matters of war with you\r\nDon't you see I am busy\r\nAt war!\r\nMy soldiers will show you the way out\r\n[[stop]]",
+		"colorID": 0
+	},
+	
+	{
+		"title": "conflict",
+		"tags": "",
+		"body": "Look, some other breed of undead came through Meviah\r\nWe fear they are evolving\r\nYour borders are not my concern\r\nThey will come to your border as well\r\nHere we will contain them\r\nStubborn as you always have!\r\nContinue on this path and you only find yourself in ruin\r\nI do not take orders from you\r\nI'm not saying you follow my orders\r\nYour order is your own\r\nBut this region will soon decrease to ashes if we will not cooperate\r\n[[stop]]",
+		"colorID": 0
+	},
+	
+{
+		"title": "the_other_cheek",
+		"tags": "",
+		"body": "The Mable alliance is no longer!\r\nIts rules outdated\r\nYou tried to make me your puppet\r\nAnd when your plan failed you tried to kill me\r\nI will only cooperate with Mace\r\nYou doom us all\r\nNo, it is you who doomed us.\r\n[[stop]]",
+		"colorID": 0
+	}
+	
+	
+]
