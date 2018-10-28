@@ -22,18 +22,26 @@
 	},
 	
 	{
+		"title": "noisy_environment",
+		"tags": "",
+		"body": "What is that noise?\r\n[[stop]]",
+		"colorID": 0
+	},
+	
+	{
+		"title": "big_bang",
+		"tags": "",
+		"body": "What are you?! Shit he sees me\r\n[[stop]]",
+		"colorID": 0
+	},
+	
+	{
 		"title": "boss_killed",
 		"tags": "",
 		"body": "What was that thing?\r\nI don't know but the undead are getting stronger\r\nThat is bad\r\nWe must go for Mayor\r\nWe need his help\r\n[[stop]]",
 		"colorID": 0
 	},
 	
-	{
-		"title": "many_meetings(mayor_and_keevan_meet)",
-		"tags": "",
-		"body": "",
-		"colorID": 0
-	},
 
 	
 	
