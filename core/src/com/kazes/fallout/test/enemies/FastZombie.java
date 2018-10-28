@@ -25,7 +25,7 @@ public class FastZombie extends Enemy {
                     yTrans = -1;
                 else yTrans = 1f;
 
-                body.setLinearVelocity(xTrans, yTrans);
+                body.setLinearVelocity(xTrans * 1.5f, yTrans * 1.5f);
             }
         }
     }
