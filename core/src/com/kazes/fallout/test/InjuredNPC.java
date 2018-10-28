@@ -50,7 +50,7 @@ public class InjuredNPC extends NPC {
             case PayedMercenary: ClanProperties.PayedMercenaries++; break;
         }
 
-        GameScreen.notifications.add("Clan updated: There are now " + ClanProperties.getValue(desire) + " "+ desire.toString() + "s");
+        GameScreen.notifications.add(new Notification("Clan updated: There are now " + ClanProperties.getValue(desire) + " "+ desire.toString() + "s"));
         setRemove();
     }
 

@@ -101,7 +101,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     DialogueManager dialogueManager; //Dialogue manager
     Story story; //Story to be updated
 
-    public static Array<String> notifications = new Array<String>(); //Notifications user will get
+    public static Array<Notification> notifications = new Array<Notification>(); //Notifications user will get
 
     GameScreen(Survivor game, String name, float startingPosX) {
         super(game);
@@ -420,7 +420,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
         screenStage.getBatch().begin();
         for(int i = 0; i < notifications.size; i++)
-            Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.TWO_HUNDRED).draw(screenStage.getBatch(), notifications.get(i) + "\n", 0, Gdx.graphics.getHeight() - 200 -  i * Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.TWO_HUNDRED).getLineHeight());
+            Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.TWO_HUNDRED).draw(screenStage.getBatch(), notifications.get(i).getMessage() + "\n", 0, Gdx.graphics.getHeight() - 200 -  i * Assets.getFont(Assets.Fonts.DEFAULT, Assets.FontSizes.TWO_HUNDRED).getLineHeight());
         screenStage.getBatch().end();
 
         if(story != null && !story.isFinished()) {
@@ -695,13 +695,15 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
     /**
      * Notification checks
-     * TODO: make a time for each notification
      */
     private void checkNotifications() {
-        if(notifications.size > 0 && stateTime > 1)
-            if(stateTime % 15 == 0)
-                notifications.removeIndex(0);
-
+        for (int i = 0; i < notifications.size; i++) {
+            notifications.get(i).decTime();
+            if(notifications.get(i).getTime() <= 0) {
+                notifications.removeIndex(i);
+                break;
+            }
+        }
     }
 
     public static float forcePositive(float number) {

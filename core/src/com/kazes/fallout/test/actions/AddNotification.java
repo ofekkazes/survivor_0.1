@@ -1,6 +1,7 @@
 package com.kazes.fallout.test.actions;
 
 import com.badlogic.gdx.scenes.scene2d.Action;
+import com.kazes.fallout.test.Notification;
 import com.kazes.fallout.test.screens.GameScreen;
 /**
  * Action to add notification to the screen
@@ -17,7 +18,7 @@ public class AddNotification extends Action {
 
     @Override
     public boolean act(float delta) {
-        GameScreen.notifications.add(message);
+        GameScreen.notifications.add(new Notification(message));
         return true;
     }
 }

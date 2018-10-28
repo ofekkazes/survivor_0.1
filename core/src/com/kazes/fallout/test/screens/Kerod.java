@@ -53,7 +53,7 @@ public class Kerod extends GameScreen {
             }
         }
         if(mercenary.isDone()) {
-            GameScreen.notifications.add(mercenary.getNumOfMercenaries() + " mercenaries returned" + mercenary.getNumberOfKills() + " enemies killed");
+            GameScreen.notifications.add(new Notification(mercenary.getNumOfMercenaries() + " mercenaries returned" + mercenary.getNumberOfKills() + " enemies killed"));
             mercenary.init();
         }
         for(Actor npc : randomNPCs.getChildren()) {
