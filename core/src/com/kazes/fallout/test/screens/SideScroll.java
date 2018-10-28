@@ -24,6 +24,7 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveTo;
  * @version 1.0
  * @since 2018-09-15
  */
+@Deprecated
 public class SideScroll extends GameScreen {
     public static Texture texture; //temp pikachu texture for testing
 
@@ -111,8 +112,8 @@ public class SideScroll extends GameScreen {
 
     //Every input given from the player is processed here
     @Override
-    public void proccessInput() {
-        super.proccessInput();
+    public void processInput() {
+        super.processInput();
 
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.ALT_LEFT)) {

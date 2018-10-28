@@ -20,6 +20,7 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
  * @version 1.0
  * @since 2018-09-15
  */
+@Deprecated
 public class SceneTest implements ApplicationListener {
     public class MyActor extends Actor {
         Texture texture = new Texture(Gdx.files.internal("medieval-tavern_10000.png"));

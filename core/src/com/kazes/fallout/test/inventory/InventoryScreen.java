@@ -34,6 +34,7 @@ import com.kazes.fallout.test.Assets;
 /**
  * @author Daniel Holderbaum
  */
+@Deprecated
 public class InventoryScreen implements Screen {
 
 	private InventoryActor inventoryActor;

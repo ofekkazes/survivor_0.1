@@ -19,7 +19,7 @@ import com.kazes.fallout.test.items.ItemActor;
 import com.kazes.fallout.test.items.Weapons;
 import com.kazes.fallout.test.stories.ActorAction;
 import com.kazes.fallout.test.stories.CutsceneManager;
-
+@Deprecated
 public class Chapter2 extends GameScreen {
     Actor camFollow;
     CutsceneManager cutscene;
@@ -68,7 +68,7 @@ public class Chapter2 extends GameScreen {
         cutscene.add(camFollow, Actions.moveTo(npcs.getChildren().get(0).getX(), currentFollow.getY(), 4f, Interpolation.sine));
         cutscene.add(camFollow, Actions.parallel(Actions.delay(0.5f), new ShowDialogue(dialogueManager, "second_chapter_start")));
         cutscene.add(player, Actions.moveTo(3, player.getY()));
-        cutscene.add(camFollow, Actions.sequence(new CheckDialogAction(dialogueManager), Actions.delay(0.2f), Actions.moveTo(player.getX(), player.getY(), 4f, Interpolation.sine)));
+        cutscene.add(camFollow, Actions.sequence(new CheckDialogueAction(dialogueManager), Actions.delay(0.2f), Actions.moveTo(player.getX(), player.getY(), 4f, Interpolation.sine)));
         cutscene.add(currentFollow, Actions.parallel(new FollowActorAction(player), new ChangeInputPrivilege(this, true), new ChangeWeaponPrivilege(this, true)));
     }
 
@@ -121,7 +121,7 @@ public class Chapter2 extends GameScreen {
             cutscene.add(player, Actions.parallel(new ChangeWeaponPrivilege(this, false), new ChangeInputPrivilege(this, false)));
             cutscene.add(player, Actions.sequence(new ChangeAnimation(Assets.Animations.HERO + "_idle"), Actions.delay(0.5f), new ChangeAnimation(Assets.Animations.HERO + "_walking"),  Actions.moveTo(npcs.getChildren().get(0).getX() - 3, npcs.getChildren().get(0).getY(), 1.5f, Interpolation.pow2), new ChangeAnimation(Assets.Animations.HERO + "_idle")));
             cutscene.add(player, new ShowDialogue(dialogueManager, "help_on_the_way"));
-            cutscene.add(player, new CheckDialogAction(dialogueManager));
+            cutscene.add(player, new CheckDialogueAction(dialogueManager));
             cutscene.add(camFollow, Actions.sequence(Actions.moveTo(player.getX(), player.getY()), Actions.delay(0.2f)));
             cutscene.add(currentFollow, new FollowActorAction(camFollow));
             cutscene.add(camFollow, Actions.moveTo(80, camFollow.getY(), 4f, Interpolation.sine));
@@ -157,7 +157,7 @@ public class Chapter2 extends GameScreen {
             cutscene.add(player, new ShowDialogue(dialogueManager, "help_arrived"));
             cutscene.add(player, Actions.parallel(new ChangeWeaponPrivilege(this, true), new ChangeInputPrivilege(this, true)));
             cutscene.add(followers, Actions.delay(1f));
-            cutscene.add(general, Actions.sequence(new CheckDialogAction(dialogueManager), new CoordinatedAction(soldiers, Actions.moveBy(player.getX() - general.getX(), player.getY() - general.getY(), 5f, Interpolation.sine))));
+            cutscene.add(general, Actions.sequence(new CheckDialogueAction(dialogueManager), new CoordinatedAction(soldiers, Actions.moveBy(player.getX() - general.getX(), player.getY() - general.getY(), 5f, Interpolation.sine))));
             cutscene.add(currentFollow, new FollowActorAction(player));
         }
     }
@@ -166,7 +166,7 @@ public class Chapter2 extends GameScreen {
         if(!batchFive) {
             batchFive = true;
             cutscene.add(player, new ShowDialogue(dialogueManager, "who_are_you"));
-            cutscene.add(player, Actions.parallel(new CheckDialogAction(dialogueManager)));
+            cutscene.add(player, Actions.parallel(new CheckDialogueAction(dialogueManager)));
             cutscene.add(general, Actions.visible(false));
             cutscene.add(soldier1, Actions.visible(false));
             cutscene.add(soldier2, Actions.visible(false));

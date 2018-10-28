@@ -17,7 +17,7 @@ import com.kazes.fallout.test.items.Weapons;
 import com.kazes.fallout.test.stories.ActorAction;
 import com.kazes.fallout.test.stories.CutsceneManager;
 import com.kazes.fallout.test.stories.Stories;
-
+@Deprecated
 public class Chapter1 extends GameScreen {
     Actor camFollow;
     CutsceneManager cutscene;
@@ -44,12 +44,12 @@ public class Chapter1 extends GameScreen {
         cutscene = new CutsceneManager();
         cutscene.add(camFollow, Actions.moveTo(npcs.getChildren().items[0].getX(), 3.5f, 5f, Interpolation.sine));
         cutscene.add(npcs.getChildren().get(0), Actions.repeat(4, Actions.moveBy(-1f, 0, 1.5f, Interpolation.sine)));
-        cutscene.add(camFollow, Actions.sequence(Actions.delay(3f), new ShowDialogue(dialogueManager, "first_chapter_start"), new CheckDialogAction(dialogueManager)));
+        cutscene.add(camFollow, Actions.sequence(Actions.delay(3f), new ShowDialogue(dialogueManager, "first_chapter_start"), new CheckDialogueAction(dialogueManager)));
         cutscene.add(player, Actions.sequence(Actions.parallel(Actions.moveTo(npcs.getChildren().items[0].getX() - 4 - player.getWidth(), 4, 5f), new ChangeAnimation(Assets.Animations.HERO + "_walking")), new ChangeAnimation(Assets.Animations.HERO + "_idle")));
         cutscene.add(player, new ShowDialogue(dialogueManager, "friend"));
-        cutscene.add(npcs.getChildren().get(0), Actions.sequence(new CheckDialogAction(dialogueManager), new XFlipAction()));
-        cutscene.add(npcs.getChildren().get(0), Actions.sequence(new ShowDialogue(dialogueManager, "help"), new CheckDialogAction(dialogueManager), Actions.delay(1f), new SaveAction()));
-        cutscene.add(player, Actions.sequence(new ShowDialogue(dialogueManager, "new_beginnings"), new CheckDialogAction(dialogueManager), Actions.delay(1f)));
+        cutscene.add(npcs.getChildren().get(0), Actions.sequence(new CheckDialogueAction(dialogueManager), new XFlipAction()));
+        cutscene.add(npcs.getChildren().get(0), Actions.sequence(new ShowDialogue(dialogueManager, "help"), new CheckDialogueAction(dialogueManager), Actions.delay(1f), new SaveAction()));
+        cutscene.add(player, Actions.sequence(new ShowDialogue(dialogueManager, "new_beginnings"), new CheckDialogueAction(dialogueManager), Actions.delay(1f)));
         cutscene.add(currentFollow, Actions.sequence(new FollowActorAction(player), new ChangeInputPrivilege(this, true)));
 
     }
@@ -126,7 +126,7 @@ public class Chapter1 extends GameScreen {
             cutscene.add(player, new ChangeInputPrivilege(this, false));
             cutscene.add(player, Actions.sequence(new ChangeAnimation(Assets.Animations.HERO + "_idle"), Actions.delay(1.5f), Actions.parallel(new ChangeAnimation(Assets.Animations.HERO + "_walking"), Actions.moveTo(items.getChildren().get(0).getX() - player.getWidth() / 2, items.getChildren().get(0).getY() - player.getHeight() / 2, 1f, Interpolation.sine)), new ChangeAnimation(Assets.Animations.HERO + "_idle")));
             cutscene.add(player, new ShowDialogue(dialogueManager, "ammo"));
-            cutscene.add(player, Actions.sequence(new CheckDialogAction(dialogueManager)));
+            cutscene.add(player, Actions.sequence(new CheckDialogueAction(dialogueManager)));
             cutscene.add(player, Actions.sequence(new PickItem(fastInventoryActor, (ItemActor)items.getChildren().get(0), 2), new AddNotification("Ammo bag picked up")));
             cutscene.add(player, new ChangeInputPrivilege(this, true));
         }
@@ -141,7 +141,7 @@ public class Chapter1 extends GameScreen {
             cutscene.add(currentFollow, new FollowActorAction(camFollow));
             cutscene.add(camFollow, Actions.moveBy(17, 0, 2f, Interpolation.sine));
             cutscene.add(player, Actions.sequence(new ShowDialogue(dialogueManager, "problem")));
-            cutscene.add(player, Actions.sequence(new CheckDialogAction(dialogueManager)));
+            cutscene.add(player, Actions.sequence(new CheckDialogueAction(dialogueManager)));
             cutscene.add(currentFollow, Actions.sequence(new FollowActorAction(player), new ChangeInputPrivilege(this, true)));
             cutscene.add(player, new ChangeWeaponPrivilege(this, true));
         }
@@ -152,7 +152,7 @@ public class Chapter1 extends GameScreen {
             batchFour = true;
             cutscene.add(player, Actions.parallel(new ChangeInputPrivilege(this, false), new ChangeWeaponPrivilege(this, false)));
             cutscene.add(player, new ShowDialogue(dialogueManager, "gone"));
-            cutscene.add(player, new CheckDialogAction(dialogueManager));
+            cutscene.add(player, new CheckDialogueAction(dialogueManager));
             zombie = new FastZombie(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), 79, 0, world);
             zombie.addInteractingObject(player);
             zombie.setHealth(250f);
@@ -173,7 +173,7 @@ public class Chapter1 extends GameScreen {
             completed = true;
             cutscene.add(player, Actions.parallel(new ChangeInputPrivilege(this, false), new ChangeWeaponPrivilege(this, false)));
             cutscene.add(player, new ShowDialogue(dialogueManager, "the_white_rider"));
-            cutscene.add(player, Actions.sequence(new CheckDialogAction(dialogueManager), Actions.delay(1f), new ChangeAnimation(Assets.Animations.HERO + "_walking"),  Actions.moveTo(map.getWidth(), player.getY(), 4f, Interpolation.pow2)));
+            cutscene.add(player, Actions.sequence(new CheckDialogueAction(dialogueManager), Actions.delay(1f), new ChangeAnimation(Assets.Animations.HERO + "_walking"),  Actions.moveTo(map.getWidth(), player.getY(), 4f, Interpolation.pow2)));
             cutscene.add(player, Actions.parallel(new ChangeInputPrivilege(this, true), new ChangeWeaponPrivilege(this, true)));
             cutscene.add(player, new CompleteStory(1));
         }
