@@ -24,7 +24,7 @@ public interface GameScreenInterface {
     void setItems();
 
     //Input logic
-    void proccessInput();
+    void processInput();
 
 
 }

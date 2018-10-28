@@ -3,7 +3,7 @@ package com.kazes.fallout.test.actions;
 import com.badlogic.gdx.scenes.scene2d.Action;
 
 /**
- * Boolean action for Scene2d usage
+ * Boolean action for Scene2d screens management
  * @author Ofek Kazes
  * @version 1.0
  * @since 2018-09-15

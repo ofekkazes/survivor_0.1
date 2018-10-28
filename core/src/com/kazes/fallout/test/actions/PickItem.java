@@ -4,6 +4,12 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.kazes.fallout.test.inventory.FastInventoryActor;
 import com.kazes.fallout.test.items.ItemActor;
 
+/**
+ * Action to add an item to the inventory
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-10-28
+ */
 public class PickItem extends Action {
     FastInventoryActor inventoryActor;
     ItemActor itemActor;

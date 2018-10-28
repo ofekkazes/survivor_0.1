@@ -20,8 +20,8 @@ import com.kazes.fallout.test.screens.Screens;
 /**
  * The father class for all enemies
  * @author Ofek Kazes
- * @version 1.0
- * @since 2018-09-15
+ * @version 1.05
+ * @since 2018-10-28
  */
 public abstract class Enemy extends ImageEx {
     float health;
@@ -76,7 +76,6 @@ public abstract class Enemy extends ImageEx {
             Screens.getCurrent().getItems().addActor(new ItemActor(Items.getRandom(), getX(), getY()));
             setRemove();
         }
-        if(health == -1f) health = 0;
     }
 
     @Override
@@ -93,7 +92,7 @@ public abstract class Enemy extends ImageEx {
 
         if(this.health <= 0) {
 
-            this.health = -1f;
+            this.health = 0;
         }
     }
 

@@ -14,8 +14,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
  * @version 1.0
  * @since 2018-09-15
  */
-class Progress extends ProgressBar {
-    Progress(float min, float max, float stepSize, boolean vertical) {
+public class Progress extends ProgressBar {
+    public Progress(float min, float max, float stepSize, boolean vertical) {
         super(min, max, stepSize, vertical, Assets.getAsset(Assets.UI_SKIN, Skin.class));
     }
 

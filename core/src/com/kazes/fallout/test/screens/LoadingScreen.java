@@ -48,7 +48,7 @@ public class LoadingScreen extends AbstractScreen {
         if (switchScreen) {
             Assets.finishLoading();
             Stories.init();
-            game.setScreen(Screens.Niar.getScreen(game, 0));
+            game.setScreen(Screens.Eryon.getScreen(game, 0));
         }
     }
 

@@ -16,27 +16,30 @@ interface StoryProperties {
     void render();
 }
 
+/**
+ * Story is a collection of parts, each manages a storytelling variables
+ * @author Ofek Kazes
+ */
 public abstract class Story implements Disposable, StoryProperties {
-    int chapter;
-    boolean finished;
-    CutsceneManager cutscene;
-    GameScreen gameScreen;
-    Actor camFollow;
-    CamFollowActor currentFollow;
+    int chapter; //The chapter number of the story
+    boolean finished; //Is the story done?
+    CutsceneManager cutscene; //Manager of storytelling variables
+    GameScreen gameScreen; //the screen to show the story on
+    Actor camFollow; //A base actor used to move the camera around
+    CamFollowActor currentFollow; //The actor the camera follows
 
-    Array<NPC> storyNpcs;
-    Array<Enemy> storyEnemies;
-    Array<ImageEx> storyDecoration;
-    Array<ItemActor> storyItems;
+    Array<NPC> storyNpcs; //npcs used in the story
+    Array<Enemy> storyEnemies; //enemies used in the story
+    Array<ImageEx> storyDecoration; //decoration used in the story
+    Array<ItemActor> storyItems; //items used in the story
 
-    boolean[] parts;
-    private boolean[] isPartAdded;
-    String dialogueFile;
+    boolean[] parts; //part length of a story
+    private boolean[] isPartAdded; //manages added parts
+    String dialogueFile; //Dialogue file to load
 
     public Story(int chapterNum) {
 
         this.chapter = chapterNum;
-        Gdx.app.log("chapter",this.chapter + "");
 
         cutscene = new CutsceneManager();
 
@@ -49,14 +52,24 @@ public abstract class Story implements Disposable, StoryProperties {
         storyItems = new Array<ItemActor>();
     }
 
+    /**
+     * Add dialogue functions
+     */
     public void addFunctions() {
         
     }
 
+    /**
+     *
+     * @param gameScreen the screen to update the story on
+     */
     public void updateScreen(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
     }
 
+    /**
+     * Update the cutscene manager
+     */
     public void update() {
                 if (!cutscene.isEmpty() &&
                         !cutscene.peekFirst().assignedActor.hasActions() &&
@@ -67,22 +80,37 @@ public abstract class Story implements Disposable, StoryProperties {
         }
     }
 
+    /**
+     * Draws the frame
+     */
     public void render() {
         if(currentFollow.getActor() != null)
             ((SideScrollingCamera)gameScreen.getGameStage().getCamera()).followPos(new Vector2(currentFollow.getActor().getX(), currentFollow.getActor().getY()));
         else ((SideScrollingCamera)gameScreen.getGameStage().getCamera()).followPos(GameScreen.player.getOrigin());
     }
 
+    /**
+     * Update, then draws the frame
+     */
     public void updateAndRender() {
         update();
         render();
     }
 
+    /**
+     * Ends parts
+     * @param part the part to end
+     */
     public void updatePart(int part) {
         if(parts != null && parts.length > part - 1)
             parts[part - 1] = true;
     }
 
+    /**
+     * Add the part to the story
+     * @param part which part to add
+     * @return whether a part can be added by the super class
+     */
     public boolean addPartToStory(int part) {
         if(parts != null && parts.length > part - 1 && !parts[part - 1]) {
             if(part != 1 && !parts[part - 2])
@@ -97,6 +125,11 @@ public abstract class Story implements Disposable, StoryProperties {
         return false;
     }
 
+    /**
+     * Check if a part has ended
+     * @param part part number in the story
+     * @return true if a part has ended, false otherwise
+     */
     public boolean checkPart(int part) {
         return (parts != null && parts.length > part - 1 && parts[part - 1]);
     }

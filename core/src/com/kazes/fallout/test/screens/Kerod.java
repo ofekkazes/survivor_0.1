@@ -6,19 +6,16 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
 import com.kazes.fallout.test.*;
 import com.kazes.fallout.test.dialogues.Var;
 import com.kazes.fallout.test.items.*;
-import com.kazes.fallout.test.stories.Chapter3;
-import com.kazes.fallout.test.stories.Stories;
 import com.kyper.yarn.Library;
 import com.kyper.yarn.Value;
 
 /**
- * The game's "city"
+ * Base town settings and the main town
  * @author Ofek Kazes
  * @version 1.0
  * @since 2018-09-15
@@ -84,8 +81,8 @@ public class Kerod extends GameScreen {
     }
 
     @Override
-    public void proccessInput() {
-        super.proccessInput();
+    public void processInput() {
+        super.processInput();
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             if(jerry.getInventory().isVisible())

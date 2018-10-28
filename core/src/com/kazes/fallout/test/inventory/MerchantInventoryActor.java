@@ -11,6 +11,12 @@ import com.kazes.fallout.test.items.AmmoCrate;
 import com.kazes.fallout.test.items.SmallMedkit;
 import com.kazes.fallout.test.screens.GameScreen;
 
+/**
+ * Merchant based on the inventory system
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-10-28
+ */
 public class MerchantInventoryActor extends WindowEx {
 
     Inventory inventory;

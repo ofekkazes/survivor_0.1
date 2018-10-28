@@ -6,6 +6,12 @@ import com.kazes.fallout.test.Mission;
 import com.kazes.fallout.test.MissionActor;
 import com.kazes.fallout.test.screens.GameScreen;
 
+/**
+ * Action to add missions to the player
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-10-28
+ */
 public class AddMission extends Action {
 
     public AddMission(Mission mission, Object object) {

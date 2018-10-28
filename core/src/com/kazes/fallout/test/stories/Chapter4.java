@@ -1,6 +1,5 @@
 package com.kazes.fallout.test.stories;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -9,7 +8,6 @@ import com.kazes.fallout.test.Mission;
 import com.kazes.fallout.test.NPC;
 import com.kazes.fallout.test.Objective;
 import com.kazes.fallout.test.actions.*;
-import com.kazes.fallout.test.items.Items;
 import com.kazes.fallout.test.items.Weapons;
 import com.kazes.fallout.test.screens.GameScreen;
 import com.kazes.fallout.test.screens.Screens;
@@ -81,7 +79,7 @@ public class Chapter4 extends Story {
         cutscene.add(GameScreen.player, Actions.parallel(new ChangeInputPrivilege(gameScreen, false), new ChangeWeaponPrivilege(gameScreen, false)));
         cutscene.add(GameScreen.player, Actions.sequence(new ChangeAnimation(Assets.Animations.HERO + "_walking"), Actions.moveTo(keevan.getX() - 1.5f, keevan.getY(), 5.5f, Interpolation.sine), new ChangeAnimation(Assets.Animations.HERO + "_idle")));
         cutscene.add(GameScreen.player, new ShowDialogue(gameScreen.getDialogueManager(), "fourth_chapter_start"));
-        cutscene.add(GameScreen.player, Actions.sequence(new CheckDialogAction(gameScreen.getDialogueManager()), new AddMission(killMission, 10), Actions.parallel(new ChangeInputPrivilege(gameScreen, true), new ChangeWeaponPrivilege(gameScreen, true))));
+        cutscene.add(GameScreen.player, Actions.sequence(new CheckDialogueAction(gameScreen.getDialogueManager()), new AddMission(killMission, 10), Actions.parallel(new ChangeInputPrivilege(gameScreen, true), new ChangeWeaponPrivilege(gameScreen, true))));
         cutscene.add(GameScreen.player, Actions.parallel(new ChangeInputPrivilege(gameScreen, true), new ChangeWeaponPrivilege(gameScreen, true)));
         cutscene.add(GameScreen.player, new CompletePart(this, 1));
     }
@@ -93,7 +91,7 @@ public class Chapter4 extends Story {
         cutscene.add(GameScreen.player, Actions.parallel(new ChangeInputPrivilege(gameScreen, false), new ChangeWeaponPrivilege(gameScreen, false)));
         cutscene.add(GameScreen.player, Actions.sequence(new ChangeAnimation(Assets.Animations.HERO + "_walking"), Actions.moveTo(keevan.getX() - 1.5f, keevan.getY(), 5.5f, Interpolation.sine), new ChangeAnimation(Assets.Animations.HERO + "_idle")));
         cutscene.add(GameScreen.player, new ShowDialogue(gameScreen.getDialogueManager(), "maga"));
-        cutscene.add(GameScreen.player, Actions.sequence(new CheckDialogAction(gameScreen.getDialogueManager()), new AddMission(gotoMayor, "Niar"), Actions.parallel(new ChangeInputPrivilege(gameScreen, true), new ChangeWeaponPrivilege(gameScreen, true))));
+        cutscene.add(GameScreen.player, Actions.sequence(new CheckDialogueAction(gameScreen.getDialogueManager()), new AddMission(gotoMayor, "Niar"), Actions.parallel(new ChangeInputPrivilege(gameScreen, true), new ChangeWeaponPrivilege(gameScreen, true))));
         cutscene.add(GameScreen.player, new CompletePart(this, 2));
     }
 
@@ -105,7 +103,7 @@ public class Chapter4 extends Story {
         cutscene.add(GameScreen.player, Actions.sequence( Actions.parallel(new ChangeInputPrivilege(gameScreen, false), new ChangeWeaponPrivilege(gameScreen, false))));
         cutscene.add(GameScreen.player, Actions.sequence(new ChangeAnimation(Assets.Animations.HERO + "_walking"), Actions.moveTo(mayor.getX() - 1.5f, mayor.getY(), 7f, Interpolation.sine), new ChangeAnimation(Assets.Animations.HERO + "_idle")));
         cutscene.add(GameScreen.player, new ShowDialogue(gameScreen.getDialogueManager(), "not_happening"));
-        cutscene.add(GameScreen.player, Actions.sequence(new CheckDialogAction(gameScreen.getDialogueManager()), Actions.parallel(new ChangeInputPrivilege(gameScreen, true), new ChangeWeaponPrivilege(gameScreen, true))));
+        cutscene.add(GameScreen.player, Actions.sequence(new CheckDialogueAction(gameScreen.getDialogueManager()), Actions.parallel(new ChangeInputPrivilege(gameScreen, true), new ChangeWeaponPrivilege(gameScreen, true))));
         cutscene.add(GameScreen.player, new CompletePart(this, 3));
     }
 

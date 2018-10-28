@@ -44,10 +44,10 @@ import com.kazes.fallout.test.stories.Story;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 /**
- * Most of the game's logic will be coded here.
+ * Game logic and render on a screen
  * @author Ofek Kazes
- * @version 1.01
- * @since 2018-09-15
+ * @version 1.05
+ * @since 2018-10-28
  */
 public abstract class GameScreen extends AbstractScreen implements GameScreenInterface {
     public static final int SCREEN_WIDTH = Gdx.graphics.getWidth();
@@ -55,25 +55,24 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     public static final int VIRTUAL_HEIGHT = 400;
     private String screenName;
 
-    public static float bitcoin = 0;
+    public static float bitcoin = 0; //Money the player will have
 
-    Screens nextScreen;
-    Screens lastScreen;
-    Boolean[] screenChange = {false};
+    Screens nextScreen; //The next screen to load
+    Screens lastScreen; //The last screen to load
+    Boolean[] screenChange = {false}; //Can a screen change
 
     public static Player player; //Game player
-    static InventoryActor inventoryActor;
-    static FastInventoryActor fastInventoryActor;
-    static DragAndDrop dragAndDrop;
-    public static WeaponsActor weaponsActor;
-    static ObjectiveWindow objectiveWindow;
-    static Label location;
+    static InventoryActor inventoryActor; //Inventory of items
+    static FastInventoryActor fastInventoryActor; //Fast inventory for easy usage
+    public static WeaponsActor weaponsActor; //Weapons a player will have
+    static ObjectiveWindow objectiveWindow; //Missions manager and window
+    static Label location; //What screen we are at
 
     Stage gameStage; //Game container
     static Stage screenStage; //Screen container
     float stateTime; //How much time passed since the screen was created
 
-    ShaderProgram shader;
+    ShaderProgram shader; //Shading of the screen
 
     ImageEx map; //Level map
     ParallaxBackground parallaxBackground; //Level background
@@ -89,20 +88,20 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     Group bonfires; //Fires the player sets
 
     boolean completed = true;
-    boolean allowInput = true;
-    boolean weaponsAllowed;
+    boolean allowInput = true; //Is input allowed from the player
+    boolean weaponsAllowed; //Are weapons allowed in the screen
 
-    World world;
-    RayHandler rayHandler;
+    World world; //Physics world
+    RayHandler rayHandler; //Lighting management
     //Box2DDebugRenderer renderer;
-    private static float ambientAlpha = 0.5f;
-    public static float time = 0.5f;
-    private static boolean day = true;
+    private static float ambientAlpha = 0.5f; //Default light cast
+    public static float time = 0.5f; //The time of day
+    private static boolean day = true; //Is it a day or night
 
-    DialogueManager dialogueManager;
-    Story story;
+    DialogueManager dialogueManager; //Dialogue manager
+    Story story; //Story to be updated
 
-    public static Array<String> notifications = new Array<String>();
+    public static Array<String> notifications = new Array<String>(); //Notifications user will get
 
     GameScreen(Survivor game, String name, float startingPosX) {
         super(game);
@@ -244,6 +243,9 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         story = Stories.getStory(Stories.getCurrentChapter(), this);
     }
 
+    /**
+     * One time Gui adding to the screen stage
+     */
     private void setGUI() {
         Skin skin = Assets.getAsset(Assets.UI_SKIN, Skin.class);
         final TextButton menuButton = new TextButton("Menu", skin);
@@ -320,7 +322,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
                 return super.scrolled(event, x, y, amount);
             }
 
-            public int getIndex(int amount) {
+            int getIndex(int amount) {
                 int newIndex;
                 amount = MathUtils.clamp(amount, -1, 1);
                 if(Weapons.values().length <= player.weapon.getValue() + amount) {
@@ -361,7 +363,9 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         });
     }
 
-    //Update the logic every frame
+    /**
+     * Updates the logic every frame
+     */
     @Override
     public void update(float delta) {
         super.update(delta);
@@ -369,7 +373,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         world.clearForces();
         player.playerTranslation.setZero();
 
-        this.proccessInput();
+        this.processInput();
         this.fireGun();
         this.playerZombieInteraction();
         this.fireplaceCheck();
@@ -456,8 +460,11 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         gameStage.getCamera().update();
     }
 
+    /**
+     * Input given from the user will be updated
+     */
     @Override
-    public void proccessInput() {
+    public void processInput() {
         dialogueManager.input();
         player.changeAnimation(player.getCurrentKey());
         if(allowInput) {
@@ -603,7 +610,9 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         }
     }
 
-    //Player, Enemy and Bullets collision check, plus the most sophisticated AI the world has ever seen for a zombie
+    /**
+     * Player, Enemy and Bullets collision check, plus the most sophisticated AI the world has ever seen for a zombie
+     */
     private void playerZombieInteraction() {
         for (int j = 0; j < enemies.getChildren().size; j++) {
 
@@ -626,7 +635,9 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         }
     }
 
-    //Checks if the player fired the gun, and checks for the boundries of the bullets
+    /**
+     * Provides checks for all bullet types, and manages them for npcs
+     */
     private void fireGun() {
         if(this.bullets.getChildren().size > 0) {
             if (((Bullet)this.bullets.getChildren().get(0)).getTimeToLive() < 0) {
@@ -664,8 +675,10 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         }
     }
 
+    /**
+     * Checks whether the player is on the edge on the screen and update the said screen
+     */
     private void screenChange() {
-
         if(player.getX() + player.getWidth() / 2 < 0 && lastScreen != null) {
             gameStage.addAction(sequence(Actions.fadeOut(.25f), new BoolAction(screenChange)));
             if(screenChange[0]) {
@@ -680,6 +693,10 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         }
     }
 
+    /**
+     * Notification checks
+     * TODO: make a time for each notification
+     */
     private void checkNotifications() {
         if(notifications.size > 0 && stateTime > 1)
             if(stateTime % 15 == 0)

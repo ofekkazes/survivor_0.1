@@ -122,6 +122,8 @@ public class Assets {
         public static final String CHAPTER2  = "dialogues/Chapter2.json";
         public static final String CHAPTER3  = "dialogues/Chapter3.json";
         public static final String CHAPTER4  = "dialogues/Chapter4.json";
+        public static final String CHAPTER5A  = "dialogues/Chapter5a.json";
+        public static final String CHAPTER5B  = "dialogues/Chapter5b.json";
         public static final String BARDOCK  = "dialogues/bardock.json";
     }
     private static final String[] _Dialogues = {

@@ -5,6 +5,12 @@ import com.kazes.fallout.test.inventory.FastInventoryActor;
 import com.kazes.fallout.test.inventory.Item;
 import com.kazes.fallout.test.inventory.Slot;
 
+/**
+ * Action to remove an item from the inventory
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-10-28
+ */
 public class TakeItem extends Action {
     FastInventoryActor inventoryActor;
     Item item;

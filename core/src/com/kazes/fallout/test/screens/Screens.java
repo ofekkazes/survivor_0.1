@@ -6,7 +6,7 @@ import com.kazes.fallout.test.Survivor;
  * All game screens
  * @author Ofek Kazes
  * @version 1.0
- * @since 2018-09-15
+ * @since 2018-10-28
  */
 public enum Screens {
 
@@ -112,8 +112,14 @@ public enum Screens {
         }
     };
 
-    static AbstractScreen current;
+    static AbstractScreen current; //current screen
 
+    /**
+     * Get a screen from the enum
+     * @param game the base game
+     * @param startingPosX Where the player would start
+     * @return A screen at load time
+     */
     public abstract AbstractScreen getScreen(Survivor game, float startingPosX);
 
     public static GameScreen getCurrent() {

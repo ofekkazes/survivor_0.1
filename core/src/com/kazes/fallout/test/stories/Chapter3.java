@@ -1,6 +1,5 @@
 package com.kazes.fallout.test.stories;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
@@ -11,7 +10,6 @@ import com.kazes.fallout.test.*;
 import com.kazes.fallout.test.actions.*;
 import com.kazes.fallout.test.items.ItemActor;
 import com.kazes.fallout.test.items.Items;
-import com.kazes.fallout.test.items.Sneakers;
 import com.kazes.fallout.test.items.Weapons;
 import com.kazes.fallout.test.screens.GameScreen;
 import com.kazes.fallout.test.screens.Screens;
@@ -86,7 +84,7 @@ public class Chapter3 extends Story{
         cutscene.add(GameScreen.player, Actions.parallel(new ChangeInputPrivilege(gameScreen, false), new ChangeWeaponPrivilege(gameScreen, false)));
         cutscene.add(GameScreen.player, Actions.sequence(new ChangeAnimation(Assets.Animations.HERO + "_walking"), Actions.moveTo(keevan.getX() - 1.5f, keevan.getY(), 5f, Interpolation.sine), new ChangeAnimation(Assets.Animations.HERO + "_idle")));
         cutscene.add(GameScreen.player, new ShowDialogue(gameScreen.getDialogueManager(), "third_chapter_start"));
-        cutscene.add(GameScreen.player, Actions.sequence(new CheckDialogAction(gameScreen.getDialogueManager()), new AddMission(niar, "Niar"), Actions.parallel(new ChangeInputPrivilege(gameScreen, true), new ChangeWeaponPrivilege(gameScreen, true))));
+        cutscene.add(GameScreen.player, Actions.sequence(new CheckDialogueAction(gameScreen.getDialogueManager()), new AddMission(niar, "Niar"), Actions.parallel(new ChangeInputPrivilege(gameScreen, true), new ChangeWeaponPrivilege(gameScreen, true))));
         cutscene.add(GameScreen.player, new CompletePart(this, 1));
 
     }
@@ -99,15 +97,15 @@ public class Chapter3 extends Story{
         cutscene.add(GameScreen.player, Actions.sequence( Actions.parallel(new ChangeInputPrivilege(gameScreen, false), new ChangeWeaponPrivilege(gameScreen, false))));
         cutscene.add(GameScreen.player, Actions.sequence(new ChangeAnimation(Assets.Animations.HERO + "_walking"), Actions.moveTo(mayor.getX() - 1.5f, mayor.getY(), 7.5f, Interpolation.sine), new ChangeAnimation(Assets.Animations.HERO + "_idle")));
         cutscene.add(GameScreen.player, new ShowDialogue(gameScreen.getDialogueManager(), "arbitrage"));
-        cutscene.add(GameScreen.player, Actions.sequence(new CheckDialogAction(gameScreen.getDialogueManager()), new AddMission(merchant, Items.Sneakers.getItem()), Actions.parallel(new ChangeInputPrivilege(gameScreen, true), new ChangeWeaponPrivilege(gameScreen, true))));
+        cutscene.add(GameScreen.player, Actions.sequence(new CheckDialogueAction(gameScreen.getDialogueManager()), new AddMission(merchant, Items.Sneakers.getItem()), Actions.parallel(new ChangeInputPrivilege(gameScreen, true), new ChangeWeaponPrivilege(gameScreen, true))));
         cutscene.add(GameScreen.player, new CompletePart(this, 2));
     }
 
     private void part3() {
         cutscene.add(GameScreen.player, Actions.parallel(new ChangeInputPrivilege(gameScreen, false), new ChangeWeaponPrivilege(gameScreen, false)));
         cutscene.add(GameScreen.player, new ShowDialogue(gameScreen.getDialogueManager(), "axe_em"));
-        cutscene.add(GameScreen.player, Actions.sequence(new CheckDialogAction(gameScreen.getDialogueManager()), new PickItem(GameScreen.getFastInventoryActor(), new ItemActor(Items.Sneakers.getItem(), -1, -1), 1), new ShowDialogue(gameScreen.getDialogueManager(), "axe_em2")));
-        cutscene.add(GameScreen.player, Actions.sequence(new CheckDialogAction(gameScreen.getDialogueManager()), new AddMission(niar2, "Niar"), Actions.parallel(new ChangeInputPrivilege(gameScreen, true), new ChangeWeaponPrivilege(gameScreen, true))));
+        cutscene.add(GameScreen.player, Actions.sequence(new CheckDialogueAction(gameScreen.getDialogueManager()), new PickItem(GameScreen.getFastInventoryActor(), new ItemActor(Items.Sneakers.getItem(), -1, -1), 1), new ShowDialogue(gameScreen.getDialogueManager(), "axe_em2")));
+        cutscene.add(GameScreen.player, Actions.sequence(new CheckDialogueAction(gameScreen.getDialogueManager()), new AddMission(niar2, "Niar"), Actions.parallel(new ChangeInputPrivilege(gameScreen, true), new ChangeWeaponPrivilege(gameScreen, true))));
         cutscene.add(GameScreen.player, new CompletePart(this, 3));
     }
 
@@ -119,7 +117,7 @@ public class Chapter3 extends Story{
         cutscene.add(GameScreen.player, Actions.parallel(new ChangeInputPrivilege(gameScreen, false), new ChangeWeaponPrivilege(gameScreen, false)));
         cutscene.add(GameScreen.player, Actions.sequence(new ChangeAnimation(Assets.Animations.HERO + "_walking"), Actions.moveTo(mayor.getX() - 1.6f, mayor.getY() - .3f, 7.5f, Interpolation.sine), new ChangeAnimation(Assets.Animations.HERO + "_idle")));
         cutscene.add(GameScreen.player, new ShowDialogue(gameScreen.getDialogueManager(), "package_delivered"));
-        cutscene.add(GameScreen.player, Actions.sequence(new CheckDialogAction(gameScreen.getDialogueManager()), Actions.parallel(new ChangeInputPrivilege(gameScreen, true), new ChangeWeaponPrivilege(gameScreen, true))));
+        cutscene.add(GameScreen.player, Actions.sequence(new CheckDialogueAction(gameScreen.getDialogueManager()), Actions.parallel(new ChangeInputPrivilege(gameScreen, true), new ChangeWeaponPrivilege(gameScreen, true))));
         cutscene.add(GameScreen.player, new TakeItem(GameScreen.getFastInventoryActor(), Items.Sneakers.getItem(), 1));
         cutscene.add(GameScreen.player, new CompletePart(this, 4));
         cutscene.add(GameScreen.player, new CompleteStory(3));

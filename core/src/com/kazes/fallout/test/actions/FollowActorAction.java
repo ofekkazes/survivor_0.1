@@ -4,6 +4,12 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.kazes.fallout.test.CamFollowActor;
 
+/**
+ * Action to change the actor the camera's following
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-10-28
+ */
 public class FollowActorAction extends Action {
     Actor following;
 

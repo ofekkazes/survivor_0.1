@@ -6,6 +6,12 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.kazes.fallout.test.Mission;
 import com.kazes.fallout.test.MissionActor;
 
+/**
+ * Action to check if a mission was completed
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-10-28
+ */
 public class CheckMission extends Action {
     Mission mission;
 

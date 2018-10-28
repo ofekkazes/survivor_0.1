@@ -10,7 +10,12 @@ import com.badlogic.gdx.utils.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
-
+/**
+ * Action to add multiple actions to multiple actors at the same instance
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-10-28
+ */
 public class CoordinatedAction extends Action {
     private Array<Actor> objects;
     Array<Action> actions;

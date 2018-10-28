@@ -10,9 +10,13 @@ import com.kazes.fallout.test.Player;
 import com.kazes.fallout.test.enemies.Enemy;
 import com.kazes.fallout.test.screens.GameScreen;
 
+/**
+ * Listener for all physics types of contact
+ * @author Ofek Kazes
+ * @version 1.01
+ * @since 2018-10-28
+ */
 public class ContactListener implements com.badlogic.gdx.physics.box2d.ContactListener {
-
-
     @Override
     public void beginContact(Contact contact) {
         Fixture f1 = contact.getFixtureA();

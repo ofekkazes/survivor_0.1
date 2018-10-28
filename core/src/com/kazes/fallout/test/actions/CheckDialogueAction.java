@@ -3,10 +3,16 @@ package com.kazes.fallout.test.actions;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.kazes.fallout.test.dialogues.DialogueManager;
 
-public class CheckDialogAction extends Action {
+/**
+ * Action to check whether a dialogue is present currently
+ * @author Ofek Kazes
+ * @version 1.0
+ * @since 2018-10-28
+ */
+public class CheckDialogueAction extends Action {
     DialogueManager dialogueManager;
 
-    public CheckDialogAction(DialogueManager manager) {
+    public CheckDialogueAction(DialogueManager manager) {
         dialogueManager = manager;
     }
     @Override

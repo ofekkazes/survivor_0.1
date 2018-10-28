@@ -39,7 +39,7 @@ public class Inventory {
 		}
 
 		// create some random items
-		for (Slot slot : slots) {
+		/*for (Slot slot : slots) {
 			slot.add(Items.getRandom(), 2);
 		}
 
@@ -47,7 +47,7 @@ public class Inventory {
 		for (int i = 0; i < 3; i++) {
 			Slot randomSlot = slots.get(MathUtils.random(0, slots.size - 1));
 			randomSlot.take(randomSlot.getAmount());
-		}
+		}*/
 	}
 
 	public int checkInventory(Item item) {

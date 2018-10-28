@@ -76,13 +76,11 @@ public class Player extends AnimationActor {
 
         if((time % 60) == 0) {
             hunger.reduceValue(0.01f);
-            Gdx.app.log("Progress", hunger + "");
         }
         if((time % 30) == 0) {
             if(walkSpeed > 3)
                 thirst.reduceValue(0.03f);
             else thirst.reduceValue(0.01f);
-            Gdx.app.log("Thirst", thirst + "");
         }
         if(cooldown <= 60)
             cooldown++;
@@ -90,7 +88,6 @@ public class Player extends AnimationActor {
         if(!hit)
             body.setLinearVelocity(playerTranslation.x, playerTranslation.y);
         else hit = false;
-        //this.translate(playerTranslation.x, playerTranslation.y);
     }
 
     public void addHealth(float amount) {

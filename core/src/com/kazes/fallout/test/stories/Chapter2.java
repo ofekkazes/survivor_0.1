@@ -14,7 +14,6 @@ import com.kazes.fallout.test.CamFollowActor;
 import com.kazes.fallout.test.InjuredNPC;
 import com.kazes.fallout.test.NPC;
 import com.kazes.fallout.test.actions.*;
-import com.kazes.fallout.test.enemies.FastZombie;
 import com.kazes.fallout.test.enemies.Zombie;
 import com.kazes.fallout.test.items.AmmoCrate;
 import com.kazes.fallout.test.items.ItemActor;
@@ -147,7 +146,7 @@ public class Chapter2 extends Story {
         cutscene.add(camFollow, Actions.moveTo(storyNpcs.get(0).getX(), currentFollow.getY(), 4f, Interpolation.sine));
         cutscene.add(camFollow, Actions.parallel(Actions.delay(0.5f), new ShowDialogue(gameScreen.getDialogueManager(), "second_chapter_start")));
         cutscene.add(GameScreen.player, Actions.moveTo(3, GameScreen.player.getY()));
-        cutscene.add(camFollow, Actions.sequence(new CheckDialogAction(gameScreen.getDialogueManager()), Actions.delay(0.2f), Actions.moveTo(GameScreen.player.getX() - 3f, GameScreen.player.getY(), 4f, Interpolation.sine)));
+        cutscene.add(camFollow, Actions.sequence(new CheckDialogueAction(gameScreen.getDialogueManager()), Actions.delay(0.2f), Actions.moveTo(GameScreen.player.getX() - 3f, GameScreen.player.getY(), 4f, Interpolation.sine)));
         cutscene.add(currentFollow, Actions.parallel(new FollowActorAction(GameScreen.player), new ChangeInputPrivilege(gameScreen, true), new ChangeWeaponPrivilege(gameScreen, true)));
         cutscene.add(GameScreen.player, new CompletePart(this, 1));
     }
@@ -156,7 +155,7 @@ public class Chapter2 extends Story {
         cutscene.add(GameScreen.player, Actions.parallel(new ChangeWeaponPrivilege(gameScreen, false), new ChangeInputPrivilege(gameScreen, false)));
         cutscene.add(GameScreen.player, Actions.sequence(new ChangeAnimation(Assets.Animations.HERO + "_idle"), Actions.delay(0.5f), new ChangeAnimation(Assets.Animations.HERO + "_walking"),  Actions.moveTo(storyNpcs.get(0).getX() - 3, storyNpcs.get(0).getY(), 1.5f, Interpolation.pow2), new ChangeAnimation(Assets.Animations.HERO + "_idle")));
         cutscene.add(GameScreen.player, new ShowDialogue(gameScreen.getDialogueManager(), "help_on_the_way"));
-        cutscene.add(GameScreen.player, new CheckDialogAction(gameScreen.getDialogueManager()));
+        cutscene.add(GameScreen.player, new CheckDialogueAction(gameScreen.getDialogueManager()));
         cutscene.add(camFollow, Actions.sequence(Actions.moveTo(GameScreen.player.getX(), GameScreen.player.getY()), Actions.delay(0.2f)));
         cutscene.add(currentFollow, new FollowActorAction(camFollow));
         cutscene.add(camFollow, Actions.moveTo(80, camFollow.getY(), 4f, Interpolation.sine));
@@ -193,7 +192,7 @@ public class Chapter2 extends Story {
         cutscene.add(GameScreen.player, new ShowDialogue(gameScreen.getDialogueManager(), "help_arrived"));
         cutscene.add(GameScreen.player, Actions.parallel(new ChangeWeaponPrivilege(gameScreen, true), new ChangeInputPrivilege(gameScreen, true)));
         cutscene.add(gameScreen.getFollowers(), Actions.delay(1f));
-        cutscene.add(general, Actions.sequence(new CheckDialogAction(gameScreen.getDialogueManager()), new CoordinatedAction(soldiers, Actions.moveBy(GameScreen.player.getX() - general.getX(), GameScreen.player.getY() - general.getY(), 5f, Interpolation.sine))));
+        cutscene.add(general, Actions.sequence(new CheckDialogueAction(gameScreen.getDialogueManager()), new CoordinatedAction(soldiers, Actions.moveBy(GameScreen.player.getX() - general.getX(), GameScreen.player.getY() - general.getY(), 5f, Interpolation.sine))));
         cutscene.add(currentFollow, new FollowActorAction(GameScreen.player));
         cutscene.add(GameScreen.player, new CompletePart(this, 4));
 
@@ -201,7 +200,7 @@ public class Chapter2 extends Story {
 
     private void part_five() {
         cutscene.add(GameScreen.player, new ShowDialogue(gameScreen.getDialogueManager(), "who_are_you"));
-        cutscene.add(GameScreen.player, Actions.parallel(new CheckDialogAction(gameScreen.getDialogueManager())));
+        cutscene.add(GameScreen.player, Actions.parallel(new CheckDialogueAction(gameScreen.getDialogueManager())));
         cutscene.add(general, Actions.visible(false));
         cutscene.add(soldier1, Actions.visible(false));
         cutscene.add(soldier2, Actions.visible(false));

@@ -6,16 +6,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
 import com.kazes.fallout.test.*;
-import com.kazes.fallout.test.stories.ActorAction;
-import com.kazes.fallout.test.actions.AddMission;
-import com.kazes.fallout.test.actions.AddNotification;
-import com.kazes.fallout.test.actions.CheckMission;
+import com.kazes.fallout.test.enemies.FastZombie;
 import com.kazes.fallout.test.enemies.Zombie;
 import com.kazes.fallout.test.items.*;
-import com.kazes.fallout.test.stories.CutsceneManager;
 
 /**
  * A game screen for 24/7 enemy spawning and items renewal
@@ -43,8 +38,8 @@ public class Battlegrounds extends GameScreen {
     }
 
     @Override
-    public void proccessInput() {
-        super.proccessInput();
+    public void processInput() {
+        super.processInput();
         if(Gdx.input.isKeyJustPressed(Input.Keys.F)) {
             for(int i = 0; i < injuredNPCS.getChildren().size; i++) {
                 if(player.getRectangle().overlaps(((ImageEx)injuredNPCS.getChildren().get(i)).getRectangle()))
@@ -106,6 +101,8 @@ public class Battlegrounds extends GameScreen {
             if (enemies.getChildren().size < 30) {
                 enemies.addActor(new Zombie(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), Survivor.getInMeters(MathUtils.random(1000, 4000)), Survivor.getInMeters(MathUtils.random(500)), world));
                 ((Zombie) enemies.getChildren().items[enemies.getChildren().size - 1]).addInteractingObject(player);
+                enemies.addActor(new FastZombie(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), Survivor.getInMeters(MathUtils.random(1000, 4000)), Survivor.getInMeters(MathUtils.random(500)), world));
+                ((FastZombie) enemies.getChildren().items[enemies.getChildren().size - 1]).addInteractingObject(player);
 
             }
         }
