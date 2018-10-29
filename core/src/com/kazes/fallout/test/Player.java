@@ -1,18 +1,19 @@
 package com.kazes.fallout.test;
 
+import box2dLight.ConeLight;
+import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.kazes.fallout.test.items.Weapons;
-import com.kazes.fallout.test.physics.B2DBodyBuilder;
 import com.kazes.fallout.test.physics.CollisionCategory;
-import com.kazes.fallout.test.screens.GameScreen;
+import com.kazes.fallout.test.physics.Flashlight;
+import com.kazes.fallout.test.screens.Screens;
 
 
 //rabbit valve gauge
@@ -38,6 +39,7 @@ public class Player extends AnimationActor {
     public float walkSpeed;
     public boolean hit = false;
     //public int ammo;
+    public Flashlight flashlight;
 
     public Player(ObjectMap<String, Animation<TextureRegion>> t, Vector2 position) {
         super(t, "Player", position.x, position.y);
@@ -57,7 +59,10 @@ public class Player extends AnimationActor {
         this.walkSpeed = 3f;
     }
 
-
+    public void initPhysics(World world, RayHandler rayHandler) {
+        super.initPhysics(world, CollisionCategory.FRIENDLY, CollisionCategory.FRIENDLY_COLLIDER);
+        flashlight = new Flashlight(rayHandler, 20, Color.GOLDENROD, 10, getOrigin().x, getOrigin().y, 0, 20);
+    }
 
     @Override
     public void act(float delta) {
@@ -77,6 +82,11 @@ public class Player extends AnimationActor {
         }
         if(cooldown <= 60)
             cooldown++;
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.F))
+            flashlight.setVisible(!flashlight.isVisible());
+        if(flashlight.isVisible())
+            flashlight.update(getOrigin());
 
         if(!hit)
             body.setLinearVelocity(playerTranslation.x, playerTranslation.y);

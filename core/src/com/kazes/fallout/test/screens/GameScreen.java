@@ -95,8 +95,8 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
     RayHandler rayHandler; //Lighting management
     //Box2DDebugRenderer renderer;
     private static float ambientAlpha = 0.5f; //Default light cast
-    public static float time = 0.5f; //The time of day
-    private static boolean day = true; //Is it a day or night
+    public static float time = 0.1f; //The time of day
+    private static boolean day = false; //Is it a day or night
 
     DialogueManager dialogueManager; //Dialogue manager
     Story story; //Story to be updated
@@ -154,7 +154,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
         //renderer = new Box2DDebugRenderer(true, true, true, true, true, true);
         rayHandler = new RayHandler(world);
-
+        rayHandler.setShadows(true);
         rayHandler.setAmbientLight(0.1f, 0.1f, 0.1f, ambientAlpha);
         rayHandler.setBlurNum(3);
 
@@ -226,10 +226,9 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
             }
             player.clearActions();
             player.clearListeners();
-            player.initPhysics(world, CollisionCategory.FRIENDLY, CollisionCategory.FRIENDLY_COLLIDER);
+            player.initPhysics(world, rayHandler);
             gameStage.addActor(player);
             //magic = new MagicAttack(Assets.getAsset(Assets.Images.FIRE, Texture.class), Assets.getAsset(Assets.ParticleEffects.fire, ParticleEffect.class), player.getX(), player.getY());
-
         }
 
         for(Actor zombie : enemies.getChildren())
@@ -798,6 +797,10 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
     public String getName() {
         return this.screenName;
+    }
+
+    public RayHandler getRayHandler() {
+        return rayHandler;
     }
 
     public static Stage getScreenStage() {
