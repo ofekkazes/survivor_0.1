@@ -48,19 +48,38 @@ public class Zombie extends Enemy {
             }
         }*/
         if(!wander && closestInteractingObject != null) {
-            float yTranslate = closestInteractingObject.getY() + closestInteractingObject.getHeight() / 2 - this.getY();
-            float xTranslate = this.getX() - closestInteractingObject.getX() + closestInteractingObject.getWidth() / 2;
+            float yTranslate = closestInteractingObject.getOrigin().y - this.getOrigin().y;
+            float xTranslate = this.getOrigin().x - closestInteractingObject.getOrigin().x;
             if ((xTranslate > Survivor.getInMeters(-400) && xTranslate < Survivor.getInMeters(400)) || this.getHealth() != 100) { //OR THERE IS A CLEAN LINE OF SIGHT
+
+                if(xTranslate > -3f && xTranslate < 3f && yTranslate > -1f && yTranslate < 1f) {
+
+                    if(!getCurrentKey().contains("attack"))
+                        changeAnimation("attack");
+                } else changeAnimation("walk");
 
                 if ((xTranslate > Survivor.getInMeters(-150) && xTranslate < Survivor.getInMeters(150)))
                     yTranslate = (yTranslate > 0) ? Survivor.getInMeters(12f) : Survivor.getInMeters(-12f);
                 else yTranslate = (yTranslate > 0) ? Survivor.getInMeters(3f) : Survivor.getInMeters(-3f);
-                xTranslate = (xTranslate > 0) ? Survivor.getInMeters(-15f) : Survivor.getInMeters(15f);
+                 xTranslate = (xTranslate > 0) ? Survivor.getInMeters(-15f) : Survivor.getInMeters(15f);
 
                 //this.body.setLinearVelocity(xTranslate, yTranslate);
                 this.body.setLinearVelocity(xTranslate, yTranslate);
             }
             else this.wander = true;
         }
+        if(wander || closestInteractingObject == null) {
+            if(time <= 0) {
+                xChange = MathUtils.random(-4f, 4f);
+                yChange = MathUtils.random(-4f, 4f);
+                time = MathUtils.random(1f, 6f) * Gdx.graphics.getFramesPerSecond();
+                wander = false;
+            }
+            else {
+                time--;
+                body.setLinearVelocity(Survivor.getInMeters(xChange), Survivor.getInMeters(yChange));
+            }
+        }
+
     }
 }

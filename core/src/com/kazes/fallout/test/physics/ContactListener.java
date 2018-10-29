@@ -63,14 +63,15 @@ public class ContactListener implements com.badlogic.gdx.physics.box2d.ContactLi
             enemyBody = f1.getBody();
         }
         if(friendlyBody != null && enemyBody != null) {
-            ImageEx friendly = (ImageEx)friendlyBody.getUserData();
-            if(friendly instanceof Player) {
-                ((Player)friendly).subHealth(.2f);
-                ((Player)friendly).hit = true;
+            if(((Enemy)enemyBody.getUserData()).getHealth() > 0) {
+                ImageEx friendly = (ImageEx) friendlyBody.getUserData();
+                if (friendly instanceof Player) {
+                    ((Player) friendly).subHealth(.2f);
+                    ((Player) friendly).hit = true;
+                }
+                friendlyBody.setLinearVelocity(friendlyBody.getPosition().cpy().sub(enemyBody.getPosition().cpy()).scl(16f));
+                friendlyBody.setLinearDamping(5f);
             }
-            friendlyBody.setLinearVelocity(friendlyBody.getPosition().cpy().sub(enemyBody.getPosition().cpy()).scl(16f));
-            friendlyBody.setLinearDamping(5f);
-
         }
 
         /*else if(f1Category == CollisionCategory.ENEMY.cat()) {

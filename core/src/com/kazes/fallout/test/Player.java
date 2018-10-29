@@ -57,14 +57,7 @@ public class Player extends AnimationActor {
         this.walkSpeed = 3f;
     }
 
-    public void initPhysics(World world) {
-        this.world = world;
-        body = B2DBodyBuilder.createBody(world, getX(), getY(), getWidth(), getHeight(), BodyDef.BodyType.DynamicBody, CollisionCategory.FRIENDLY, CollisionCategory.FRIENDLY_COLLIDER);
-        body.setFixedRotation(true);
-        body.setUserData(this);
-        body.getWorld().clearForces();
-        body.setTransform(getX(), getY(), 0);
-    }
+
 
     @Override
     public void act(float delta) {

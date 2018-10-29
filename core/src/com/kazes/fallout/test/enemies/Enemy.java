@@ -28,8 +28,8 @@ import com.kazes.fallout.test.screens.Screens;
 public abstract class Enemy extends AnimationEx {
     float health;
     public boolean wander;
-    Array<Actor> interactingObjects;
-    Actor closestInteractingObject;
+    Array<ImageEx> interactingObjects;
+    ImageEx closestInteractingObject;
     Vector2 prevPos;
     boolean die;
 
@@ -53,8 +53,12 @@ public abstract class Enemy extends AnimationEx {
         this.wander = true;
     }
 
-    public void addInteractingObject(Actor actor) {
+    public void addInteractingObject(ImageEx actor) {
         interactingObjects.add(actor);
+        calcClosest();
+    }
+    public void addInteractingObject(Actor actor) {
+        interactingObjects.add((ImageEx)actor);
         calcClosest();
     }
 
