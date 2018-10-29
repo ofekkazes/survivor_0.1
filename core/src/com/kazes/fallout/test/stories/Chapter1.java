@@ -77,7 +77,7 @@ public class Chapter1 extends Story {
         addItem(new ItemActor(new AmmoCrate(), 60, 6));
         addNPC(new InjuredNPC(gameScreen.getPhysicsWorld() , 50, 3, Weapons.NULL));
         for(int i = 0; i < 5; i++)
-            addEnemy(new Zombie(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), MathUtils.random(100, 115), MathUtils.random(5f), gameScreen.getPhysicsWorld()));
+            addEnemy(new Zombie(MathUtils.random(100, 115), MathUtils.random(5f), gameScreen.getPhysicsWorld()));
 
         camFollow.setX(0);
         camFollow.setY(GameScreen.player.getY());
@@ -125,7 +125,7 @@ public class Chapter1 extends Story {
             cutscene.add(GameScreen.player, Actions.parallel(new ChangeInputPrivilege(gameScreen, false), new ChangeWeaponPrivilege(gameScreen, false)));
             cutscene.add(GameScreen.player, new ShowDialogue(gameScreen.getDialogueManager(), "gone"));
             cutscene.add(GameScreen.player, new CheckDialogueAction(gameScreen.getDialogueManager()));
-            zombie = new FastZombie(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), 79, 0, gameScreen.getPhysicsWorld());
+            zombie = new FastZombie(79, 0, gameScreen.getPhysicsWorld());
             zombie.addInteractingObject(GameScreen.player);
             zombie.setHealth(250f);
             addEnemy(zombie);

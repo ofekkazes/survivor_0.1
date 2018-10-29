@@ -221,7 +221,7 @@ public class SideScroll extends GameScreen {
     public void setEnemies() {
         texture = game.assetManager.get(Assets.Images.PIKACHU, Texture.class);
         for(int i = 0; i < 35; i++) {
-            enemies.addActor(new Zombie(texture, Survivor.getInMeters(MathUtils.random(1000, 4000)), Survivor.getInMeters(MathUtils.random(500)), world));
+            enemies.addActor(new Zombie(Survivor.getInMeters(MathUtils.random(1000, 4000)), Survivor.getInMeters(MathUtils.random(500)), world));
             enemies.getChildren().items[i].setName("Zombie " + i);
         }
     }

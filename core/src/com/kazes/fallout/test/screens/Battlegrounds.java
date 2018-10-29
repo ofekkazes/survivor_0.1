@@ -87,7 +87,7 @@ public class Battlegrounds extends GameScreen {
         if (GameScreen.time < 0.25f) {
             for (int i = 0; i < 1 && this.stateTime % 7 == 0; i++) {
                 if (enemies.getChildren().size < 80) {
-                    enemies.addActor(new Zombie(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), Survivor.getInMeters(MathUtils.random(1000, 4000)), Survivor.getInMeters(MathUtils.random(500)), world));
+                    enemies.addActor(new Zombie(Survivor.getInMeters(MathUtils.random(1000, 4000)), Survivor.getInMeters(MathUtils.random(500)), world));
                     ((Zombie) enemies.getChildren().items[enemies.getChildren().size - 1]).addInteractingObject(player);
                     break;
                 }
@@ -99,9 +99,9 @@ public class Battlegrounds extends GameScreen {
             if (stateTime % 60 == 0)
                 addItem();
             if (enemies.getChildren().size < 30) {
-                enemies.addActor(new Zombie(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), Survivor.getInMeters(MathUtils.random(1000, 4000)), Survivor.getInMeters(MathUtils.random(500)), world));
+                enemies.addActor(new Zombie(Survivor.getInMeters(MathUtils.random(1000, 4000)), Survivor.getInMeters(MathUtils.random(500)), world));
                 ((Zombie) enemies.getChildren().items[enemies.getChildren().size - 1]).addInteractingObject(player);
-                enemies.addActor(new FastZombie(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), Survivor.getInMeters(MathUtils.random(1000, 4000)), Survivor.getInMeters(MathUtils.random(500)), world));
+                enemies.addActor(new FastZombie(Survivor.getInMeters(MathUtils.random(1000, 4000)), Survivor.getInMeters(MathUtils.random(500)), world));
                 ((FastZombie) enemies.getChildren().items[enemies.getChildren().size - 1]).addInteractingObject(player);
 
             }
@@ -145,7 +145,7 @@ public class Battlegrounds extends GameScreen {
     public void setEnemies() {
         Texture texture = game.assetManager.get(Assets.Images.PIKACHU, Texture.class);
         for(int i = 0; i < 60; i++) {
-            enemies.addActor(new Zombie(texture, Survivor.getInMeters(MathUtils.random(1000, 4000)), Survivor.getInMeters(MathUtils.random(500)), world));
+            enemies.addActor(new Zombie(Survivor.getInMeters(MathUtils.random(1000, 4000)), Survivor.getInMeters(MathUtils.random(500)), world));
             enemies.getChildren().items[i].setName("Zombie " + i);
         }
     }

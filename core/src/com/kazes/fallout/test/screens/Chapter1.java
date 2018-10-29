@@ -112,7 +112,7 @@ public class Chapter1 extends GameScreen {
     @Override
     public void setEnemies() {
         for(int i = 0; i < 5; i++)
-            enemies.addActor(new Zombie(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), MathUtils.random(100, 115), MathUtils.random(5f), world));
+            enemies.addActor(new Zombie(MathUtils.random(100, 115), MathUtils.random(5f), world));
     }
 
     @Override
@@ -153,7 +153,7 @@ public class Chapter1 extends GameScreen {
             cutscene.add(player, Actions.parallel(new ChangeInputPrivilege(this, false), new ChangeWeaponPrivilege(this, false)));
             cutscene.add(player, new ShowDialogue(dialogueManager, "gone"));
             cutscene.add(player, new CheckDialogueAction(dialogueManager));
-            zombie = new FastZombie(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), 79, 0, world);
+            zombie = new FastZombie(79, 0, world);
             zombie.addInteractingObject(player);
             zombie.setHealth(250f);
             cutscene.add(enemies, new AddObject(zombie));

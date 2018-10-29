@@ -93,7 +93,7 @@ public class Chapter2 extends GameScreen {
         if(batchThree && !batchFour) {
             timeLabel.setText("Time left: " + MathUtils.floor(timeout-- / Gdx.graphics.getFramesPerSecond()));
             if(enemies.getChildren().size < 25) {
-                enemies.addActor(new Zombie(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), MathUtils.random(map.getWidth() - 2, map.getWidth()-0.0001f), MathUtils.random(0, 8), world));
+                enemies.addActor(new Zombie(MathUtils.random(map.getWidth() - 2, map.getWidth()-0.0001f), MathUtils.random(0, 8), world));
                 ((Zombie)enemies.getChildren().get(enemies.getChildren().size - 1)).setHealth(99);
                 ((Zombie)enemies.getChildren().get(enemies.getChildren().size - 1)).addInteractingObject(player);
             }
@@ -206,7 +206,7 @@ public class Chapter2 extends GameScreen {
     @Override
     public void setEnemies() {
         for (int i = 0; i < 10; i++) {
-            enemies.addActor(new Zombie(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), MathUtils.random(75, 90), MathUtils.random(5f), world));
+            enemies.addActor(new Zombie(MathUtils.random(75, 90), MathUtils.random(5f), world));
             ((Enemy)enemies.getChildren().get(i)).addInteractingObject(player);
             ((Enemy)enemies.getChildren().get(i)).addInteractingObject(npcs.getChildren().get(0));
             ((Enemy)enemies.getChildren().get(i)).addInteractingObject(npcs.getChildren().get(1));

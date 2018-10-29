@@ -1,0 +1,509 @@
+zombie.png
+size: 759, 759
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Zombie_1_Attacking0001
+  rotate: false
+  xy: 1, 1
+  size: 49, 103
+  orig: 128, 128
+  offset: 29, 4
+  index: -1
+Zombie_1_Attacking0002
+  rotate: false
+  xy: 52, 1
+  size: 54, 103
+  orig: 128, 128
+  offset: 29, 4
+  index: -1
+Zombie_1_Attacking0003
+  rotate: false
+  xy: 108, 1
+  size: 60, 103
+  orig: 128, 128
+  offset: 29, 3
+  index: -1
+Zombie_1_Attacking0004
+  rotate: false
+  xy: 170, 1
+  size: 54, 103
+  orig: 128, 128
+  offset: 29, 3
+  index: -1
+Zombie_1_Attacking0005
+  rotate: false
+  xy: 226, 1
+  size: 63, 103
+  orig: 128, 128
+  offset: 29, 4
+  index: -1
+Zombie_1_Attacking0006
+  rotate: false
+  xy: 291, 1
+  size: 73, 103
+  orig: 128, 128
+  offset: 20, 4
+  index: -1
+Zombie_1_Attacking0007
+  rotate: false
+  xy: 366, 1
+  size: 72, 104
+  orig: 128, 128
+  offset: 24, 3
+  index: -1
+Zombie_1_Attacking0008
+  rotate: false
+  xy: 440, 1
+  size: 69, 104
+  orig: 128, 128
+  offset: 29, 3
+  index: -1
+Zombie_1_Attacking0009
+  rotate: false
+  xy: 511, 1
+  size: 71, 103
+  orig: 128, 128
+  offset: 29, 3
+  index: -1
+Zombie_1_Attacking0010
+  rotate: false
+  xy: 584, 1
+  size: 66, 104
+  orig: 128, 128
+  offset: 29, 3
+  index: -1
+Zombie_1_Attacking0011
+  rotate: false
+  xy: 652, 1
+  size: 58, 104
+  orig: 128, 128
+  offset: 29, 3
+  index: -1
+Zombie_1_Attacking0012
+  rotate: false
+  xy: 1, 107
+  size: 49, 103
+  orig: 128, 128
+  offset: 29, 4
+  index: -1
+Zombie_1_Crouching0001
+  rotate: false
+  xy: 52, 107
+  size: 46, 105
+  orig: 128, 128
+  offset: 27, 3
+  index: -1
+Zombie_1_Crouching0002
+  rotate: false
+  xy: 100, 107
+  size: 52, 103
+  orig: 128, 128
+  offset: 25, 3
+  index: -1
+Zombie_1_Crouching0003
+  rotate: false
+  xy: 154, 107
+  size: 56, 101
+  orig: 128, 128
+  offset: 25, 3
+  index: -1
+Zombie_1_Crouching0004
+  rotate: false
+  xy: 212, 107
+  size: 62, 97
+  orig: 128, 128
+  offset: 24, 3
+  index: -1
+Zombie_1_Crouching0005
+  rotate: false
+  xy: 276, 107
+  size: 67, 94
+  orig: 128, 128
+  offset: 23, 3
+  index: -1
+Zombie_1_Crouching0006
+  rotate: false
+  xy: 345, 107
+  size: 73, 92
+  orig: 128, 128
+  offset: 23, 3
+  index: -1
+Zombie_1_Crouching0007
+  rotate: false
+  xy: 420, 107
+  size: 72, 93
+  orig: 128, 128
+  offset: 23, 3
+  index: -1
+Zombie_1_Crouching0008
+  rotate: false
+  xy: 494, 107
+  size: 72, 93
+  orig: 128, 128
+  offset: 23, 3
+  index: -1
+Zombie_1_Crouching0009
+  rotate: false
+  xy: 568, 107
+  size: 71, 94
+  orig: 128, 128
+  offset: 23, 3
+  index: -1
+Zombie_1_Crouching0010
+  rotate: false
+  xy: 641, 107
+  size: 70, 94
+  orig: 128, 128
+  offset: 23, 3
+  index: -1
+Zombie_1_Crouching0011
+  rotate: false
+  xy: 1, 214
+  size: 70, 94
+  orig: 128, 128
+  offset: 23, 3
+  index: -1
+Zombie_1_Crouching0012
+  rotate: false
+  xy: 73, 214
+  size: 69, 94
+  orig: 128, 128
+  offset: 23, 3
+  index: -1
+Zombie_1_Dying0001
+  rotate: false
+  xy: 144, 214
+  size: 56, 102
+  orig: 128, 128
+  offset: 29, 4
+  index: -1
+Zombie_1_Dying0002
+  rotate: false
+  xy: 202, 214
+  size: 78, 114
+  orig: 128, 128
+  offset: 28, 1
+  index: -1
+Zombie_1_Dying0003
+  rotate: false
+  xy: 282, 214
+  size: 86, 99
+  orig: 128, 128
+  offset: 27, 0
+  index: -1
+Zombie_1_Dying0004
+  rotate: false
+  xy: 370, 214
+  size: 89, 90
+  orig: 128, 128
+  offset: 26, 1
+  index: -1
+Zombie_1_Dying0005
+  rotate: false
+  xy: 461, 214
+  size: 94, 85
+  orig: 128, 128
+  offset: 9, 2
+  index: -1
+Zombie_1_Dying0006
+  rotate: false
+  xy: 557, 214
+  size: 97, 81
+  orig: 128, 128
+  offset: 11, 2
+  index: -1
+Zombie_1_Dying0007
+  rotate: false
+  xy: 656, 214
+  size: 91, 72
+  orig: 128, 128
+  offset: 24, 1
+  index: -1
+Zombie_1_Dying0008
+  rotate: false
+  xy: 1, 330
+  size: 100, 57
+  orig: 128, 128
+  offset: 23, 1
+  index: -1
+Zombie_1_Dying0009
+  rotate: false
+  xy: 103, 330
+  size: 105, 45
+  orig: 128, 128
+  offset: 23, 0
+  index: -1
+Zombie_1_Dying0010
+  rotate: false
+  xy: 210, 330
+  size: 105, 48
+  orig: 128, 128
+  offset: 23, 0
+  index: -1
+Zombie_1_Dying0011
+  rotate: false
+  xy: 317, 330
+  size: 105, 43
+  orig: 128, 128
+  offset: 23, 0
+  index: -1
+Zombie_1_Dying0012
+  rotate: false
+  xy: 424, 330
+  size: 105, 43
+  orig: 128, 128
+  offset: 23, 0
+  index: -1
+Zombie_1_Jumping0001
+  rotate: false
+  xy: 531, 330
+  size: 41, 104
+  orig: 128, 175
+  offset: 23, 1
+  index: -1
+Zombie_1_Jumping0002
+  rotate: false
+  xy: 574, 330
+  size: 49, 101
+  orig: 128, 175
+  offset: 19, 0
+  index: -1
+Zombie_1_Jumping0003
+  rotate: false
+  xy: 625, 330
+  size: 56, 92
+  orig: 128, 175
+  offset: 16, 4
+  index: -1
+Zombie_1_Jumping0004
+  rotate: false
+  xy: 683, 330
+  size: 43, 103
+  orig: 128, 175
+  offset: 15, 23
+  index: -1
+Zombie_1_Jumping0005
+  rotate: false
+  xy: 1, 436
+  size: 51, 109
+  orig: 128, 175
+  offset: 0, 47
+  index: -1
+Zombie_1_Jumping0006
+  rotate: false
+  xy: 54, 436
+  size: 46, 107
+  orig: 128, 175
+  offset: 7, 53
+  index: -1
+Zombie_1_Jumping0007
+  rotate: false
+  xy: 102, 436
+  size: 46, 103
+  orig: 128, 175
+  offset: 13, 61
+  index: -1
+Zombie_1_Jumping0008
+  rotate: false
+  xy: 150, 436
+  size: 51, 106
+  orig: 128, 175
+  offset: 21, 50
+  index: -1
+Zombie_1_Jumping0009
+  rotate: false
+  xy: 203, 436
+  size: 55, 106
+  orig: 128, 175
+  offset: 26, 40
+  index: -1
+Zombie_1_Jumping0010
+  rotate: false
+  xy: 260, 436
+  size: 61, 106
+  orig: 128, 175
+  offset: 26, 30
+  index: -1
+Zombie_1_Jumping0011
+  rotate: false
+  xy: 323, 436
+  size: 58, 105
+  orig: 128, 175
+  offset: 26, 16
+  index: -1
+Zombie_1_Jumping0012
+  rotate: false
+  xy: 383, 436
+  size: 41, 104
+  orig: 128, 175
+  offset: 23, 1
+  index: -1
+Zombie_1_Running0001
+  rotate: false
+  xy: 426, 436
+  size: 65, 98
+  orig: 128, 128
+  offset: 1, 4
+  index: -1
+Zombie_1_Running0002
+  rotate: false
+  xy: 493, 436
+  size: 58, 105
+  orig: 128, 128
+  offset: 9, 3
+  index: -1
+Zombie_1_Running0003
+  rotate: false
+  xy: 553, 436
+  size: 53, 107
+  orig: 128, 128
+  offset: 18, 5
+  index: -1
+Zombie_1_Running0004
+  rotate: false
+  xy: 608, 436
+  size: 71, 101
+  orig: 128, 128
+  offset: 15, 10
+  index: -1
+Zombie_1_Running0005
+  rotate: false
+  xy: 1, 547
+  size: 85, 103
+  orig: 128, 128
+  offset: 11, 7
+  index: -1
+Zombie_1_Running0006
+  rotate: false
+  xy: 88, 547
+  size: 89, 103
+  orig: 128, 128
+  offset: 9, 5
+  index: -1
+Zombie_1_Running0007
+  rotate: false
+  xy: 179, 547
+  size: 92, 101
+  orig: 128, 128
+  offset: 5, 3
+  index: -1
+Zombie_1_Running0008
+  rotate: false
+  xy: 273, 547
+  size: 73, 98
+  orig: 128, 128
+  offset: 17, 7
+  index: -1
+Zombie_1_Running0009
+  rotate: false
+  xy: 348, 547
+  size: 52, 105
+  orig: 128, 128
+  offset: 27, 7
+  index: -1
+Zombie_1_Running0010
+  rotate: false
+  xy: 402, 547
+  size: 46, 105
+  orig: 128, 128
+  offset: 18, 6
+  index: -1
+Zombie_1_Running0011
+  rotate: false
+  xy: 450, 547
+  size: 58, 103
+  orig: 128, 128
+  offset: 9, 7
+  index: -1
+Zombie_1_Running0012
+  rotate: false
+  xy: 510, 547
+  size: 66, 98
+  orig: 128, 128
+  offset: 1, 9
+  index: -1
+Zombie_1_Walking0001
+  rotate: false
+  xy: 578, 547
+  size: 42, 104
+  orig: 128, 128
+  offset: 16, 4
+  index: -1
+Zombie_1_Walking0002
+  rotate: false
+  xy: 622, 547
+  size: 41, 105
+  orig: 128, 128
+  offset: 21, 3
+  index: -1
+Zombie_1_Walking0003
+  rotate: false
+  xy: 665, 547
+  size: 41, 104
+  orig: 128, 128
+  offset: 27, 3
+  index: -1
+Zombie_1_Walking0004
+  rotate: false
+  xy: 708, 547
+  size: 50, 102
+  orig: 128, 128
+  offset: 23, 3
+  index: -1
+Zombie_1_Walking0005
+  rotate: false
+  xy: 1, 654
+  size: 62, 99
+  orig: 128, 128
+  offset: 17, 5
+  index: -1
+Zombie_1_Walking0006
+  rotate: false
+  xy: 65, 654
+  size: 62, 100
+  orig: 128, 128
+  offset: 18, 4
+  index: -1
+Zombie_1_Walking0007
+  rotate: false
+  xy: 129, 654
+  size: 61, 102
+  orig: 128, 128
+  offset: 19, 5
+  index: -1
+Zombie_1_Walking0008
+  rotate: false
+  xy: 192, 654
+  size: 60, 102
+  orig: 128, 128
+  offset: 20, 6
+  index: -1
+Zombie_1_Walking0009
+  rotate: false
+  xy: 254, 654
+  size: 59, 102
+  orig: 128, 128
+  offset: 21, 7
+  index: -1
+Zombie_1_Walking0010
+  rotate: false
+  xy: 315, 654
+  size: 52, 104
+  orig: 128, 128
+  offset: 23, 6
+  index: -1
+Zombie_1_Walking0011
+  rotate: false
+  xy: 369, 654
+  size: 43, 104
+  orig: 128, 128
+  offset: 27, 5
+  index: -1
+Zombie_1_Walking0012
+  rotate: false
+  xy: 414, 654
+  size: 41, 104
+  orig: 128, 128
+  offset: 24, 4
+  index: -1

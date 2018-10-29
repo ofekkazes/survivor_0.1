@@ -2,7 +2,9 @@ package com.kazes.fallout.test.enemies;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.World;
+import com.kazes.fallout.test.Assets;
 import com.kazes.fallout.test.Progress;
 import com.kazes.fallout.test.screens.GameScreen;
 
@@ -15,8 +17,8 @@ import com.kazes.fallout.test.screens.GameScreen;
 public class Boss extends Enemy {
     Progress healthBar;
     boolean flag;
-    public Boss(Texture img, float xPos, float yPos, World world) {
-        super(img, xPos, yPos, world);
+    public Boss(float xPos, float yPos, World world) {
+        super(Assets.getAsset(Assets.Atlases.zombie2, TextureAtlas.class), xPos, yPos, world);
         healthBar = new Progress(0, 200f, 1f, false);
         healthBar.setWidth(GameScreen.getFastInventoryActor().getWidth() / 1.5f);
         healthBar.setPosition(GameScreen.getFastInventoryActor().getX(), Gdx.graphics.getHeight() - Gdx.graphics.getHeight() / 7);

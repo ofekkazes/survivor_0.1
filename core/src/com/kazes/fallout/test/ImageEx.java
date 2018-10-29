@@ -58,6 +58,14 @@ public class ImageEx extends Image {
         this.lateUpdateTicker = value;
     }
 
+    public void initPhysics(World world, CollisionCategory type, CollisionCategory collideWith) {
+        this.world = world;
+        body = B2DBodyBuilder.createBody(world, getX(), getY(), getWidth(), getHeight(), BodyDef.BodyType.DynamicBody, type, collideWith);
+        body.setFixedRotation(true);
+        body.setUserData(this);
+        body.getWorld().clearForces();
+        body.setTransform(getX(), getY(), 0);
+    }
 
     @Override
     public void act(float delta) {

@@ -40,7 +40,7 @@ public class SingletonRoad extends GameScreen {
     @Override
     public void setEnemies() {
         for(int i = 0; i < 25; i++) {
-            enemies.addActor(new Zombie(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), MathUtils.random(10, 100), MathUtils.random(6f), world));
+            enemies.addActor(new Zombie(MathUtils.random(10, 100), MathUtils.random(6f), world));
             ((Enemy)enemies.getChildren().get(enemies.getChildren().size - 1)).addInteractingObject(player);
         }
     }

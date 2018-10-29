@@ -226,7 +226,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
             }
             player.clearActions();
             player.clearListeners();
-            player.initPhysics(world);
+            player.initPhysics(world, CollisionCategory.FRIENDLY, CollisionCategory.FRIENDLY_COLLIDER);
             gameStage.addActor(player);
             //magic = new MagicAttack(Assets.getAsset(Assets.Images.FIRE, Texture.class), Assets.getAsset(Assets.ParticleEffects.fire, ParticleEffect.class), player.getX(), player.getY());
 
@@ -647,7 +647,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
 
         for(NPC follower : (NPC[])followers.getChildren().toArray(NPC.class)) {
             if(enemies.getChildren().size > 0) {
-                Vector2 closest = GameScreen.closestTo(enemies.getChildren(), follower).getOrigin().cpy().sub(follower.getOrigin()).nor();
+                Vector2 closest = GameScreen.closestTo(new Array<ImageEx>((ImageEx[])enemies.getChildren().toArray()), follower).getOrigin().cpy().sub(follower.getOrigin()).nor();
                 if(closest.x < 10) {
                     switch (follower.getWeapon()) {
                         case Pistol:

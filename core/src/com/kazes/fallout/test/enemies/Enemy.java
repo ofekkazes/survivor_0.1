@@ -3,12 +3,14 @@ package com.kazes.fallout.test.enemies;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
+import com.kazes.fallout.test.AnimationEx;
 import com.kazes.fallout.test.ImageEx;
 import com.kazes.fallout.test.items.AmmoCrate;
 import com.kazes.fallout.test.items.ItemActor;
@@ -23,21 +25,22 @@ import com.kazes.fallout.test.screens.Screens;
  * @version 1.05
  * @since 2018-10-28
  */
-public abstract class Enemy extends ImageEx {
+public abstract class Enemy extends AnimationEx {
     float health;
     public boolean wander;
     Array<Actor> interactingObjects;
     Actor closestInteractingObject;
     Vector2 prevPos;
+    boolean die;
 
     int frameCount;
     //MagicAttack hurt;
 
-    public Enemy(Texture img, float xPos, float yPos, World world) {
-        super(img, xPos, yPos, world, BodyDef.BodyType.DynamicBody, CollisionCategory.ENEMY, CollisionCategory.ENEMY_COLLIDER);
-        body.setFixedRotation(true);
+    public Enemy(TextureAtlas img, float xPos, float yPos, World world) {
+        super(img, xPos, yPos);
+        initPhysics(world, CollisionCategory.ENEMY, CollisionCategory.ENEMY_COLLIDER);
         body.setUserData(this);
-        interactingObjects = new Array<Actor>();
+        interactingObjects = new Array<ImageEx>();
         prevPos = new Vector2();
         frameCount = 0;
         init();
@@ -63,16 +66,39 @@ public abstract class Enemy extends ImageEx {
         if(body.getPosition().x == prevPos.x && body.getPosition().y == prevPos.y) {
             frameCount++;
             if(frameCount > MathUtils.random(10, 25)) {
+                changeAnimation("walk");
                 //clearActions();
                 this.wander = false;
                 this.body.setLinearVelocity(MathUtils.random(-0.84f, 0.84f), MathUtils.random(-0.84f, 0.84f));
                 this.body.setLinearDamping(1f);
             }
         }
-        else
+        else {
             frameCount = 0;
+        }
         prevPos.set(body.getPosition().x, body.getPosition().y);
         if(health == 0) {
+            changeAnimation("die");
+            if(isAnimationFinished())
+                die = true;
+        } else {
+            if(!getCurrentKey().contains("attack")) {
+                if (body.getLinearVelocity().isZero() || body.getLinearVelocity().x < 0.1 && body.getLinearVelocity().x > -0.1f) {
+                    changeAnimation("crouch");
+                    changeSpeed(1 / 6f);
+                } else if (body.getLinearVelocity().x > 0.5 && body.getLinearVelocity().x < -0.5f) {
+                    changeAnimation("run");
+                    changeSpeed(1 / 14f);
+                } else {
+                    changeAnimation("walk");
+                    changeSpeed(1 / 12f);
+                }
+            }
+            if(body.getLinearVelocity().x > 0)
+                flipAnimation(false);
+            else flipAnimation(true);
+        }
+        if(die) {
             Screens.getCurrent().getItems().addActor(new ItemActor(Items.getRandom(), getX(), getY()));
             setRemove();
         }
@@ -81,7 +107,7 @@ public abstract class Enemy extends ImageEx {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        //hurt.draw(batch, parentAlpha);
+
     }
 
     public float getHealth(){ return this.health; }
@@ -101,7 +127,7 @@ public abstract class Enemy extends ImageEx {
 
     }
 
-    public Array<Actor> getInteractingObjects() {
+    public Array<ImageEx> getInteractingObjects() {
         return this.interactingObjects;
     }
 
@@ -112,5 +138,9 @@ public abstract class Enemy extends ImageEx {
 
     public void calcClosest() {
         closestInteractingObject = GameScreen.closestTo(interactingObjects, this);
+    }
+
+    public boolean isDead() {
+        return die;
     }
 }

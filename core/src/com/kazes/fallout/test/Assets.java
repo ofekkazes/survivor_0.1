@@ -48,6 +48,9 @@ public class Assets {
         public static final String ITEMS = "images/maps/items.png";
         public static final String FIRE = "particles/fire.png";
         public static final String BLOOD = "particles/blood.png";
+        public static final String ZOMBIE = "images/characters/zombie.png";
+        public static final String ZOMBIE2 = "images/characters/zombie2.png";
+        public static final String ZOMBIE3 = "images/characters/zombie3.png";
     }
     private static final String[] _Images = {
             Images.PIKACHU,
@@ -61,17 +64,22 @@ public class Assets {
             Images.HOUSE1, Images.HOUSE2,
             Images.WALL, Images.CRATE,
             Images.ITEMS, Images.FIRE,
-            Images.BLOOD
+            Images.BLOOD, Images.ZOMBIE, Images.ZOMBIE2,
+            Images.ZOMBIE3
     };
 
     public static class Atlases {
         public static final String items = "images/maps/items.atlas";
         public static final String items_new = "images/maps/items (2).atlas";
         public static final String items_icons = "images/maps/items2.atlas";
+        public static final String zombie = "images/characters/zombie.atlas";
+        public static final String zombie2 = "images/characters/zombie2.atlas";
+        public static final String zombie3 = "images/characters/zombie3.atlas";
     }
 
     private static final String[] _Atlases = {
-            Atlases.items, Atlases.items_new, Atlases.items_icons
+            Atlases.items, Atlases.items_new, Atlases.items_icons,
+            Atlases.zombie, Atlases.zombie2, Atlases.zombie3
     };
 
     public static final String[] _Parallax1 = {

@@ -91,7 +91,7 @@ public class Prologue extends GameScreen {
 
         enemies = new Array<Zombie>();
         for(int i = 0; i < 150; i++) {
-            enemies.add(new Zombie(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), MathUtils.random(1000, 3000), MathUtils.random(250), world));
+            enemies.add(new Zombie(MathUtils.random(1000, 3000), MathUtils.random(250), world));
             gameStage.addActor(enemies.get(i));
         }
 
@@ -172,7 +172,7 @@ public class Prologue extends GameScreen {
         if(i % 30 == 0) {
             turn = !turn;
             ImageEx position = (turn) ? npc1 : npc2;
-            bullets.add(new Bullet(world, position.getX(), position.getY(), GameScreen.closestTo(new Array<Actor>(enemies), position).getOrigin().cpy().sub(position.getOrigin()).nor()));
+            bullets.add(new Bullet(world, position.getX(), position.getY(), GameScreen.closestTo(new Array<ImageEx>(enemies), position).getOrigin().cpy().sub(position.getOrigin()).nor()));
             gameStage.addActor(this.bullets.get(bullets.size - 1));
         }
         if(this.bullets.size > 0) {

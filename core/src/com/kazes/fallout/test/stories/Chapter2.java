@@ -45,7 +45,7 @@ public class Chapter2 extends Story {
         storyNpcs.get(1).setRotation(90);
 
         for (int i = 0; i < 10; i++) {
-            addEnemy(new Zombie(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), MathUtils.random(75, 90), MathUtils.random(5f), gameScreen.getPhysicsWorld()));
+            addEnemy(new Zombie(MathUtils.random(75, 90), MathUtils.random(5f), gameScreen.getPhysicsWorld()));
             storyEnemies.get(i).addInteractingObject(GameScreen.player);
             storyEnemies.get(i).addInteractingObject(storyNpcs.get(0));
             storyEnemies.get(i).addInteractingObject(storyNpcs.get(1));
@@ -114,7 +114,7 @@ public class Chapter2 extends Story {
             if (checkPart(3) && !checkPart(4)) {
                 timeLabel.setText("Time left: " + MathUtils.floor(timeout-- / Gdx.graphics.getFramesPerSecond()));
                 if (storyEnemies.size < 25) {
-                    addEnemy(new Zombie(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), MathUtils.random(gameScreen.getMap().getWidth() - 2, gameScreen.getMap().getWidth() - 0.0001f), MathUtils.random(0, 8), gameScreen.getPhysicsWorld()));
+                    addEnemy(new Zombie(MathUtils.random(gameScreen.getMap().getWidth() - 2, gameScreen.getMap().getWidth() - 0.0001f), MathUtils.random(0, 8), gameScreen.getPhysicsWorld()));
                     storyEnemies.get(storyEnemies.size - 1).setHealth(99);
                     storyEnemies.get(storyEnemies.size - 1).addInteractingObject(GameScreen.player);
                 }

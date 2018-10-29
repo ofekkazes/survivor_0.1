@@ -1,8 +1,14 @@
 package com.kazes.fallout.test.enemies;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.World;
+import com.kazes.fallout.test.Assets;
+import com.kazes.fallout.test.ImageEx;
 import com.kazes.fallout.test.Survivor;
+import com.kazes.fallout.test.screens.GameScreen;
 
 /**
  * First class enemy, slow and weak
@@ -15,8 +21,8 @@ public class Zombie extends Enemy {
     private float yChange;
     private float time;
 
-    public Zombie(Texture img, float xPos, float yPos, World world) {
-        super(img, xPos, yPos, world);
+    public Zombie(float xPos, float yPos, World world) {
+        super(Assets.getAsset(Assets.Atlases.zombie, TextureAtlas.class), xPos, yPos, world);
     }
     @Override
     public void act(float delta) {

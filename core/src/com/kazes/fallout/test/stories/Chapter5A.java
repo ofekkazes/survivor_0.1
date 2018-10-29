@@ -63,7 +63,7 @@ public class Chapter5A extends Story {
     }
 
     private void part_two() {
-        Boss giorgio = new Boss(Assets.getAsset(Assets.Images.PIKACHU, Texture.class), 30, 4, gameScreen.getPhysicsWorld());
+        Boss giorgio = new Boss(30, 4, gameScreen.getPhysicsWorld());
         addEnemy(giorgio);
         cutscene.add(GameScreen.player, Actions.parallel(new ChangeInputPrivilege(gameScreen, false), new ChangeWeaponPrivilege(gameScreen, false)));
         cutscene.add(GameScreen.player, Actions.sequence(new ChangeAnimation(Assets.Animations.HERO + "_walking"), Actions.moveTo(50, 5f, 10f, Interpolation.sine), new ChangeAnimation(Assets.Animations.HERO + "_idle")));

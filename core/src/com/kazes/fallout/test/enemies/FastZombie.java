@@ -1,11 +1,13 @@
 package com.kazes.fallout.test.enemies;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.World;
+import com.kazes.fallout.test.Assets;
 
 public class FastZombie extends Enemy {
-    public FastZombie(Texture img, float xPos, float yPos, World world) {
-        super(img, xPos, yPos, world);
+    public FastZombie(float xPos, float yPos, World world) {
+        super(Assets.getAsset(Assets.Atlases.zombie3, TextureAtlas.class), xPos, yPos, world);
     }
 
     @Override
