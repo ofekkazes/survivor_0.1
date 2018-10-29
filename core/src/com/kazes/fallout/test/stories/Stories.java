@@ -30,6 +30,7 @@ public class Stories {
         setFinished(2);
         setFinished(3);
         setFinished(4);
+        setFinished(5);
     }
 
     /**

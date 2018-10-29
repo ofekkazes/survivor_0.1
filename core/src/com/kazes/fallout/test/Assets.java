@@ -32,6 +32,22 @@ public class Assets {
         public static final String PARALLAX_4 = "images/maps/parallax/img4.png";
         public static final String PARALLAX_5 = "images/maps/parallax/img5.png";
         public static final String PARALLAX_6 = "images/maps/parallax/img6.png";
+        public static final String PARALLAX_11 = "images/maps/parallax/Tlayer1.png";
+        public static final String PARALLAX_12 = "images/maps/parallax/Tlayer2.png";
+        public static final String PARALLAX_13 = "images/maps/parallax/Tlayer3.png";
+        public static final String PARALLAX_21 = "images/maps/parallax/plx-1.png";
+        public static final String PARALLAX_22 = "images/maps/parallax/plx-2.png";
+        public static final String PARALLAX_23 = "images/maps/parallax/plx-3.png";
+        public static final String PARALLAX_24 = "images/maps/parallax/plx-4.png";
+        public static final String PARALLAX_25 = "images/maps/parallax/plx-5.png";
+        public static final String PARALLAX_31 = "images/maps/parallax/layers1.png";
+        public static final String PARALLAX_32 = "images/maps/parallax/layers2.png";
+        public static final String PARALLAX_33 = "images/maps/parallax/layers3.png";
+        public static final String PARALLAX_34 = "images/maps/parallax/layers4.png";
+        public static final String PARALLAX_41 = "images/maps/parallax/plx1.png";
+        public static final String PARALLAX_42 = "images/maps/parallax/plx2.png";
+        public static final String PARALLAX_43 = "images/maps/parallax/plx3.png";
+        public static final String PARALLAX_44 = "images/maps/parallax/plx4.png";
         public static final String MAP = "images/maps/tempmap2.png";
         public static final String MAP_GREEN = "images/maps/green_map.png";
         public static final String BONFIRE = "images/maps/bonfire.png";
@@ -65,7 +81,15 @@ public class Assets {
             Images.WALL, Images.CRATE,
             Images.ITEMS, Images.FIRE,
             Images.BLOOD, Images.ZOMBIE, Images.ZOMBIE2,
-            Images.ZOMBIE3
+            Images.ZOMBIE3, Images.PARALLAX_11,
+            Images.PARALLAX_12, Images.PARALLAX_13,
+            Images.PARALLAX_21, Images.PARALLAX_22,
+            Images.PARALLAX_23, Images.PARALLAX_24,
+            Images.PARALLAX_25, Images.PARALLAX_31,
+            Images.PARALLAX_32, Images.PARALLAX_33,
+            Images.PARALLAX_34, Images.PARALLAX_41,
+            Images.PARALLAX_42, Images.PARALLAX_43,
+            Images.PARALLAX_44
     };
 
     public static class Atlases {

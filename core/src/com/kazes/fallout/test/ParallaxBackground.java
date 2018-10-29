@@ -1,6 +1,7 @@
 package com.kazes.fallout.test;
 
 import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -20,7 +21,17 @@ public class ParallaxBackground extends Actor {
     private float x,y,width,height,scaleX,scaleY;
 
     public ParallaxBackground(Array<Texture> textures, Camera cam){
-        layers = textures;
+        if(textures.get(0).getWidth() < 1920) {
+            Array<Texture> modified = new Array<Texture>();
+            for(Texture texture : textures) {
+                if(textures.get(0).getWidth() < 600)
+                    modified.add(extendTexture(texture, 4));
+                else modified.add(extendTexture(texture, 3));
+            }
+
+            layers = modified;
+        }
+        else layers = textures;
         for(int i = 0; i <textures.size;i++){
             layers.get(i).setWrap(Texture.TextureWrap.MirroredRepeat, Texture.TextureWrap.MirroredRepeat);
         }
@@ -46,5 +57,20 @@ public class ParallaxBackground extends Actor {
     public void dispose() {
         for(int i = 0; i < layers.size; i++)
             layers.get(i).dispose();
+    }
+
+    /**
+     * Multiply a texture horizontally
+     * @param texture the texture you want to extend
+     * @param multiplier How many times to multiply the texture
+     * @return an extended texture
+     */
+    private static Texture extendTexture(Texture texture, int multiplier) {
+        Pixmap pixmap = new Pixmap(texture.getWidth() * multiplier, texture.getHeight(), Pixmap.Format.RGBA8888);
+        for(int i = 0; i < multiplier; i++) {
+            texture.getTextureData().prepare();
+            pixmap.drawPixmap(texture.getTextureData().consumePixmap(), i * texture.getWidth(), 0);
+        }
+        return new Texture(pixmap);
     }
 }
