@@ -710,7 +710,7 @@ public abstract class GameScreen extends AbstractScreen implements GameScreenInt
         return (number < 0) ? number * -1 : number;
     }
 
-    public static ImageEx closestTo(Array<Actor> vectorsArray, ImageEx checkVector) {
+    public static ImageEx closestTo(Array<ImageEx> vectorsArray, ImageEx checkVector) {
         float shortestDist = 0;
         ImageEx closestActor = null;
         for(ImageEx point : (ImageEx[])vectorsArray.toArray(ImageEx.class)){
